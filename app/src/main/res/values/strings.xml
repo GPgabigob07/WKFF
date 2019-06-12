@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AppTest</string>
+    <string name="player_name">Player Name</string>
+    <string name="add">add</string>
+    <string name="go_btn_text">GO!</string>
+    <string name="dialog_text">This Player Already Exists</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skills">Skills:</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="player_name_noname">You must put a name there...</string>
+    <string name="current_player_name">CurrentPlayerName</string>
+    <string name="least4players">Game needs at least 4 playes to start!</string>
+    <string name="del_player">Delete</string>
+</resources>
