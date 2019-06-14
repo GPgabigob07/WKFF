@@ -1,6 +1,5 @@
 package org.gpginc.ntateam.apptest.runtime;
 
-import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -78,7 +77,7 @@ public class Clazzs
                 {
                     attackable.add(pP);
                 }
-                ((ListView) this.current.findViewById(R.id.players)).setAdapter(new ArrayAdapter<Player>(this.current.getApplicationContext(), android.R.layout.simple_list_item_1, attackable));
+                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
                 int a = p.getField();
                 while(a==p.getField())a = rand.nextInt(4) + 1;
                 setDownFieldMemory(p.getField());
@@ -123,7 +122,7 @@ public class Clazzs
                         attackable.add(PLAYERS.get(i));
                     }
                 }
-                ((ListView) this.current.findViewById(R.id.players)).setAdapter(new ArrayAdapter<Player>(this.current.getApplicationContext(), android.R.layout.simple_list_item_1, attackable));
+                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
             }
         }
     };
@@ -146,7 +145,7 @@ public class Clazzs
                         attackable.add(PLAYERS.get(i));
                     }
                 }
-                ((ListView) this.current.findViewById(R.id.players)).setAdapter(new ArrayAdapter<Player>(this.current.getApplicationContext(), android.R.layout.simple_list_item_1, attackable));
+                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
 							/*int sP = input.nextInt();
 							int sP2 = input.nextInt();
 							PLAYERS.get(sP).giveDamage(p, 1);

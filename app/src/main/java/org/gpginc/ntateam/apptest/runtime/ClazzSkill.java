@@ -1,23 +1,21 @@
 package org.gpginc.ntateam.apptest.runtime;
 
 
-import android.app.Activity;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
+import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
 import java.io.Serializable;
 
-public class ClazzSkill implements Parcelable
-{
+abstract class ClazzSkill implements Serializable {
 	private final String name;
 	private boolean passiveRun, canBeUsedAsCounter = false;
 	protected boolean isCounter = false;
-	protected RuntimeActivity current;
+	protected SkillRun current;
 	public final Type type;
 
 
@@ -37,49 +35,13 @@ public class ClazzSkill implements Parcelable
 		this.layout = layout;
 	}
 
-	protected ClazzSkill(Parcel in) {
-		name = in.readString();
-		passiveRun = in.readByte() != 0;
-		canBeUsedAsCounter = in.readByte() != 0;
-		isCounter = in.readByte() != 0;
-		current = in.readParcelable(RuntimeActivity.class.getClassLoader());
-		layout = in.readInt();
-		this.type =(Type) in.readSerializable();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(name);
-		dest.writeByte((byte) (passiveRun ? 1 : 0));
-		dest.writeByte((byte) (canBeUsedAsCounter ? 1 : 0));
-		dest.writeByte((byte) (isCounter ? 1 : 0));
-		dest.writeParcelable(current, flags);
-		dest.writeInt(layout);
-		dest.writeSerializable(this.type);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	public static final Creator<ClazzSkill> CREATOR = new Creator<ClazzSkill>() {
-		@Override
-		public ClazzSkill createFromParcel(Parcel in) {
-			return new ClazzSkill(in);
-		}
-
-		@Override
-		public ClazzSkill[] newArray(int size) {
-			return new ClazzSkill[size];
-		}
-	};
-
-	public void setCurrent(RuntimeActivity current)
+	public void setCurrent(SkillRun current)
 	{
 		this.current = current;
 	}
-	public native void runSkill(@Nullable Object o);
+
+
+	public abstract void runSkill(@Nullable Object o);
 	
 	public String getName()
 	{

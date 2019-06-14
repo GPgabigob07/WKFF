@@ -79,7 +79,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getIntent().getExtras()!=null)
+        if(getIntent().getExtras().get("Players")!=null)
         {
             this.load(getIntent().getExtras());
         }
@@ -172,10 +172,23 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
                     Main.p("NOT ATTACKED");
                     out_skills.add(c.getSkillAt(i));
                 }
-                c.getSkillAt(i).setCurrent(this);
+                //c.getSkillAt(i).setCurrent(this);
             }
         }
         return out_skills;
+    }
+    protected Bundle enableNext()
+    {
+        Bundle next = new Bundle();
+        next.putString("CPN", this.CURRENT_PLAYER);
+        next.putParcelable("CP", this.CP);
+        next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
+        next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
+        next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
+        next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
+        next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
+        next.putParcelableArrayList("Players", this.ON_PLAYERS);
+        return next;
     }
    /* @Nullable
     protected Clazz getClazzByName(String playerName)

@@ -51,7 +51,10 @@ public class CurrentPlayer extends RuntimeActivity {
                 Snackbar.make(view, skills.get(position).getName(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Intent skill = new Intent(CurrentPlayer.this, SkillRun.class);
-                skill.putExtra("layout", skills.get(position).getLayout());
+                //skill.putExtra("layout", skills.get(position).getLayout());
+                skill.putExtra("cskill", skills.get(position));
+                //
+                // skill.putExtras(CurrentPlayer.this.enableNext());
                 startActivity(skill);
 
                 //((ViewFlipper) CurrentPlayer.this.findViewById(R.id.current_showin)).setDisplayedChild(1);

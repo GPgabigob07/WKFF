@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Clazz implements Parcelable
+class Clazz implements Parcelable
 {
 	private final String name, pseudoName;
 	private Player cPlayer;
@@ -35,11 +35,11 @@ public class Clazz implements Parcelable
 		this.pseudoName = "SPY";
 	}
 
+
 	protected Clazz(Parcel in) {
 		name = in.readString();
 		pseudoName = in.readString();
 		cPlayer = in.readParcelable(Player.class.getClassLoader());
-		SKILLS = in.createTypedArrayList(ClazzSkill.CREATOR);
 	}
 
 	@Override
@@ -47,7 +47,11 @@ public class Clazz implements Parcelable
 		dest.writeString(name);
 		dest.writeString(pseudoName);
 		dest.writeParcelable(cPlayer, flags);
-		dest.writeTypedList(SKILLS);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
 	}
 
 	public static final Creator<Clazz> CREATOR = new Creator<Clazz>() {
@@ -61,12 +65,6 @@ public class Clazz implements Parcelable
 			return new Clazz[size];
 		}
 	};
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
 
 	public Clazz bindSkill(ClazzSkill skill)
 	{
