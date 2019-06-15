@@ -33,7 +33,7 @@ public class Clazzs
 {
      public static List<Clazz> CLAZZS = new ArrayList<>();
      public static final Map<String, Clazz> CLAZZ_MAP = new HashMap<>();
-
+     public static final Map<String, ClazzSkill> SKILL_MAP = new HashMap<>();
 
     /**
      * Classes Declaration
@@ -46,6 +46,20 @@ public class Clazzs
     public static final Clazz DRAGON_HUNTER;
     public static final Clazz ADC;
 
+    /**
+     * Skills Declaration
+     */
+    public static final ClazzSkill SOUL_DESCRIBER;
+    public static final ClazzSkill KING_KNOWNS;
+    public static final ClazzSkill ARCHERY_ATTACK;
+    public static final ClazzSkill LANCER_ATTACK;
+    public static final ClazzSkill SWORDMAN_ATTACK;
+    public static final ClazzSkill SPY_KNOWLEDGE;
+    public static final ClazzSkill NULLING_ATTACK;
+    public static final ClazzSkill ABSOLUTE_DEFENSE;
+    public static final ClazzSkill MADICIAN_COUNTER;
+    public static final ClazzSkill CHANGE_POSITION;
+    public static final ClazzSkill REPOSITION;
 
     /**
      * Classes init
@@ -55,17 +69,17 @@ public class Clazzs
         /**
          * Skills
          */
-        final ClazzSkill SOUL_DESCRIBER = new SoulDescriber("Soul Describer", ClazzSkill.Type.MAHOU, false);
-        final ClazzSkill KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
-        final ClazzSkill ARCHERY_ATTACK = new ArcherAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        final ClazzSkill LANCER_ATTACK = new LancerAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        final ClazzSkill SWORDMAN_ATTACK = new SwordmanAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        final ClazzSkill SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false);
-        final ClazzSkill NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
-        final ClazzSkill ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);
-        final ClazzSkill MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
-        final ClazzSkill CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false);
-        final ClazzSkill REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false);
+        SOUL_DESCRIBER = new SoulDescriber("Soul Describer", ClazzSkill.Type.MAHOU, false);
+        KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
+        ARCHERY_ATTACK = new ArcherAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        LANCER_ATTACK = new LancerAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        SWORDMAN_ATTACK = new SwordmanAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false);
+        NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
+        ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);
+        MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
+        CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false);
+        REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false);
 
 
         ARCHERY = new Clazz("Archery Madician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);

@@ -62,12 +62,17 @@ public class MainActivity extends AppCompatActivity {
     {
         String name = ((EditText)findViewById(R.id.player_name)).getText().toString();
         if(!name.equals("") || name != null) {
-            PLAYER_NAMES.add(name);
+            if(!PLAYER_NAMES.contains(name)) {
+                PLAYER_NAMES.add(name);
 
-            ExpandableListView listinha = findViewById(R.id.player_list);
+                ExpandableListView listinha = findViewById(R.id.player_list);
 
-            listinha.setAdapter(new PlayerListAdapter<String>(this, PLAYER_NAMES, this));
-            ((EditText)findViewById(R.id.player_name)).setText("");
+                listinha.setAdapter(new PlayerListAdapter<String>(this, PLAYER_NAMES, this));
+                ((EditText) findViewById(R.id.player_name)).setText("");
+            } else {
+                Snackbar.make(view, R.string.player_name_justexist, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         } else {
             Snackbar.make(view, R.string.player_name_noname, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

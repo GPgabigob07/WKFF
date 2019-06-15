@@ -47,6 +47,12 @@ public class KingKnowns extends ClazzSkill
             }
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<KingKnowns> CREATOR = new Creator<KingKnowns>()
     {
         @Override

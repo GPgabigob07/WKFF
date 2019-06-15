@@ -68,4 +68,8 @@ public class ArcherAttack extends ClazzSkill
             return new ArcherAttack[size];
         }
     };
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
 }

@@ -56,4 +56,8 @@ public class SoulDescriber extends ClazzSkill
             return new SoulDescriber[size];
         }
     };
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
 }

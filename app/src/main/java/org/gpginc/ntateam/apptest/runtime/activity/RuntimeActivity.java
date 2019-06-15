@@ -146,11 +146,12 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             System.out.println(this.CURRENT_PLAYER);
             System.out.println(this.CP.getName());
             Main.p(this.CP.getClazz().getName());
-            for(ClazzSkill c : this.CP.getClazz().getSkills())
-            {
-                Main.p("Skill:");
-                Main.p(c.getName());
-            }
+            if(this.CP.getClazz().hasSkills()) {
+                for (ClazzSkill c : this.CP.getClazz().getSkills()) {
+                    Main.p("Skill:");
+                    Main.p(c.getName());
+                }
+            } else Main.p("No skills here");
         } else System.out.println("bugbugsbugs");
     }
 

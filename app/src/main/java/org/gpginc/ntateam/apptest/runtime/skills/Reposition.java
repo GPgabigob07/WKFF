@@ -75,6 +75,12 @@ public class Reposition extends ClazzSkill
             } else ;
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<Reposition> CREATOR = new Creator<Reposition>()
     {
         @Override

@@ -59,6 +59,12 @@ public class MagicianCounter extends ClazzSkill
             }
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<MagicianCounter> CREATOR = new Creator<MagicianCounter>()
     {
         @Override

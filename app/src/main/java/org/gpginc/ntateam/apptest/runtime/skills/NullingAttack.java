@@ -50,6 +50,12 @@ public class NullingAttack extends ClazzSkill
             }
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<NullingAttack> CREATOR = new Creator<NullingAttack>()
     {
         @Override

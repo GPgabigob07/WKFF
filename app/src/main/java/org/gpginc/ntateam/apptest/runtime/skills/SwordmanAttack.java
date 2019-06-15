@@ -55,6 +55,12 @@ public class SwordmanAttack extends ClazzSkill
 
         }
     }
+
+    @Override
+    public Creator<SwordmanAttack> getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<SwordmanAttack> CREATOR = new Creator<SwordmanAttack>()
     {
         @Override

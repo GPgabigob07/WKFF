@@ -48,6 +48,12 @@ public class AbsoluteDefense extends ClazzSkill
             }
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<AbsoluteDefense> CREATOR = new Creator<AbsoluteDefense>()
     {
         @Override

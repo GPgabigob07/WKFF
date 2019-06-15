@@ -11,7 +11,7 @@ public class Clazz implements Parcelable
 {
 	private final String name, pseudoName;
 	private Player cPlayer;
-	private ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
+	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 	public Clazz(String name)
 	{
 		this.name = name;
@@ -37,37 +37,50 @@ public class Clazz implements Parcelable
 	}
 
 
-    protected Clazz(Parcel in) {
-        name = in.readString();
-        pseudoName = in.readString();
-        cPlayer = in.readParcelable(Player.class.getClassLoader());
-    }
+	protected Clazz(Parcel in) {
+		name = in.readString();
+		pseudoName = in.readString();
+		cPlayer = in.readParcelable(Player.class.getClassLoader());
+		ArrayList<String> names =  new ArrayList();
+		in.readStringList(names);
+		for(String name :  names)
+		{
+			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
+		}
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(pseudoName);
-        dest.writeParcelable(cPlayer, flags);
-    }
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(name);
+		dest.writeString(pseudoName);
+		dest.writeParcelable(cPlayer, flags);
+		ArrayList<String> names =  new ArrayList();
+		for(ClazzSkill c : this.SKILLS)
+		{
+			names.add(c.getName());
+		}
+		dest.writeStringList(names);
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	}
 
-    public static final Creator<Clazz> CREATOR = new Creator<Clazz>() {
-        @Override
-        public Clazz createFromParcel(Parcel in) {
-            return new Clazz(in);
-        }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-        @Override
-        public Clazz[] newArray(int size) {
-            return new Clazz[size];
-        }
-    };
+	public static final Creator<Clazz> CREATOR = new Creator<Clazz>() {
+		@Override
+		public Clazz createFromParcel(Parcel in) {
+			return new Clazz(in);
+		}
 
-    public Clazz bindSkill(ClazzSkill skill)
+		@Override
+		public Clazz[] newArray(int size) {
+			return new Clazz[size];
+		}
+	};
+
+	public Clazz bindSkill(ClazzSkill skill)
 	{
 		this.SKILLS.add(skill);
 		Main.p("Skill: " + skill.getName() + " added to " + this.getName());

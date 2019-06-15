@@ -13,4 +13,5 @@
     <string name="current_player_name">CurrentPlayerName</string>
     <string name="least4players">Game needs at least 4 playes to start!</string>
     <string name="del_player">Delete</string>
+    <string name="player_name_justexist">Player Already Exists</string>
 </resources>

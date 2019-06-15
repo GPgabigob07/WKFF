@@ -66,6 +66,12 @@ public class LancerAttack extends ClazzSkill
             ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<>(this.current, android.R.layout.simple_list_item_1, attackable));
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<LancerAttack> CREATOR = new Creator<LancerAttack>()
     {
         @Override

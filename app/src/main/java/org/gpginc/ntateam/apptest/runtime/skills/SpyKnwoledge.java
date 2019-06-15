@@ -48,6 +48,12 @@ public class SpyKnwoledge extends ClazzSkill
             }
         }
     }
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
+
     public static final Creator<SpyKnwoledge> CREATOR = new Creator<SpyKnwoledge>()
     {
         @Override

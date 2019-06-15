@@ -47,6 +47,7 @@ public class ChangePosition extends ClazzSkill
             }
         }
     }
+
     public static final Creator<ChangePosition> CREATOR = new Creator<ChangePosition>()
     {
         @Override
@@ -59,4 +60,9 @@ public class ChangePosition extends ClazzSkill
             return new ChangePosition[size];
         }
     };
+
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
+    }
 }

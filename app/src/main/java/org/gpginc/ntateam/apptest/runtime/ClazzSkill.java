@@ -30,6 +30,7 @@ public abstract class ClazzSkill implements Skill {
 		this.name = name;
 		this.type = type;
 		this.isCounter =isCounter;
+		Clazzs.SKILL_MAP.put(this.name, this);
 	}
 	public ClazzSkill(String name, Type type, boolean isCounter, int layout)
 	{
@@ -39,12 +40,8 @@ public abstract class ClazzSkill implements Skill {
 
 	public ClazzSkill(Parcel in)
 	{
-		this.name = in.readString();
-		this.type = (Type) in.readSerializable();
-		this.isCounter = in.readByte() == 0;
-		this.layout = in.readInt();
+		this(in.readString(), (Type) in.readSerializable(), in.readByte() != 0, in.readInt());
 	}
-
 	@Override
 	public void writeToParcel(Parcel dest, int flags)
 	{
@@ -98,7 +95,7 @@ public abstract class ClazzSkill implements Skill {
 	{
 		return 0;
 	}
-	public enum Type implements Serializable
+    public enum Type implements Serializable
 	{
 		MAHOU,
 		ATTACK,
