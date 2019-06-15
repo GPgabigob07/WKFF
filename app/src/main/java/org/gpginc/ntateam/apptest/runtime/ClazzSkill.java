@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime;
 
 
+import android.os.Parcel;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.Skill;
 
 import java.io.Serializable;
 
-abstract class ClazzSkill implements Serializable {
+public abstract class ClazzSkill implements Skill {
 	private final String name;
-	private boolean passiveRun, canBeUsedAsCounter = false;
+	private boolean passiveRun;
 	protected boolean isCounter = false;
 	protected SkillRun current;
 	public final Type type;
@@ -21,7 +23,7 @@ abstract class ClazzSkill implements Serializable {
 
 	@LayoutRes
 	@NonNull
-	protected int layout;
+	protected int layout = -1;
 
 	public ClazzSkill(String name, Type type, boolean isCounter)
 	{
@@ -35,14 +37,27 @@ abstract class ClazzSkill implements Serializable {
 		this.layout = layout;
 	}
 
+	public ClazzSkill(Parcel in)
+	{
+		this.name = in.readString();
+		this.type = (Type) in.readSerializable();
+		this.isCounter = in.readByte() == 0;
+		this.layout = in.readInt();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeString(this.name);
+		dest.writeSerializable(this.type);
+		dest.writeByte((byte) (this.isCounter ? 1 : 0));
+		dest.writeInt(this.layout);
+	}
 	public void setCurrent(SkillRun current)
 	{
 		this.current = current;
 	}
 
-
-	public abstract void runSkill(@Nullable Object o);
-	
 	public String getName()
 	{
 		return this.name;
@@ -79,11 +94,16 @@ abstract class ClazzSkill implements Serializable {
 		return this.layout;
 	}
 
+	public int describeContents()
+	{
+		return 0;
+	}
 	public enum Type implements Serializable
 	{
 		MAHOU,
 		ATTACK,
 		PASSIVE,
 		ATTACK_TRIGGER;
+
 	}
 }

@@ -5,6 +5,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.runtime.skills.AbsoluteDefense;
+import org.gpginc.ntateam.apptest.runtime.skills.ArcherAttack;
+import org.gpginc.ntateam.apptest.runtime.skills.ChangePosition;
+import org.gpginc.ntateam.apptest.runtime.skills.KingKnowns;
+import org.gpginc.ntateam.apptest.runtime.skills.LancerAttack;
+import org.gpginc.ntateam.apptest.runtime.skills.MagicianCounter;
+import org.gpginc.ntateam.apptest.runtime.skills.NullingAttack;
+import org.gpginc.ntateam.apptest.runtime.skills.Reposition;
+import org.gpginc.ntateam.apptest.runtime.skills.SoulDescriber;
+import org.gpginc.ntateam.apptest.runtime.skills.SpyKnwoledge;
+import org.gpginc.ntateam.apptest.runtime.skills.SwordmanAttack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,315 +31,54 @@ import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
 public class Clazzs
 {
-    public static List<Clazz> CLAZZS = new ArrayList<>();
-    public static final Map<String, Clazz> CLAZZ_MAP = new HashMap<String, Clazz>();
-
-    /**
-     * Skills
-     */
-    public  final ClazzSkill SEE_THROUGH = new ClazzSkill("See Through", ClazzSkill.Type.MAHOU, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Player p = Main.getPlayer((Player) o);
-                Random rand = new Random();
-                p("This playes is from " + p.getKingdom());
-                if(rand.nextInt(25) == 5)p("And is  " + p.getClazz());
-                if(rand.nextInt(25)  <5)p("And is in field " + p.getField());
-            }
-        }
-    };
-    public  final ClazzSkill SEE_ALL = new ClazzSkill("SEE ALL", ClazzSkill.Type.MAHOU, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!= null)
-            {
-                Player p = (Player) o;
-                String cK = p.getKingdom();
-                p("Those Players Belongs to your kingdom:");
-                for(Player k : PLAYERS)
-                {
-                    if(k.getKingdom().equals(cK) && !k.equals(p))
-                    {
-                        p(k.getName()+ " in field: "+k.getField());
-                    }
-                }
-            }
-        }
-    };
-    public  final ClazzSkill ARCHERY_ATTACK = new ClazzSkill("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-
-            Random rand = new Random();
-            final List<Player> attackable = new ArrayList<>();
-            if(o!= null)
-            {
-                Player p = (Player) o;
-                int asd = 0;
-                for(Player pP : PLAYERS)
-                {
-                    attackable.add(pP);
-                }
-                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
-                int a = p.getField();
-                while(a==p.getField())a = rand.nextInt(4) + 1;
-                setDownFieldMemory(p.getField());
-                setUpFieldMemory(a);
-                p.setField(a);
-                p("You'd moved to field " + a);
-            }
-        }
-    };
-    public  final ClazzSkill LANCER_ATTACK = new ClazzSkill("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!= null)
-            {
-                Player p = (Player) o;
-                int pField = p.getField();
-                int attackingField = 0;
-                final List<Player> attackable = new ArrayList<>();
-                switch(pField)
-                {
-                    case 1:
-                        attackingField = 3;
-                        break;
-                    case 2:
-                        attackingField = 4;
-                        break;
-                    case 3:
-                        attackingField = 1;
-                        break;
-                    case 4:
-                        attackingField = 2;
-                        break;
-                }
-
-                int asd = 1;
-                for(int i = 0; i< PLAYERS.size(); ++i)
-                {
-                    if(!PLAYERS.get(i).equals(p)&& (PLAYERS.get(i).getField() == attackingField | PLAYERS.get(i).getField() == pField))
-                    {
-                        attackable.add(PLAYERS.get(i));
-                    }
-                }
-                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
-            }
-        }
-    };
-    public  final ClazzSkill SWORDMAN_ATTACK = new ClazzSkill("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!= null)
-            {
-                p("You can attack 2 players, that are in your field.");
-                Player p = (Player) o;
-                int pField = p.getField();
-                int asd = 1;
-                final List<Player> attackable = new ArrayList<>();
-                for(int i = 0; i< PLAYERS.size(); ++i)
-                {
-                    if(!PLAYERS.get(i).equals(p)&& PLAYERS.get(i).getField() == pField)
-                    {
-                        attackable.add(PLAYERS.get(i));
-                    }
-                }
-                ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
-							/*int sP = input.nextInt();
-							int sP2 = input.nextInt();
-							PLAYERS.get(sP).giveDamage(p, 1);
-							PLAYERS.get(sP2).giveDamage(p, 1);*/
-
-            }
-        }
-    };
-    public  ClazzSkill SPY_KNOWLEDGE = new ClazzSkill("INTEL", ClazzSkill.Type.PASSIVE, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Random rand = new Random();
-                int i,a,u;
-                a=rand.nextInt(PLAYERS.size());
-                i=rand.nextInt(PLAYERS.size() - a / 2);
-                u=rand.nextInt(i + a < PLAYERS.size() ? i + a : PLAYERS.size());
-                int[] iau = {a, i, u};
-                for(int k : iau)
-                {
-                    p(PLAYERS.get(k).getName() + (rand.nextInt(5) < 2 ? " is " + PLAYERS.get(k).getClazz().getPseudoName() : " belongs to " + PLAYERS.get(k).getKingdom()) + " in field " + PLAYERS.get(k).getField());
-                }
-            }
-        }
-    };
-
-    public  ClazzSkill NULLING_ATTACK = new ClazzSkill("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Player p = (Player) o;
-                if(p.attacked && !this.isPassiveRun() || this.isPassiveRun())
-                {
-                    p("During this phase you won't take damage");
-                    p.isProtected = true;
-                    this.setPassiveRun(true);
-                } else if(p.attacked)
-                {
-                    p("This phase you will take damage, I'm sorry...");
-                } else
-                {
-                    p("U weren't attacked... till now...");
-                }
-            }
-        }
-    };
-    public  final ClazzSkill ABSOLUTE_DEFENSE = new ClazzSkill("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Player p = (Player) o;
-                if(p.attacked && !this.isPassiveRun())
-                {
-                    p("You were attacked by "+p.getLastAttacker().getName() + " from field " + p.getField());
-                    p("No worries, u won't take any damage");
-                    p.isProtected = true;
-                    this.setPassiveRun(true);
-                } else if(p.attacked)
-                {
-                    p("attacked");
-                }
-            }
-        }
-    };
-    public  final ClazzSkill MADICIAN_COUNTER = new ClazzSkill("Madician Counter", ClazzSkill.Type.MAHOU, true)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Player p = (Player) o;
-                if(p.attacked)
-                {
-                    if(p.getAttackers().size() >= 2)
-                    {
-                        p.increaseLifeIn(1);
-                        p("You were attacked more than you can counter, only one point of damagewill be restored");
-                        p.getLastAttacker().giveDamage(p, 1);
-                        p(p.getLastAttacker().getName() + " attack suceffuly countered!");
-                    } else if (p.getLastAttacker().getClazz().equals(ARCHERY) || p.getLastAttacker().getClazz().equals(SWORDMAN) || p.getLastAttacker().getClazz().equals(LANCER))
-                    {
-                        p.increaseLifeIn(1);
-                        p.getLastAttacker().giveDamage(p, 1);
-                        p(p.getLastAttacker().getName() + " attack suceffuly countered!");
-                    }
-                    else
-                    {
-                        p("You can't counter this player's attack!");
-                    }
-                }
-            }
-        }
-    };
-    public  final ClazzSkill CHANGE_POSITION = new ClazzSkill("Change Position", ClazzSkill.Type.MAHOU, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!=null)
-            {
-                Player p = (Player) o;
-                int lastField = p.getField();
-                int newField = lastField;
-                p("Type the field you want to go, [1, 4]:");
-                while(newField == lastField)
-                {
-                    newField = input.nextInt();
-                    if(newField == lastField)p("You need to choose a different field");
-                }
-            }
-        }
-
-    };
-    public  final ClazzSkill REPOSITION = new ClazzSkill("Reposition", ClazzSkill.Type.PASSIVE, false)
-    {
-        @Override
-        public void runSkill(@Nullable Object o)
-        {
-            if(o!= null)
-            {
-                Player p = (Player) o;
-                String cK = p.getKingdom();
-                p("Do you want to move someone of your kindom? [y, n]:");
-                String ans = input.next();
-                if(ans.equals("y"))
-                {
-                    final List<Integer> gone = new ArrayList<>();
-                    p("Select one to move: ");
-                    for(Player k : PLAYERS)
-                    {
-                        if(k.getKingdom().equals(cK) && !k.equals(p))
-                        {
-                            p("["+PLAYERS.indexOf(k) +"] " + k.getName());
-                            gone.add(PLAYERS.indexOf(k));
-                        }
-
-                    }
-                    int i = input.nextInt();
-                    while(!gone.contains(i))
-                    {
-                        p("U can only select players above!!");
-                        i = input.nextInt();
-                    }
-                    p("Where this player will be?");
-                    int a = input.nextInt();
-                    while(a < 0 && a > 5 || a==PLAYERS.get(i).getField())
-                    {
-                        p("U can only select players above!!");
-                        a = input.nextInt();
-                    }
-                    p(PLAYERS.get(i).getName() + " moved to field "+a);
-                    setDownFieldMemory(PLAYERS.get(i).getField());
-                    PLAYERS.get(i).setField(a);
-                    setUpFieldMemory(a);
-                } else ;
-            }
-        }
-    };
-
+     public static List<Clazz> CLAZZS = new ArrayList<>();
+     public static final Map<String, Clazz> CLAZZ_MAP = new HashMap<>();
 
 
     /**
-     * Classes and binding;
+     * Classes Declaration
      */
-    public  final Clazz ARCHERY = new Clazz("Archery Madician").bindSkill(SEE_THROUGH).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
-    public  final Clazz SWORDMAN = new Clazz("Knight Madician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
-    public  final Clazz SUPREME = new Clazz("Supreme Madician").bindSkill(SEE_THROUGH).bindSkill(SEE_ALL).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
-    public  final Clazz ADC = new Clazz("Adc Support Madician").bindSkill(ABSOLUTE_DEFENSE);
-    public  final Clazz DRAGON_HUNTER = new Clazz("Dragon Hunter");
-    public  final Clazz LANCER = new Clazz("Lancer Madician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
-    public  final Clazz SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
+    public static final Clazz ARCHERY;
+    public static final Clazz SWORDMAN;
+    public static final Clazz LANCER;
+    public static final Clazz SUPREME;
+    public static final Clazz SPY;
+    public static final Clazz DRAGON_HUNTER;
+    public static final Clazz ADC;
 
-    public  Clazz getClazzByInheritedName(String s)
+
+    /**
+     * Classes init
+     */
+    static {
+
+        /**
+         * Skills
+         */
+        final ClazzSkill SOUL_DESCRIBER = new SoulDescriber("Soul Describer", ClazzSkill.Type.MAHOU, false);
+        final ClazzSkill KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
+        final ClazzSkill ARCHERY_ATTACK = new ArcherAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        final ClazzSkill LANCER_ATTACK = new LancerAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        final ClazzSkill SWORDMAN_ATTACK = new SwordmanAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        final ClazzSkill SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false);
+        final ClazzSkill NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
+        final ClazzSkill ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);
+        final ClazzSkill MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
+        final ClazzSkill CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false);
+        final ClazzSkill REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false);
+
+
+        ARCHERY = new Clazz("Archery Madician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
+        SWORDMAN = new Clazz("Knight Madician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
+        SUPREME = new Clazz("Supreme Madician").bindSkill(SOUL_DESCRIBER).bindSkill(KING_KNOWNS).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
+        ADC = new Clazz("Adc Support Madician").bindSkill(ABSOLUTE_DEFENSE);
+        DRAGON_HUNTER = new Clazz("Dragon Hunter");
+        LANCER = new Clazz("Lancer Madician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
+        SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
+    }
+
+
+    public static Clazz getClazzByInheritedName(String s)
     {
         return CLAZZ_MAP.get(s);
     }

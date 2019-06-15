@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class Player implements Parcelable
+public class Player implements Parcelable
 {
 	private int lifePoints = 3, damageTaken, currentField;
 	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected;

@@ -3,10 +3,11 @@ package org.gpginc.ntateam.apptest.runtime;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class Clazz implements Parcelable
+public class Clazz implements Parcelable
 {
 	private final String name, pseudoName;
 	private Player cPlayer;
@@ -36,37 +37,37 @@ class Clazz implements Parcelable
 	}
 
 
-	protected Clazz(Parcel in) {
-		name = in.readString();
-		pseudoName = in.readString();
-		cPlayer = in.readParcelable(Player.class.getClassLoader());
-	}
+    protected Clazz(Parcel in) {
+        name = in.readString();
+        pseudoName = in.readString();
+        cPlayer = in.readParcelable(Player.class.getClassLoader());
+    }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(name);
-		dest.writeString(pseudoName);
-		dest.writeParcelable(cPlayer, flags);
-	}
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(pseudoName);
+        dest.writeParcelable(cPlayer, flags);
+    }
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-	public static final Creator<Clazz> CREATOR = new Creator<Clazz>() {
-		@Override
-		public Clazz createFromParcel(Parcel in) {
-			return new Clazz(in);
-		}
+    public static final Creator<Clazz> CREATOR = new Creator<Clazz>() {
+        @Override
+        public Clazz createFromParcel(Parcel in) {
+            return new Clazz(in);
+        }
 
-		@Override
-		public Clazz[] newArray(int size) {
-			return new Clazz[size];
-		}
-	};
+        @Override
+        public Clazz[] newArray(int size) {
+            return new Clazz[size];
+        }
+    };
 
-	public Clazz bindSkill(ClazzSkill skill)
+    public Clazz bindSkill(ClazzSkill skill)
 	{
 		this.SKILLS.add(skill);
 		Main.p("Skill: " + skill.getName() + " added to " + this.getName());

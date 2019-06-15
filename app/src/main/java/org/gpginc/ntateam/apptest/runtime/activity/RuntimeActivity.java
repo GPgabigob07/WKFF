@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
@@ -157,7 +158,9 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         final List<ClazzSkill> out_skills = new ArrayList<>();
         //c.runPassive();
+        Clazzs clazzs = new Clazzs();
         Player p = c.getCurrentPlayer();
+
         int asd = 0;
         for(int i = 0; i < c.getSkills().size(); ++i)
         {
