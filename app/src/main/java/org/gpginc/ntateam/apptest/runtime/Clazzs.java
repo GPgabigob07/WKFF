@@ -71,9 +71,9 @@ public class Clazzs
          */
         SOUL_DESCRIBER = new SoulDescriber("Soul Describer", ClazzSkill.Type.MAHOU, false);
         KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
-        ARCHERY_ATTACK = new ArcherAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        LANCER_ATTACK = new LancerAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        SWORDMAN_ATTACK = new SwordmanAttack("Attack", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        ARCHERY_ATTACK = new ArcherAttack("Use Bow", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        LANCER_ATTACK = new LancerAttack("Use Lance", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
+        SWORDMAN_ATTACK = new SwordmanAttack("Use Sword", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false);
         NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
         ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);

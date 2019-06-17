@@ -14,4 +14,10 @@
     <string name="least4players">Game needs at least 4 playes to start!</string>
     <string name="del_player">Delete</string>
     <string name="player_name_justexist">Player Already Exists</string>
+    <string name="swordman_only_two">Only two players, if one, this one will be attacked twice.</string>
+    <string name="swordman_info_spc">SO, only one player, that might be a good thing, or not...</string>
+    <string name="default_func_skill_btn">Select</string>
+    <string name="lancer_atk_info">Theres just one player that you can attack, strange...</string>
+    <string name="player_info_attack_single_or_twice">Select some player to attack!</string>
+    <string name="swordman_dialog_info_1">You select 2 players!</string>
 </resources>

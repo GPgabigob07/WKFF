@@ -223,4 +223,9 @@ public class Player implements Parcelable
 	public int describeContents() {
 		return 0;
 	}
+
+	public String toString()
+	{
+		return this.name;
+	}
 }

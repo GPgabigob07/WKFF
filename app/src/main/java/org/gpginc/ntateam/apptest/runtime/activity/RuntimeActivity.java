@@ -1,11 +1,14 @@
 package org.gpginc.ntateam.apptest.runtime.activity;
 
+import android.app.Dialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
@@ -28,6 +31,14 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     protected ArrayList<Integer> GONE_PLAYERS = new ArrayList<>();
 
     protected ArrayList<Player> ON_PLAYERS = new ArrayList<>();
+
+    public Player getCP() {
+        return CP;
+    }
+
+    public void setCP(Player CP) {
+        this.CP = CP;
+    }
 
     protected String CURRENT_PLAYER ="Suposed to A Player Name here..";
     protected Player CP = null;
@@ -80,10 +91,8 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getIntent().getExtras().get("Players")!=null)
-        {
-            this.load(getIntent().getExtras());
-        }
+        this.load(getIntent().getExtras());
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     protected Bundle getNextPlayer()
@@ -143,6 +152,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             }
             this.CURRENT_PLAYER = savedInstanceState.getString("CPN");
             this.CP = savedInstanceState.getParcelable("CP");
+            Main.p("LOAD INFO");
             System.out.println(this.CURRENT_PLAYER);
             System.out.println(this.CP.getName());
             Main.p(this.CP.getClazz().getName());
@@ -152,16 +162,18 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
                     Main.p(c.getName());
                 }
             } else Main.p("No skills here");
+
         } else System.out.println("bugbugsbugs");
+        Main.p("LOAD END");
     }
 
-    protected List<ClazzSkill> getAplicableSkillsFor(Clazz c)
+    protected List<ClazzSkill> getAplicableSkillsFor()
     {
         final List<ClazzSkill> out_skills = new ArrayList<>();
         //c.runPassive();
-        Clazzs clazzs = new Clazzs();
-        Player p = c.getCurrentPlayer();
 
+        Player p = this.CP;
+        Clazz c = this.CP.getClazz();
         int asd = 0;
         for(int i = 0; i < c.getSkills().size(); ++i)
         {
@@ -194,11 +206,21 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
         return next;
     }
-   /* @Nullable
-    protected Clazz getClazzByName(String playerName)
+    protected ClazzSkill getTypedSkill(String skillName)
     {
-        return this.PLAYER_NAMES.contains(playerName) ? Main.Clazzs.getClazzByInheritedName(this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(playerName))) : null;
-    }*/
-
+        Main.p(skillName);
+        return Clazzs.SKILL_MAP.get(skillName);
+    }
+   public Dialog getDialog(String info)
+   {
+       final Dialog d = new Dialog(this);
+       d.setContentView(R.layout.dialog_demo);
+       ((TextView)d.findViewById(R.id.dialog_info)).setText(info);
+       return d;
+   }
+   public void openDialog(Dialog d)
+   {
+       d.show();
+   }
 }
 

@@ -284,7 +284,7 @@ public class Main
 			}
 		}
 	}
-	static void damageStep()
+	public static final void damageStep(List<Player> players)
 	{
 		List<Player> playersKilled = new ArrayList<>();
 		
@@ -322,7 +322,7 @@ public class Main
 		}
 		for(Player pp : playersKilled)
 		{
-			PLAYERS.remove(pp);
+			players.remove(pp);
 		}
 	}
 	static void firstSkillCaller(Player p)

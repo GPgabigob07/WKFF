@@ -16,11 +16,11 @@ public class SkillRun extends RuntimeActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
         Bundle d = this.getIntent().getExtras();
-        this.currentSkill = d.getParcelable("cskill");
-        this.currentSkill.setCurrent(this);
+        super.onCreate(savedInstanceState);
+        this.currentSkill = getTypedSkill(d.getString("cskill"));
         setContentView(this.currentSkill.getLayout());
+        this.currentSkill.setCurrent(this);
         this.currentSkill.runSkill(this.CP);
 
     }

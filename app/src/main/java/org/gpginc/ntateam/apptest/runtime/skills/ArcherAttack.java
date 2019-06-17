@@ -1,13 +1,19 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +43,8 @@ public class ArcherAttack extends ClazzSkill
     public void runSkill(@Nullable Object o)
     {
         Random rand = new Random();
-        final List<Player> attackable = new ArrayList<>();
+        Main.p("ACTIVATED");
+        final List<Object> attackable = new ArrayList<>();
         if(o!= null)
         {
             Player p = (Player) o;
@@ -45,8 +52,11 @@ public class ArcherAttack extends ClazzSkill
             for(Player pP : PLAYERS)
             {
                 attackable.add(pP);
+                Main.p(pP.getName());
             }
-            ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<Player>(this.current, android.R.layout.simple_list_item_1, attackable));
+            final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+            list.setAdapter(new PlayerSelectAdapter(this.current, attackable, false, 1, list));
+
             int a = p.getField();
             while(a==p.getField())a = rand.nextInt(4) + 1;
             setDownFieldMemory(p.getField());

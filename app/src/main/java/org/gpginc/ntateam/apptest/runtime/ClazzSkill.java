@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.util.Skill;
@@ -17,6 +18,9 @@ public abstract class ClazzSkill implements Skill {
 	private final String name;
 	private boolean passiveRun;
 	protected boolean isCounter = false;
+
+	@Nullable
+	protected CurrentPlayer lastAct = null;
 	protected SkillRun current;
 	public final Type type;
 
@@ -41,6 +45,7 @@ public abstract class ClazzSkill implements Skill {
 	public ClazzSkill(Parcel in)
 	{
 		this(in.readString(), (Type) in.readSerializable(), in.readByte() != 0, in.readInt());
+		this.setLastAct((CurrentPlayer) in.readParcelable(RuntimeActivity.class.getClassLoader()));
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags)
@@ -49,6 +54,7 @@ public abstract class ClazzSkill implements Skill {
 		dest.writeSerializable(this.type);
 		dest.writeByte((byte) (this.isCounter ? 1 : 0));
 		dest.writeInt(this.layout);
+		dest.writeParcelable(this.lastAct, flags);
 	}
 	public void setCurrent(SkillRun current)
 	{
@@ -95,7 +101,17 @@ public abstract class ClazzSkill implements Skill {
 	{
 		return 0;
 	}
-    public enum Type implements Serializable
+
+	@Nullable
+	public CurrentPlayer getLastAct() {
+		return lastAct;
+	}
+
+	public void setLastAct(@Nullable CurrentPlayer lastAct) {
+		this.lastAct = lastAct;
+	}
+
+	public enum Type implements Serializable
 	{
 		MAHOU,
 		ATTACK,

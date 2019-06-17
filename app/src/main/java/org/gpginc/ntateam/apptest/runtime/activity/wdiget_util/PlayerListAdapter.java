@@ -21,6 +21,14 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
     private final List<T> owners;
     private final MainActivity activity;
    // private final String[][] subowners;
+
+    /**
+     * Creates the main player adding list, which you are able to delete or change some players name;
+     * P.S. This delete the player, and set a new one, {@link Player} name is final.
+     * @param context
+     * @param owners
+     * @param activity
+     */
     public PlayerListAdapter(Context context, List<T> owners, MainActivity activity)
     {
         this.context = context;

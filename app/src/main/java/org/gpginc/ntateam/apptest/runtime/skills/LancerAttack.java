@@ -1,13 +1,19 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +39,13 @@ public class LancerAttack extends ClazzSkill
     @Override
     public void runSkill(@Nullable Object o)
     {
+        Main.p("ACTIVATED");
         if(o!= null)
         {
             Player p = (Player) o;
             int pField = p.getField();
             int attackingField = 0;
-            final List<Player> attackable = new ArrayList<>();
+            final List<Object> attackable = new ArrayList<>();
             switch(pField)
             {
                 case 1:
@@ -61,9 +68,28 @@ public class LancerAttack extends ClazzSkill
                 if(!PLAYERS.get(i).equals(p)&& (PLAYERS.get(i).getField() == attackingField | PLAYERS.get(i).getField() == pField))
                 {
                     attackable.add(PLAYERS.get(i));
+                    Main.p(PLAYERS.get(i).getName());
                 }
             }
-            ((ListView) this.current.findViewById(R.id.players_list)).setAdapter(new ArrayAdapter<>(this.current, android.R.layout.simple_list_item_1, attackable));
+            final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+            list.setAdapter(new PlayerSelectAdapter(this.current, attackable, true, 1, list));
+            /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    if(list.getCheckedItemCount() ==0 && list.getCount() > 1)
+                    {
+                        list.setItemChecked(position, !list.isItemChecked(position));
+                    } else if (list.getCount() == 1) {
+                        Snackbar.make(view, R.string.lancer_atk_info, Snackbar.LENGTH_SHORT)
+                                .setActionTextColor(Color.RED)
+                                .setAction("Action", null).show();
+                    } else {
+                        Snackbar.make(view, R.string.swordman_only_two, Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                    }
+                }
+            });*/
         }
     }
 

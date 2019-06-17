@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,25 +40,22 @@ public class CurrentPlayer extends RuntimeActivity {
          * SetP player skills into the list
          */
         ListView listinha = findViewById(R.id.skill_list);
-        this.CP.getClazz().setCurrentPlayer(this.CP);
-        final List<ClazzSkill> skills = this.getAplicableSkillsFor(this.CP.getClazz());
+       // this.CP.getClazz().setCurrentPlayer(this.CP);
+        final List<ClazzSkill> skills = this.getAplicableSkillsFor();
 
         ArrayAdapter<ClazzSkill> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, skills);
         listinha.setAdapter(adapter);
-
+        final CurrentPlayer cpA = this;
         listinha.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Snackbar.make(view, skills.get(position).getName(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent skill = new Intent(CurrentPlayer.this, SkillRun.class);
-                //skill.putExtra("layout", skills.get(position).getLayout());
-                skill.putExtra("cskill", skills.get(position));
-                //
-                // skill.putExtras(CurrentPlayer.this.enableNext());
+                Intent skill = new Intent(cpA, SkillRun.class);
+                skill.putExtra("cskill", skills.get(position).getName());
+                skills.get(position).setLastAct(cpA);
+                skill.putExtras(cpA.enableNext());
                 startActivity(skill);
-
-                //((ViewFlipper) CurrentPlayer.this.findViewById(R.id.current_showin)).setDisplayedChild(1);
 
             }
         });
@@ -70,9 +68,18 @@ public class CurrentPlayer extends RuntimeActivity {
 
     public void goNext(View view)
     {
-        Intent next = new Intent(this, CurrentPlayer.class);
-        next.putExtras(this.getNextPlayer());
-        startActivity(next);
-        this.finish();
+        if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
+            Intent next = new Intent(this, CurrentPlayer.class);
+            next.putExtras(this.getNextPlayer());
+            startActivity(next);
+            this.finish();
+        } else {
+            Main.damageStep(this.ON_PLAYERS);
+            this.GONE_PLAYERS.clear();
+            Intent next = new Intent(this, CurrentPlayer.class);
+            next.putExtras(this.getNextPlayer());
+            startActivity(next);
+            this.finish();
+        }
     }
 }
