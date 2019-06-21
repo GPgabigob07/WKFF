@@ -2,11 +2,14 @@ package org.gpginc.ntateam.apptest;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.FieldSliderFragment;
 
 public class SkillRun extends RuntimeActivity{
 

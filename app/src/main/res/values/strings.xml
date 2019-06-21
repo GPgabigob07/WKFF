@@ -20,4 +20,8 @@
     <string name="lancer_atk_info">Theres just one player that you can attack, strange...</string>
     <string name="player_info_attack_single_or_twice">Select some player to attack!</string>
     <string name="swordman_dialog_info_1">You select 2 players!</string>
+    <string name="title_section1">Ruins</string>
+    <string name="title_section2">Jungle</string>
+    <string name="title_section3">Castle</string>
+    <string name="title_section4">Desert</string>
 </resources>

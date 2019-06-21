@@ -69,6 +69,14 @@ public class SwordmanAttack extends ClazzSkill
             final ClazzSkill thisSkill = this;
 
             list.setAdapter(adapter);
+
+            final Dialog d = r.getDialog("You can select 2 players!");
+            d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.dismiss();
+                }
+            });
             btn.setOnClickListener(new View.OnClickListener() {
                 public View.OnClickListener secondListener = new View.OnClickListener() {
                     @Override
@@ -81,7 +89,6 @@ public class SwordmanAttack extends ClazzSkill
                 @Override
                 public void onClick(View v)
                 {
-                    Dialog d = r.getDialog("You can select 2 players!");
                     ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
                     ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
                     if(adapter.getSelectedCount() < 2 && !btn.getHint().equals("twice"))

@@ -1,5 +1,6 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
@@ -7,12 +8,14 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
 
 import java.util.ArrayList;
@@ -72,24 +75,47 @@ public class LancerAttack extends ClazzSkill
                 }
             }
             final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
-            list.setAdapter(new PlayerSelectAdapter(this.current, attackable, true, 1, list));
-            /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            final Button btn = this.current.findViewById(R.id.func_skill_btn);
+            btn.setHint("single");
+            final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, true, 1, list);
+            final RuntimeActivity r = this.current;
+            final ClazzSkill thisSkill = this;
+            final Dialog d = r.getDialog("You can select just 1 player!");
+            d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onClick(View v) {
+                    d.dismiss();
+                }
+            });
+            list.setAdapter(adapter);
+            btn.setOnClickListener(new View.OnClickListener() {
+                public View.OnClickListener secondListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn.setHint("twice");
+                        Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
+                        d.dismiss();
 
-                    if(list.getCheckedItemCount() ==0 && list.getCount() > 1)
+                    }
+                };
+                @Override
+                public void onClick(View v)
+                {
+
+                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
+                    ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+                    if(adapter.getSelectedCount() < 1)
                     {
-                        list.setItemChecked(position, !list.isItemChecked(position));
-                    } else if (list.getCount() == 1) {
-                        Snackbar.make(view, R.string.lancer_atk_info, Snackbar.LENGTH_SHORT)
-                                .setActionTextColor(Color.RED)
-                                .setAction("Action", null).show();
-                    } else {
-                        Snackbar.make(view, R.string.swordman_only_two, Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
+                        d.show();
+                    } else if (adapter.getSelectedCount() ==1)
+                    {
+                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r.getCP(), 1);
+                        r.finish();
+                        thisSkill.getLastAct().goNext(v);
                     }
                 }
-            });*/
+            });
+
         }
     }
 

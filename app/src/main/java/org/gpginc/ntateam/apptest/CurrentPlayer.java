@@ -76,6 +76,7 @@ public class CurrentPlayer extends RuntimeActivity {
         } else {
             Main.damageStep(this.ON_PLAYERS);
             this.GONE_PLAYERS.clear();
+
             Intent next = new Intent(this, CurrentPlayer.class);
             next.putExtras(this.getNextPlayer());
             startActivity(next);
