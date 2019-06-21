@@ -24,4 +24,7 @@
     <string name="title_section2">Jungle</string>
     <string name="title_section3">Castle</string>
     <string name="title_section4">Desert</string>
+    <string name="yes_btn">Yes</string>
+    <string name="no_btn">No</string>
+    <string name="cancel_reposition_dialog_btn">Cancel</string>
 </resources>

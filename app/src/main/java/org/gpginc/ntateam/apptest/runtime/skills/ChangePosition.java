@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.FieldSliderAdapter;
@@ -24,6 +25,8 @@ import java.util.List;
 import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
 import static org.gpginc.ntateam.apptest.runtime.Main.input;
 import static org.gpginc.ntateam.apptest.runtime.Main.p;
+import static org.gpginc.ntateam.apptest.runtime.Main.setDownFieldMemory;
+import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
 public class ChangePosition extends ClazzSkill
 {
@@ -46,6 +49,7 @@ public class ChangePosition extends ClazzSkill
         if(o!=null)
         {
             final ViewPager pager = (ViewPager) this.current.findViewById(R.id.pager);
+            final ClazzSkill thisSkill = this;
             pager.setAdapter(new FieldSliderAdapter(this.current.getSupportFragmentManager(), this.current));
 
             TextView txt = this.current.findViewById(R.id.title);
@@ -61,13 +65,17 @@ public class ChangePosition extends ClazzSkill
                             d.dismiss();
                         }
                     });
-                    if(r.getCP().getField() == pager.getCurrentItem())
+                    if(r.getCP().getField() == pager.getCurrentItem()+1)
                     {
                         d.show();
                     } else
                     {
+                        Main.p("Current:" + pager.getCurrentItem()+1);
+                        setDownFieldMemory(r.getCP().getField());
                         r.getCP().setField(pager.getCurrentItem() + 1);
+                        setUpFieldMemory(r.getCP().getField());
                         r.finish();
+                        thisSkill.getLastAct().goNext(v);
                     }
                 }
             });

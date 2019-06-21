@@ -368,7 +368,7 @@ public class Main
 	@Nullable
 	public static ClazzSkill skillSelector(Clazz c)
 	{
-		c.runPassive();
+	//	c.runPassive();
 		Player p = c.getCurrentPlayer();
 		p("Select one of your skills to use this phase:");
 		int asd = 0;

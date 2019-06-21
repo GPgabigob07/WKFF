@@ -79,7 +79,7 @@ public class Clazzs
         ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);
         MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
         CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false, R.layout.skill_run_field_change);
-        REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false);
+        REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_player_selection_layout);
 
 
         ARCHERY = new Clazz("Archery Madician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);

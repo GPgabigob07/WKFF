@@ -1,7 +1,12 @@
 package org.gpginc.ntateam.apptest.runtime;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
+
+import org.gpginc.ntateam.apptest.CurrentPlayer;
+import org.gpginc.ntateam.apptest.SkillRun;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +15,7 @@ import java.util.List;
 public class Clazz implements Parcelable
 {
 	private final String name, pseudoName;
+	@Nullable
 	private Player cPlayer;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 	public Clazz(String name)
@@ -102,13 +108,18 @@ public class Clazz implements Parcelable
 		// TODO Auto-generated method stub
 		return this.SKILLS.size() > 0;
 	}
-	public void runPassive()
+	public void runPassive(CurrentPlayer player)
 	{
 		for(ClazzSkill s : this.SKILLS)
 		{
 			if(s.isPassive())
 			{
-				s.runSkill(this.getCurrentPlayer());
+				Intent skill = new Intent(player, SkillRun.class);
+				skill.putExtra("cskill", s.getName());
+				s.setLastAct(player);
+				skill.putExtras(player.enableNext());
+				player.startActivity(skill);
+
 			}
 		}
 	}
@@ -126,7 +137,7 @@ public class Clazz implements Parcelable
 	{
 		return this.cPlayer;
 	}
-	public Clazz setCurrentPlayer(Player p)
+	public Clazz setCurrentPlayer(@Nullable Player p)
 	{
 		this.cPlayer = p;
 		return this;

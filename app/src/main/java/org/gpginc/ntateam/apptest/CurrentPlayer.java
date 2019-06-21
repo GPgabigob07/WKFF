@@ -49,8 +49,8 @@ public class CurrentPlayer extends RuntimeActivity {
         listinha.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, skills.get(position).getName(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               /* Snackbar.make(view, skills.get(position).getName(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
                 Intent skill = new Intent(cpA, SkillRun.class);
                 skill.putExtra("cskill", skills.get(position).getName());
                 skills.get(position).setLastAct(cpA);
@@ -64,23 +64,6 @@ public class CurrentPlayer extends RuntimeActivity {
          */
         ((TextView)findViewById(R.id.kingdom)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getKingdom());
         ((TextView)findViewById(R.id.clazz)).setText(/*this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getClazz().getName());
-    }
-
-    public void goNext(View view)
-    {
-        if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
-            Intent next = new Intent(this, CurrentPlayer.class);
-            next.putExtras(this.getNextPlayer());
-            startActivity(next);
-            this.finish();
-        } else {
-            Main.damageStep(this.ON_PLAYERS);
-            this.GONE_PLAYERS.clear();
-
-            Intent next = new Intent(this, CurrentPlayer.class);
-            next.putExtras(this.getNextPlayer());
-            startActivity(next);
-            this.finish();
-        }
+        this.CP.getClazz().runPassive(this);
     }
 }

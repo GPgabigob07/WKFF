@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -8,8 +9,10 @@ import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
+import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
@@ -45,6 +48,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     @Nullable
     @LayoutRes
     protected int layout = -1;
+
     public RuntimeActivity()
     {
 
@@ -193,7 +197,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         }
         return out_skills;
     }
-    protected Bundle enableNext()
+    public Bundle enableNext()
     {
         Bundle next = new Bundle();
         next.putString("CPN", this.CURRENT_PLAYER);
@@ -208,7 +212,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     }
     protected ClazzSkill getTypedSkill(String skillName)
     {
-        Main.p(skillName);
+        Main.p("TypedSkill: "+skillName);
         return Clazzs.SKILL_MAP.get(skillName);
     }
    public Dialog getDialog(String info)
@@ -222,5 +226,33 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
    {
        d.show();
    }
+
+   public View.OnClickListener dialogDismiss(final Dialog d, final Boolean end)
+   {
+       final RuntimeActivity r = this;
+       return new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               d.dismiss();
+               if(end)r.finish();
+           }
+       };
+   }
+    public void goNext(View view)
+    {
+        if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
+            Intent next = new Intent(this, CurrentPlayer.class);
+            next.putExtras(this.getNextPlayer());
+            startActivity(next);
+            this.finish();
+        } else {
+            Main.damageStep(this.ON_PLAYERS);
+            this.GONE_PLAYERS.clear();
+            Intent next = new Intent(this, CurrentPlayer.class);
+            next.putExtras(this.getNextPlayer());
+            startActivity(next);
+            this.finish();
+        }
+    }
 }
 

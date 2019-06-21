@@ -1,13 +1,20 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,41 +45,64 @@ public class Reposition extends ClazzSkill
     {
         if(o!= null)
         {
-            Player p = (Player) o;
-            String cK = p.getKingdom();
-            p("Do you want to move someone of your kindom? [y, n]:");
-            String ans = input.next();
-            if(ans.equals("y"))
-            {
-                final List<Integer> gone = new ArrayList<>();
-                p("Select one to move: ");
-                for(Player k : PLAYERS)
-                {
-                    if(k.getKingdom().equals(cK) && !k.equals(p))
-                    {
-                        p("["+PLAYERS.indexOf(k) +"] " + k.getName());
-                        gone.add(PLAYERS.indexOf(k));
-                    }
+            final Player p = (Player) o;
+            p.getClazz().setCurrentPlayer(null);
+            final String cK = p.getKingdom();
+            final SkillRun sk = this.current;
+            final Dialog d = this.current.getDialog("You are able to move someone from your kingdom, do you want to?");
+            final ClazzSkill thisSkill = this;
 
+            ((Button)d.findViewById(R.id.doalog_ok)).setText(R.string.yes_btn);
+            d.findViewById(R.id.doalog_ok).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final List<Object> gone = new ArrayList<>();
+                    for(Player k : PLAYERS)
+                    {
+                        if(k.getKingdom().equals(cK) && !k.equals(p))
+                        {
+                            p("["+PLAYERS.indexOf(k) +"] " + k.getName());
+                            gone.add(k);
+                        }
+                    }
+                    ListView list = sk.findViewById(R.id.players_list);
+                    final PlayerSelectAdapter adapter = new PlayerSelectAdapter(sk, gone, true, 1, list);
+                    list.setAdapter(adapter);
+                    ((Button)sk.findViewById(R.id.func_skill_btn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog d2 = sk.getDialog("You might select someone...");
+                            ((Button)d2.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
+                            ((Button)d2.findViewById(R.id.doalog_ok)).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    d2.dismiss();
+                                }
+                            });
+                            ((Button)d2.findViewById(R.id.doalog_cancel)).setText(R.string.cancel_reposition_dialog_btn);
+                            d2.findViewById(R.id.doalog_cancel).setOnClickListener(sk.dialogDismiss(d2, true));
+                            if(adapter.getSelectedCount() < 1)
+                            {
+                                d2.show();
+                            } else if (adapter.getSelectedCount() ==1)
+                            {
+                                ClazzSkill c = Clazzs.CHANGE_POSITION;
+                                c.setLastAct(sk);
+                                Intent skill = new Intent(sk, SkillRun.class);
+                                skill.putExtra("cskill", c.getName());
+                                skill.putExtras(sk.enableNext());
+                                sk.startActivity(skill);
+                                sk.finish();
+                            }
+                        }
+                    });
+                    d.dismiss();
                 }
-                int i = input.nextInt();
-                while(!gone.contains(i))
-                {
-                    p("U can only select players above!!");
-                    i = input.nextInt();
-                }
-                p("Where this player will be?");
-                int a = input.nextInt();
-                while(a < 0 && a > 5 || a==PLAYERS.get(i).getField())
-                {
-                    p("U can only select players above!!");
-                    a = input.nextInt();
-                }
-                p(PLAYERS.get(i).getName() + " moved to field "+a);
-                setDownFieldMemory(PLAYERS.get(i).getField());
-                PLAYERS.get(i).setField(a);
-                setUpFieldMemory(a);
-            } else ;
+            });
+            ((Button)d.findViewById(R.id.doalog_cancel)).setText(R.string.no_btn);
+            d.findViewById(R.id.doalog_cancel).setOnClickListener(this.current.dialogDismiss(d, true));
+            d.show();
+
         }
     }
 

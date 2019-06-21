@@ -20,7 +20,7 @@ public abstract class ClazzSkill implements Skill {
 	protected boolean isCounter = false;
 
 	@Nullable
-	protected CurrentPlayer lastAct = null;
+	protected RuntimeActivity lastAct = null;
 	protected SkillRun current;
 	public final Type type;
 
@@ -45,7 +45,7 @@ public abstract class ClazzSkill implements Skill {
 	public ClazzSkill(Parcel in)
 	{
 		this(in.readString(), (Type) in.readSerializable(), in.readByte() != 0, in.readInt());
-		this.setLastAct((CurrentPlayer) in.readParcelable(RuntimeActivity.class.getClassLoader()));
+		this.setLastAct((RuntimeActivity) in.readParcelable(RuntimeActivity.class.getClassLoader()));
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags)
@@ -103,11 +103,11 @@ public abstract class ClazzSkill implements Skill {
 	}
 
 	@Nullable
-	public CurrentPlayer getLastAct() {
+	public RuntimeActivity getLastAct() {
 		return lastAct;
 	}
 
-	public void setLastAct(@Nullable CurrentPlayer lastAct) {
+	public void setLastAct(@Nullable RuntimeActivity lastAct) {
 		this.lastAct = lastAct;
 	}
 
