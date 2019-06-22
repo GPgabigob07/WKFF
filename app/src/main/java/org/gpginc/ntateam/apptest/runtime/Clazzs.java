@@ -74,9 +74,9 @@ public class Clazzs
         ARCHERY_ATTACK = new ArcherAttack("Use Bow", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         LANCER_ATTACK = new LancerAttack("Use Lance", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         SWORDMAN_ATTACK = new SwordmanAttack("Use Sword", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
-        SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false);
+        SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_intel);
         NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
-        ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false);
+        ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false, R.layout.empty_skillrun);
         MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
         CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false, R.layout.skill_run_field_change);
         REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_player_selection_layout);

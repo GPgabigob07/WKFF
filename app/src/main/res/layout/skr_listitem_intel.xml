@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_intel_"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/darker_gray">
+
+    <TextView
+        android:id="@+id/intel_player_name"
+        android:layout_width="105dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/field_showner_intel"
+        android:text="Player Name"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/intel_player_clazz"
+        android:layout_width="105dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="36dp"
+        android:layout_toEndOf="@+id/field_showner_intel"
+        android:text="Player Clazz"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/field_showner_intel"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:srcCompat="@drawable/field_1" />
+
+    <ImageView
+        android:id="@+id/kingdom_emblem_intel"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="93dp"
+        android:layout_toEndOf="@+id/intel_player_name"
+        app:srcCompat="@drawable/camelot_emblem" />
+</RelativeLayout>

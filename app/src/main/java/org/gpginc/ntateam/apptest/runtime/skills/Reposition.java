@@ -45,6 +45,7 @@ public class Reposition extends ClazzSkill
     {
         if(o!= null)
         {
+            //Variable initialization
             final Player p = (Player) o;
             p.getClazz().setCurrentPlayer(null);
             final String cK = p.getKingdom();
@@ -52,11 +53,14 @@ public class Reposition extends ClazzSkill
             final Dialog d = this.current.getDialog("You are able to move someone from your kingdom, do you want to?");
             final ClazzSkill thisSkill = this;
 
+            //----------------------DIALOG SETUP----------------------//
             ((Button)d.findViewById(R.id.doalog_ok)).setText(R.string.yes_btn);
             d.findViewById(R.id.doalog_ok).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Set up: if player press the 'ok' button
                     final List<Object> gone = new ArrayList<>();
+                    //Get all players that apply to the condition
                     for(Player k : PLAYERS)
                     {
                         if(k.getKingdom().equals(cK) && !k.equals(p))
@@ -65,13 +69,20 @@ public class Reposition extends ClazzSkill
                             gone.add(k);
                         }
                     }
+
+                    //Create and set the Adapter for the ListView
                     ListView list = sk.findViewById(R.id.players_list);
-                    final PlayerSelectAdapter adapter = new PlayerSelectAdapter(sk, gone, true, 1, list);
+                    final PlayerSelectAdapter adapter = new PlayerSelectAdapter(sk, gone, false, 1, list);
+                    adapter.setShowField(true);
                     list.setAdapter(adapter);
+
+                    //Set up: 'Select' button
                     ((Button)sk.findViewById(R.id.func_skill_btn)).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog d2 = sk.getDialog("You might select someone...");
+
+                            final Dialog d2 = sk.getDialog("You might select someone...");//New dialog
+
                             ((Button)d2.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
                             ((Button)d2.findViewById(R.id.doalog_ok)).setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -81,6 +92,7 @@ public class Reposition extends ClazzSkill
                             });
                             ((Button)d2.findViewById(R.id.doalog_cancel)).setText(R.string.cancel_reposition_dialog_btn);
                             d2.findViewById(R.id.doalog_cancel).setOnClickListener(sk.dialogDismiss(d2, true));
+
                             if(adapter.getSelectedCount() < 1)
                             {
                                 d2.show();
@@ -101,7 +113,8 @@ public class Reposition extends ClazzSkill
             });
             ((Button)d.findViewById(R.id.doalog_cancel)).setText(R.string.no_btn);
             d.findViewById(R.id.doalog_cancel).setOnClickListener(this.current.dialogDismiss(d, true));
-            d.show();
+            //----------------------DIALOG SETUP----------------------//
+            d.show(); //Shows the dialog
 
         }
     }

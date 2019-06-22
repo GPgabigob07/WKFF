@@ -88,6 +88,7 @@ public class LancerAttack extends ClazzSkill
                 }
             });
             list.setAdapter(adapter);
+
             btn.setOnClickListener(new View.OnClickListener() {
                 public View.OnClickListener secondListener = new View.OnClickListener() {
                     @Override
@@ -101,8 +102,7 @@ public class LancerAttack extends ClazzSkill
                 @Override
                 public void onClick(View v)
                 {
-
-                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
+                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Confirm");
                     ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
                     if(adapter.getSelectedCount() < 1)
                     {

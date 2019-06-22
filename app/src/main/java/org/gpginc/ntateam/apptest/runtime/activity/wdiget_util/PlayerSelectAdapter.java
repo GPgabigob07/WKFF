@@ -25,6 +25,16 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
     private List<Object> inf = new ArrayList<>();
     private final List<Boolean> selectedIndexes = new ArrayList<>();
     private LayoutInflater inflater;
+
+    public boolean isShowField() {
+        return showField;
+    }
+
+    public void setShowField(boolean showField) {
+        this.showField = showField;
+    }
+
+    private boolean showField;
     private final int limit;
     protected final View infos;
 
@@ -58,6 +68,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
         {
             this.selectedIndexes.add(false);
         }
+
     }
 
     @NonNull
@@ -79,7 +90,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
             {
                 Snackbar.make(a.infos, R.string.player_info_attack_single_or_twice, Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
-                box.setText(o.toString());
+                box.setText(o.toString() + (this.showField ? " in field: "+((Player)o).getField() : ""));
                 box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)

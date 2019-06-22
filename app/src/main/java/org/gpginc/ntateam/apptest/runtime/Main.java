@@ -101,10 +101,12 @@ public class Main
 	
 	public ArrayList[] postInit(ArrayList<String> players)
 	{
+		int cod = 0;
 		Random rand = new Random();
 		for(String p : players)
 		{
-			PLAYERS.add(new Player(p));
+			PLAYERS.add(new Player(p).withCod(cod));
+			++cod;
 		}
 
 		int i = rand.nextInt(2);

@@ -1,13 +1,15 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.Intel_SkillUtil.IntelLineAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +38,30 @@ public class SpyKnwoledge extends ClazzSkill
     {
         if(o!=null)
         {
+            Player p = (Player)o;
             Random rand = new Random();
-            int i,a,u;
-            a=rand.nextInt(PLAYERS.size());
-            i=rand.nextInt(PLAYERS.size() - a / 2);
-            u=rand.nextInt(i + a < PLAYERS.size() ? i + a : PLAYERS.size());
-            int[] iau = {a, i, u};
-            for(int k : iau)
-            {
-                p(PLAYERS.get(k).getName() + (rand.nextInt(5) < 2 ? " is " + PLAYERS.get(k).getClazz().getPseudoName() : " belongs to " + PLAYERS.get(k).getKingdom()) + " in field " + PLAYERS.get(k).getField());
-            }
+            int cod = p.getCod();
+            int i = p.getCod(),a = i,u = a;
+            /*while(PLAYERS.get(a) != p)*/
+            p(PLAYERS.indexOf(p));
+            List<Player> iau = new ArrayList<>();
+            List<Integer> gone = new ArrayList<>();
+            while(a==cod){a=rand.nextInt(PLAYERS.size());p("a:"+a);}
+            gone.add(a);
+            while(i==cod){i=rand.nextInt(PLAYERS.size());p("i:"+i);}
+            gone.add(i);
+            while(u==cod){u=rand.nextInt(PLAYERS.size());p("u:"+u);}
+            iau.add(PLAYERS.get(a));
+            iau.add(PLAYERS.get(i));
+            iau.add(PLAYERS.get(u));
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this.current, LinearLayoutManager.VERTICAL,false);
+
+            RecyclerView mR = this.current.findViewById(R.id.intel_list);
+            mR.setLayoutManager(layoutManager);
+
+            IntelLineAdapter lAdp = new IntelLineAdapter(iau);
+            mR.setAdapter(lAdp);
         }
     }
 
@@ -66,4 +82,6 @@ public class SpyKnwoledge extends ClazzSkill
             return new SpyKnwoledge[size];
         }
     };
+
+
 }

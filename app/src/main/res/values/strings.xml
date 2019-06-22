@@ -27,4 +27,6 @@
     <string name="yes_btn">Yes</string>
     <string name="no_btn">No</string>
     <string name="cancel_reposition_dialog_btn">Cancel</string>
+    <string name="intel_accept_btn">Accept Intel</string>
+    <string name="ps_intel">P.S. Stay quiet!</string>
 </resources>
