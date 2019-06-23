@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
@@ -48,7 +49,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
      * @param limitOfChecks How many ´players can be selected.
      * @param infos A usually {@link View} to show {@link Snackbar}
      */
-    public PlayerSelectAdapter(@NonNull Context context, @NonNull List<Object> objects, boolean noNames, int limitOfChecks, View infos)
+    public PlayerSelectAdapter(@NonNull SkillRun context, @NonNull List<Object> objects, boolean noNames, int limitOfChecks, View infos)
     {
         super(context, R.layout.player_adapter_view, objects);
         this.limit = limitOfChecks;
@@ -58,7 +59,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
             final List<Object> list =  new ArrayList<>();
             for(Object p : objects)
             {
-                list.add("Player " + Main.PLAYERS.indexOf(p));
+                list.add("Player " + context.getSkill().getLastAct().getPlayers().indexOf(p));
             }
             this.inf = list;
         }

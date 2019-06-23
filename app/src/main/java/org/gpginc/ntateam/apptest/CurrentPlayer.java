@@ -29,7 +29,7 @@ public class CurrentPlayer extends RuntimeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_player);
-        if(this.CP.attacked)this.CP.getClazz().runAttackTrigger(this);
+        if(this.currentPlayer().attacked)this.currentPlayer().getClazz().runAttackTrigger(this);
         /*
         Set players name in window
          */
@@ -40,7 +40,7 @@ public class CurrentPlayer extends RuntimeActivity {
          * SetP player skills into the list
          */
         ListView listinha = findViewById(R.id.skill_list);
-       // this.CP.getClazz().setCurrentPlayer(this.CP);
+       // this.currentPlayer().getClazz().setCurrentPlayer(this.currentPlayer());
         final List<ClazzSkill> skills = this.getAplicableSkillsFor();
 
         ArrayAdapter<ClazzSkill> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, skills);
@@ -53,8 +53,8 @@ public class CurrentPlayer extends RuntimeActivity {
                         .setAction("Action", null).show();*/
                 Intent skill = new Intent(cpA, SkillRun.class);
                 skill.putExtra("cskill", skills.get(position).getName());
+                skill.putExtra("PLAYER_EXECUTE", cpA.currentPlayer());
                 skills.get(position).setLastAct(cpA);
-                skill.putExtras(cpA.enableNext());
                 startActivity(skill);
 
             }
@@ -62,9 +62,9 @@ public class CurrentPlayer extends RuntimeActivity {
         /**
          * Seting clazz and kingdom
          */
-        ((TextView)findViewById(R.id.kingdom)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getKingdom());
-        ((TextView)findViewById(R.id.clazz)).setText(/*this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getClazz().getName());
-        this.CP.getClazz().runPassive(this);
+        ((TextView)findViewById(R.id.kingdom)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.currentPlayer().getKingdom());
+        ((TextView)findViewById(R.id.clazz)).setText(/*this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.currentPlayer().getClazz().getName());
+        this.currentPlayer().getClazz().runPassive(this);
 
     }
 }

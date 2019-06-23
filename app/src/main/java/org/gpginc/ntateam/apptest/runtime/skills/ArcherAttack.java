@@ -52,7 +52,7 @@ public class ArcherAttack extends ClazzSkill
         {
             Player p = (Player) o;
             int asd = 0;
-            for(Player pP : PLAYERS)
+            for(Player pP : lastAct.getPlayers())
             {
                 attackable.add(pP);
                 Main.p(pP.getName());
@@ -61,9 +61,8 @@ public class ArcherAttack extends ClazzSkill
             final Button btn = this.current.findViewById(R.id.func_skill_btn);
             btn.setHint("single");
             final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, false, 1, list);
-            final RuntimeActivity r = this.current;
-            final ClazzSkill thisSkill = this;
-            final Dialog d = r.getDialog("You can select just 1 player!");
+            final RuntimeActivity r = this.lastAct;
+            final Dialog d = r.getDialog(this.current,"You can select just 1 player!");
             d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -75,8 +74,6 @@ public class ArcherAttack extends ClazzSkill
                 public View.OnClickListener secondListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btn.setHint("twice");
-                        Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
                         d.dismiss();
 
                     }
@@ -87,13 +84,14 @@ public class ArcherAttack extends ClazzSkill
 
                     ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
                     ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+
                     if(adapter.getSelectedCount() < 1)
                     {
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
-                        thisSkill.getLastAct().goNext(v);
+                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
+                        r.goNext(v);
                     }
                 }
             });

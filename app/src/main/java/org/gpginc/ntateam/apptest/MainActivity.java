@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
             int i = rand.nextInt(PLAYER_NAMES.size());
             bundle.putString("CPN", PLAYER_NAMES.get(i));
-            bundle.putParcelable("CP", (Parcelable) lists[3].get(i));
-
+            //bundle.putParcelable("CP", (Parcelable) lists[3].get(i));
+            bundle.putInt("CurrentPlayerCod", ((Player)lists[3].get(i)).getCod());
             final ArrayList<Integer> a = new ArrayList<>();
             a.add(i);
 

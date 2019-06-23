@@ -8,12 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Clazzs;
+import org.gpginc.ntateam.apptest.runtime.Main;
+import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.FieldSliderFragment;
 
-public class SkillRun extends RuntimeActivity{
+public class SkillRun extends AppCompatActivity{
 
     private ClazzSkill currentSkill;
+    public Player ongoingPlayer;
 
     public SkillRun(){};
     @Override
@@ -22,9 +26,20 @@ public class SkillRun extends RuntimeActivity{
         Bundle d = this.getIntent().getExtras();
         super.onCreate(savedInstanceState);
         this.currentSkill = getTypedSkill(d.getString("cskill"));
+        this.ongoingPlayer = d.getParcelable("PLAYER_EXECUTE");
         setContentView(this.currentSkill.getLayout());
         this.currentSkill.setCurrent(this);
-        this.currentSkill.runSkill(this.CP);
+        this.currentSkill.runSkill(this.ongoingPlayer);
 
+    }
+
+    protected ClazzSkill getTypedSkill(String skillName)
+    {
+        Main.p("TypedSkill: "+skillName);
+        return Clazzs.SKILL_MAP.get(skillName);
+    }
+    public ClazzSkill getSkill()
+    {
+        return this.currentSkill;
     }
 }

@@ -66,21 +66,20 @@ public class LancerAttack extends ClazzSkill
             }
 
             int asd = 1;
-            for(int i = 0; i< PLAYERS.size(); ++i)
+            for(int i = 0; i< lastAct.getPlayers().size(); ++i)
             {
-                if(!PLAYERS.get(i).equals(p)&& (PLAYERS.get(i).getField() == attackingField | PLAYERS.get(i).getField() == pField))
+                if(!lastAct.getPlayers().get(i).equals(p)&& (lastAct.getPlayers().get(i).getField() == attackingField | lastAct.getPlayers().get(i).getField() == pField))
                 {
-                    attackable.add(PLAYERS.get(i));
-                    Main.p(PLAYERS.get(i).getName());
+                    attackable.add(lastAct.getPlayers().get(i));
+                    Main.p(lastAct.getPlayers().get(i).getName());
                 }
             }
             final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
             final Button btn = this.current.findViewById(R.id.func_skill_btn);
             btn.setHint("single");
             final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, true, 1, list);
-            final RuntimeActivity r = this.current;
-            final ClazzSkill thisSkill = this;
-            final Dialog d = r.getDialog("You can select just 1 player!");
+            final RuntimeActivity r = this.lastAct;
+            final Dialog d = r.getDialog(this.current, "You can select just 1 player!");
             d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,9 +108,8 @@ public class LancerAttack extends ClazzSkill
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
-                        r.finish();
-                        thisSkill.getLastAct().goNext(v);
+                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
+                        r.goNext(v);
                     }
                 }
             });

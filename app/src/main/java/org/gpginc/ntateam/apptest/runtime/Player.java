@@ -190,10 +190,10 @@ public class Player implements Parcelable
 	{
 		//TODO Fixing player Behaviour
 		this.attacked = true;
-		this.lastAttacker = player.getCP();
+		this.lastAttacker = player.currentPlayer();
 		this.damageTaken += i;
-		this.attackers.add(player.getCP());
-		Main.p(this.getName() + " was attacked by " + player.getCP().getName()+"\n life:"+this.lifePoints+"" +
+		this.attackers.add(player.currentPlayer());
+		Main.p(this.getName() + " was attacked by " + player.currentPlayer().getName()+"\n life:"+this.lifePoints+"" +
 				"\n damage taken:" + this.damageTaken+
 				"\n Attacked: "+this.attacked
 		);

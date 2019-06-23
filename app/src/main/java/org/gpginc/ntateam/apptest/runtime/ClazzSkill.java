@@ -95,7 +95,7 @@ public abstract class ClazzSkill implements Skill {
 
 	public String toString()
 	{
-		return this.isAttackTriggered() && this.current.getCP().attacked ? this.name + " COUNTER!" : this.name;
+		return this.isAttackTriggered() && this.lastAct.currentPlayer().attacked ? this.name + " COUNTER!" : this.name;
 	}
 
 	public int getLayout()

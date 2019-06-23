@@ -42,7 +42,7 @@ public class NullingAttack extends ClazzSkill
             Player p = (Player) o;
             if(p.attacked && !this.isPassiveRun() || this.isPassiveRun())
             {
-                final Dialog d = this.lastAct.getDialog("During this phase you won't take damage");
+                final Dialog d = this.lastAct.getDialog(this.current, "During this phase you won't take damage");
                 d.setContentView(R.layout.dialog_protection_appied);
                 d.findViewById(R.id.back_btn_skill_dialog).setOnClickListener(new View.OnClickListener() {
                     @Override

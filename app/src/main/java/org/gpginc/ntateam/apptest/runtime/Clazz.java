@@ -119,10 +119,10 @@ public class Clazz implements Parcelable
 				if(s.hasLayout()) {
 					Intent skill = new Intent(player, SkillRun.class);
 					skill.putExtra("cskill", s.getName());
-					skill.putExtras(player.enableNext());
+					skill.putExtra("PLAYER_EXECUTE", player.currentPlayer());
 					player.startActivity(skill);
 				} else {
-					s.runSkill(player.getCP());
+					s.runSkill(player.currentPlayer());
 				}
 			}
 		}
@@ -137,10 +137,10 @@ public class Clazz implements Parcelable
 				if(s.hasLayout()) {
 					Intent skill = new Intent(player, SkillRun.class);
 					skill.putExtra("cskill", s.getName());
-					skill.putExtras(player.enableNext());
+					skill.putExtra("PLAYER_EXECUTE", player.currentPlayer());
 					player.startActivity(skill);
 				} else {
-					s.runSkill(player.getCP());
+					s.runSkill(player.currentPlayer());
 				}
 			}
 		}
