@@ -29,4 +29,6 @@
     <string name="cancel_reposition_dialog_btn">Cancel</string>
     <string name="intel_accept_btn">Accept Intel</string>
     <string name="ps_intel">P.S. Stay quiet!</string>
+    <string name="ywa">You were Attacked!</string>
+    <string name="dntw">You won\'t take damage this phase.</string>
 </resources>

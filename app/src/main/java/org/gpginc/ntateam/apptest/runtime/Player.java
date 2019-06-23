@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import org.gpginc.ntateam.apptest.CurrentPlayer;
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,36 +35,38 @@ public class Player implements Parcelable
 	}
 
 	protected Player(Parcel in) {
-		lifePoints = in.readInt();
-		damageTaken = in.readInt();
-		currentField = in.readInt();
-		cod = in.readInt();
-		isStunned = in.readByte() != 0;
-		attacked = in.readByte() != 0;
-		isBlind = in.readByte() != 0;
-		isProtected = in.readByte() != 0;
-		isDragonProtected = in.readByte() != 0;
-		kingdom = in.readString();
-		clazz = in.readParcelable(Clazz.class.getClassLoader());
-		lastAttacker = in.readParcelable(Player.class.getClassLoader());
-		name = in.readString();
+		this.lifePoints = in.readInt();
+		this.damageTaken = in.readInt();
+		this.currentField = in.readInt();
+		this.cod = in.readInt();
+		this.isStunned = in.readByte() != 0;
+		this.attacked = in.readByte() != 0;
+		this.isBlind = in.readByte() != 0;
+		this.isProtected = in.readByte() != 0;
+		this.isDragonProtected = in.readByte() != 0;
+		this.kingdom = in.readString();
+		this.clazz = in.readParcelable(Clazz.class.getClassLoader());
+		this.lastAttacker = in.readParcelable(Player.class.getClassLoader());
+		this.name = in.readString();
+		Main.p(this.name + " INHERITED FROM PLAYER (construct): "+ this.attacked);
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(lifePoints);
-		dest.writeInt(damageTaken);
-		dest.writeInt(currentField);
-		dest.writeInt(cod);
-		dest.writeByte((byte) (isStunned ? 1 : 0));
-		dest.writeByte((byte) (attacked ? 1 : 0));
-		dest.writeByte((byte) (isBlind ? 1 : 0));
-		dest.writeByte((byte) (isProtected ? 1 : 0));
-		dest.writeByte((byte) (isDragonProtected ? 1 : 0));
-		dest.writeString(kingdom);
-		dest.writeParcelable(clazz, flags);
-		dest.writeParcelable(lastAttacker, flags);
-		dest.writeString(name);
+		dest.writeInt(this.lifePoints);
+		dest.writeInt(this.damageTaken);
+		dest.writeInt(this.currentField);
+		dest.writeInt(this.cod);
+		dest.writeByte((byte) (this.isStunned ? 1 : 0));
+		dest.writeByte((byte) (this.attacked ? 1 : 0));
+		Main.p(this.name + " INHERITED FROM PLAYER (deconstruct): "+ this.attacked);
+		dest.writeByte((byte) (this.isBlind ? 1 : 0));
+		dest.writeByte((byte) (this.isProtected ? 1 : 0));
+		dest.writeByte((byte) (this.isDragonProtected ? 1 : 0));
+		dest.writeString(this.kingdom);
+		dest.writeParcelable(this.clazz, flags);
+		dest.writeParcelable(this.lastAttacker, flags);
+		dest.writeString(this.name);
 	}
 
 	@Override
@@ -181,22 +186,21 @@ public class Player implements Parcelable
 	{
 		return this.currentField;
 	}
-	public void giveDamage(Player attacker, int i) 
+	public void giveDamage(RuntimeActivity player, int i)
 	{
+		//TODO Fixing player Behaviour
 		this.attacked = true;
-		this.lastAttacker = attacker;
-		this.clazz.setCurrentPlayer(this);
-		this.clazz.runAttackTrigger();
-		if(!this.isProtected && !this.isDragonProtected)
-		{
-			this.damageTaken += i;
-		}
-		this.attackers.add(attacker);
-		Main.p(this.getName() + " was attacked by " + attacker.getName());
+		this.lastAttacker = player.getCP();
+		this.damageTaken += i;
+		this.attackers.add(player.getCP());
+		Main.p(this.getName() + " was attacked by " + player.getCP().getName()+"\n life:"+this.lifePoints+"" +
+				"\n damage taken:" + this.damageTaken+
+				"\n Attacked: "+this.attacked
+		);
 	}
 	public Player damageStep()
 	{
-		this.lifePoints -= this.damageTaken;
+		this.lifePoints -= (!this.isProtected || !this.isDragonProtected) ? this.damageTaken : 0;
 		return this;
 	}
 	public int life()
@@ -205,7 +209,6 @@ public class Player implements Parcelable
 	}
 	public Player re_setup()
 	{
-		
 		this.attacked = false;
 		this.attackers.clear();
 		this.damageTaken = 0;

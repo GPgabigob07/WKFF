@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.SkillRun;
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -114,22 +115,33 @@ public class Clazz implements Parcelable
 		{
 			if(s.isPassive())
 			{
-				Intent skill = new Intent(player, SkillRun.class);
-				skill.putExtra("cskill", s.getName());
 				s.setLastAct(player);
-				skill.putExtras(player.enableNext());
-				player.startActivity(skill);
-
+				if(s.hasLayout()) {
+					Intent skill = new Intent(player, SkillRun.class);
+					skill.putExtra("cskill", s.getName());
+					skill.putExtras(player.enableNext());
+					player.startActivity(skill);
+				} else {
+					s.runSkill(player.getCP());
+				}
 			}
 		}
 	}
-	public void runAttackTrigger()
+	public void runAttackTrigger(RuntimeActivity player)
 	{
 		for(ClazzSkill s : this.SKILLS)
 		{
 			if(s.isAttackTriggered())
 			{
-				s.runSkill(this.getCurrentPlayer());
+				s.setLastAct(player);
+				if(s.hasLayout()) {
+					Intent skill = new Intent(player, SkillRun.class);
+					skill.putExtra("cskill", s.getName());
+					skill.putExtras(player.enableNext());
+					player.startActivity(skill);
+				} else {
+					s.runSkill(player.getCP());
+				}
 			}
 		}
 	}

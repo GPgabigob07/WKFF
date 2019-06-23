@@ -1,9 +1,12 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
@@ -33,14 +36,23 @@ public class NullingAttack extends ClazzSkill
     @Override
     public void runSkill(@Nullable Object o)
     {
+        //TODO implementing attack trigger
         if(o!=null)
         {
             Player p = (Player) o;
             if(p.attacked && !this.isPassiveRun() || this.isPassiveRun())
             {
-                p("During this phase you won't take damage");
-                p.isProtected = true;
-                this.setPassiveRun(true);
+                final Dialog d = this.lastAct.getDialog("During this phase you won't take damage");
+                d.setContentView(R.layout.dialog_protection_appied);
+                d.findViewById(R.id.back_btn_skill_dialog).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.dismiss();
+                    }
+                });
+                PopupWindow popupWindow = new PopupWindow(d.getContext());
+                popupWindow.showAsDropDown(this.lastAct.findViewById(R.id.id_selectable_players_layout));
+                d.show();
             } else if(p.attacked)
             {
                 p("This phase you will take damage, I'm sorry...");

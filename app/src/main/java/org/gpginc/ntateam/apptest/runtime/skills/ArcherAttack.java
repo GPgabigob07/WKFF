@@ -92,8 +92,7 @@ public class ArcherAttack extends ClazzSkill
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r.getCP(), 1);
-                        r.finish();
+                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
                         thisSkill.getLastAct().goNext(v);
                     }
                 }

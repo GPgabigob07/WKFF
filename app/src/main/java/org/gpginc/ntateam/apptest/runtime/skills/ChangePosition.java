@@ -70,12 +70,16 @@ public class ChangePosition extends ClazzSkill
                         d.show();
                     } else
                     {
-                        Main.p("Current:" + pager.getCurrentItem()+1);
+                        Main.p("Current:" + (pager.getCurrentItem()+1));
                         setDownFieldMemory(r.getCP().getField());
                         r.getCP().setField(pager.getCurrentItem() + 1);
                         setUpFieldMemory(r.getCP().getField());
                         r.finish();
-                        thisSkill.getLastAct().goNext(v);
+                        if(!thisSkill.isExternal())
+                        {
+                            thisSkill.getLastAct().goNext(v);
+                            thisSkill.external = false;
+                        }
                     }
                 }
             });

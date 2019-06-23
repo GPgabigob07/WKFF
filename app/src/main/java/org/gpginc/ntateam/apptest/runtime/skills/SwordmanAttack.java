@@ -96,14 +96,14 @@ public class SwordmanAttack extends ClazzSkill
                         d.show();
                     } else if (adapter.getSelectedCount() < 2)
                     {
-                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r.getCP(), 2);
+                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r, 2);
                         r.finish();
                         thisSkill.getLastAct().goNext(v);
                     }
                     else
                     {
-                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r.getCP(), 1);
-                        PLAYERS.get(adapter.getSelectedIndexes()[1]).giveDamage(r.getCP(), 1);
+                        PLAYERS.get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
+                        PLAYERS.get(adapter.getSelectedIndexes()[1]).giveDamage(r, 1);
                         r.finish();
                         thisSkill.getLastAct().goNext(v);
                     }

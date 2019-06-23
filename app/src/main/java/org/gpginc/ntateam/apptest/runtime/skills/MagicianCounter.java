@@ -35,6 +35,7 @@ public class MagicianCounter extends ClazzSkill
     @Override
     public void runSkill(@Nullable Object o)
     {
+        //TODO not implemented yet
         if(o!=null)
         {
             Player p = (Player) o;
@@ -44,12 +45,12 @@ public class MagicianCounter extends ClazzSkill
                 {
                     p.increaseLifeIn(1);
                     p("You were attacked more than you can counter, only one point of damagewill be restored");
-                    p.getLastAttacker().giveDamage(p, 1);
+                   // p.getLastAttacker().giveDamage(p, 1);
                     p(p.getLastAttacker().getName() + " attack suceffuly countered!");
                 } else if (p.getLastAttacker().getClazz().equals(ARCHERY) || p.getLastAttacker().getClazz().equals(SWORDMAN) || p.getLastAttacker().getClazz().equals(LANCER))
                 {
                     p.increaseLifeIn(1);
-                    p.getLastAttacker().giveDamage(p, 1);
+                    //p.getLastAttacker().giveDamage(p, 1);
                     p(p.getLastAttacker().getName() + " attack suceffuly countered!");
                 }
                 else

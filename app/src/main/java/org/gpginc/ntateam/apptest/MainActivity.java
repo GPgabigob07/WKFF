@@ -29,6 +29,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final ArrayList<String> PLAYER_NAMES = new ArrayList<>();
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         this.main.preInit();
-        ((Button)findViewById(R.id.del_player)).setVisibility(View.INVISIBLE);
         final ListView list = findViewById(R.id.player_list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 else ((Button)findViewById(R.id.del_player)).setVisibility(View.INVISIBLE);*/
             }
         });
+        GifImageView gif = findViewById(R.id.title_animation);
+
 
     }
     public void addPlayer(View view)

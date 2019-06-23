@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="toolbarMateria">#7825BC</color>
     <color name="default_color">#ffffff</color>
+    <color name="empty_color">#00FFFFFF</color>
 </resources>

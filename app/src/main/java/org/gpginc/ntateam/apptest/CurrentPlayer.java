@@ -29,7 +29,7 @@ public class CurrentPlayer extends RuntimeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_player);
-
+        if(this.CP.attacked)this.CP.getClazz().runAttackTrigger(this);
         /*
         Set players name in window
          */
@@ -65,5 +65,6 @@ public class CurrentPlayer extends RuntimeActivity {
         ((TextView)findViewById(R.id.kingdom)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getKingdom());
         ((TextView)findViewById(R.id.clazz)).setText(/*this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.CP.getClazz().getName());
         this.CP.getClazz().runPassive(this);
+
     }
 }

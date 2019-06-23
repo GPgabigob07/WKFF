@@ -98,7 +98,7 @@ public class Reposition extends ClazzSkill
                                 d2.show();
                             } else if (adapter.getSelectedCount() ==1)
                             {
-                                ClazzSkill c = Clazzs.CHANGE_POSITION;
+                                ClazzSkill c = Clazzs.CHANGE_POSITION.asExternalCall();
                                 c.setLastAct(sk);
                                 Intent skill = new Intent(sk, SkillRun.class);
                                 skill.putExtra("cskill", c.getName());

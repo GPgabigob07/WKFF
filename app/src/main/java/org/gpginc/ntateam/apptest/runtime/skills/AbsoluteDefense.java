@@ -1,7 +1,9 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -36,15 +38,10 @@ public class AbsoluteDefense extends ClazzSkill
         if(o!=null)
         {
             Player p = (Player) o;
-            if(p.attacked && !this.isPassiveRun())
+            if(!this.isPassiveRun())
             {
-                p("You were attacked by "+p.getLastAttacker().getName() + " from field " + p.getField());
-                p("No worries, u won't take any damage");
                 p.isProtected = true;
                 this.setPassiveRun(true);
-            } else if(p.attacked)
-            {
-                p("attacked");
             }
         }
     }

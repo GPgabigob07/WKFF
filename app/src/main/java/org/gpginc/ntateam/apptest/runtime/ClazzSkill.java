@@ -18,7 +18,11 @@ public abstract class ClazzSkill implements Skill {
 	private final String name;
 	private boolean passiveRun;
 	protected boolean isCounter = false;
+	public boolean external = false;
 
+	/**
+	 * Commonly {@link CurrentPlayer}
+	 */
 	@Nullable
 	protected RuntimeActivity lastAct = null;
 	protected SkillRun current;
@@ -45,6 +49,7 @@ public abstract class ClazzSkill implements Skill {
 	public ClazzSkill(Parcel in)
 	{
 		this(in.readString(), (Type) in.readSerializable(), in.readByte() != 0, in.readInt());
+		this.external = in.readByte() == 1;
 		this.setLastAct((RuntimeActivity) in.readParcelable(RuntimeActivity.class.getClassLoader()));
 	}
 	@Override
@@ -54,6 +59,7 @@ public abstract class ClazzSkill implements Skill {
 		dest.writeSerializable(this.type);
 		dest.writeByte((byte) (this.isCounter ? 1 : 0));
 		dest.writeInt(this.layout);
+		dest.writeByte((byte) (this.external ? 1 : 0));
 		dest.writeParcelable(this.lastAct, flags);
 	}
 	public void setCurrent(SkillRun current)
@@ -89,7 +95,7 @@ public abstract class ClazzSkill implements Skill {
 
 	public String toString()
 	{
-		return this.name;
+		return this.isAttackTriggered() && this.current.getCP().attacked ? this.name + " COUNTER!" : this.name;
 	}
 
 	public int getLayout()
@@ -109,6 +115,21 @@ public abstract class ClazzSkill implements Skill {
 
 	public void setLastAct(@Nullable RuntimeActivity lastAct) {
 		this.lastAct = lastAct;
+	}
+
+	public ClazzSkill asExternalCall()
+	{
+		this.external = true;
+		return this;
+	}
+	public boolean isExternal()
+	{
+		return this.external;
+	}
+
+	public boolean hasLayout()
+	{
+		return this.layout != -1;
 	}
 
 	public enum Type implements Serializable

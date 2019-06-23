@@ -181,7 +181,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         int asd = 0;
         for(int i = 0; i < c.getSkills().size(); ++i)
         {
-            if(!c.getSkillAt(i).isPassive())
+            if(!c.getSkillAt(i).isPassive() && !c.getSkillAt(i).isAttackTriggered())
             {
                 if(p.attacked)
                 {
@@ -220,6 +220,8 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
        final Dialog d = new Dialog(this);
        d.setContentView(R.layout.dialog_demo);
        ((TextView)d.findViewById(R.id.dialog_info)).setText(info);
+       d.findViewById(R.id.doalog_cancel).setOnClickListener(this.dialogDismiss(d, false));
+       d.findViewById(R.id.doalog_ok).setOnClickListener(this.dialogDismiss(d, false));
        return d;
    }
    public void openDialog(Dialog d)
@@ -238,6 +240,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
            }
        };
    }
+   //TODO maybe some changes are needed here: {@link}
     public void goNext(View view)
     {
         if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
