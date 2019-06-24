@@ -1,13 +1,13 @@
 package org.gpginc.ntateam.apptest.runtime.activity.wdiget_util;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.gpginc.ntateam.apptest.MainActivity;
 import org.gpginc.ntateam.apptest.R;
@@ -20,6 +20,7 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
     private final Context context;
     private final List<T> owners;
     private final MainActivity activity;
+    private LayoutInflater inflater;
    // private final String[][] subowners;
 
     /**
@@ -83,9 +84,9 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
 
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Button delete = new Button(this.context);
+        /*ImageButton delete = new ImageButton(this.context);
         final PlayerListAdapter a = this;
-        delete.setText(R.string.del_player);
+        delete.setImageResource(android.R.drawable.ic_menu_delete);
         delete.setPadding(10, 5, 30 ,5);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +95,37 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
                 a.owners.remove(groupPosition);
                 ((ExpandableListView)a.activity.findViewById(R.id.player_list)).setAdapter(a);
             }
-        });
-        return delete;
+        });*/
+        View viewRow = convertView;
+        if(viewRow == null)
+        {
+            this.inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            viewRow = inflater.inflate(R.layout.pla_child_layout, null, true);
+        }
+        final T o = this.owners.get(groupPosition);
+        if(o != null)
+        {
+            final EditText namae = viewRow.findViewById(R.id.rename);
+            final PlayerListAdapter<T> AD = this;
+            namae.setText(o.toString());
+
+            viewRow.findViewById(R.id.rename_btn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String txt = namae.getText().toString();
+                    AD.owners.set(groupPosition, (T)txt);
+                    ((ExpandableListView)AD.activity.findViewById(R.id.player_list)).setAdapter(AD);
+                }
+            });
+            viewRow.findViewById(R.id.delete_player).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AD.owners.remove(groupPosition);
+                    ((ExpandableListView)AD.activity.findViewById(R.id.player_list)).setAdapter(AD);
+                }
+            });
+        }
+        return viewRow;
     }
 
     @Override

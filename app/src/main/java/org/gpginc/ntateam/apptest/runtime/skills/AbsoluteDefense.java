@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
@@ -40,6 +41,17 @@ public class AbsoluteDefense extends ClazzSkill
             Player p = (Player) o;
             if(!this.isPassiveRun())
             {
+                final Dialog d = this.lastAct.getDialog(this.lastAct, R.string.dtpywttd);
+                d.setContentView(R.layout.dialog_protection_appied);
+                d.findViewById(R.id.back_btn_skill_dialog).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.dismiss();
+                    }
+                });
+                PopupWindow popupWindow = new PopupWindow(d.getContext());
+                popupWindow.showAsDropDown(this.lastAct.findViewById(R.id.content_cp_layout));
+                if(p.attacked)d.show();
                 p.isProtected = true;
                 this.setPassiveRun(true);
             }

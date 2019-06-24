@@ -182,6 +182,7 @@ public class Player implements Parcelable
 		}
 		
 	}
+
 	public int getField()
 	{
 		return this.currentField;

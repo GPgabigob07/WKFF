@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -226,7 +227,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         return next;
     }
 
-   public Dialog getDialog(Context t, String info)
+   public Dialog getDialog(Context t, @StringRes int info)
    {
        final Dialog d = new Dialog(t);
        d.setContentView(R.layout.dialog_demo);
@@ -251,7 +252,6 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
            }
        };
    }
-   //TODO maybe some changes are needed here: {@link}
     public void goNext(View view)
     {
         if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
@@ -276,6 +276,15 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     public List<Player> getPlayers()
     {
         return this.ON_PLAYERS;
+    }
+    @Nullable
+    public Player findByCode(int code)
+    {
+        for(Player p : this.getPlayers())
+        {
+            if(p.getCod() == code)return p;
+        }
+        return null;
     }
 }
 

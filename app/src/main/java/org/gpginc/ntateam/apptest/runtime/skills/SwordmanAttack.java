@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Parcel;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
@@ -52,63 +54,73 @@ public class SwordmanAttack extends ClazzSkill
             int pField = p.getField();
             int asd = 1;
             final List<Object> attackable = new ArrayList<>();
+            final SkillRun sk = this.current;
             for(int i = 0; i< lastAct.getPlayers().size(); ++i)
             {
-                if(!lastAct.getPlayers().get(i).equals(p)&& lastAct.getPlayers().get(i).getField() == pField)
+                if(!(lastAct.getPlayers().get(i).getName().equals(p.getName())) && lastAct.getPlayers().get(i).getField() == pField)
                 {
                     attackable.add(lastAct.getPlayers().get(i));
                     Main.p(lastAct.getPlayers().get(i).getName());
                 }
             }
-            /* Find and setup list and buttons functions*/
-            final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
-            final Button btn = this.current.findViewById(R.id.func_skill_btn);
-            btn.setHint("single");
-            final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, true, 2, list);
-            final RuntimeActivity r = this.lastAct;
-            final ClazzSkill thisSkill = this;
+            //Test if there's someone in the player field, if not, advice player to move from field
+            if(attackable.size() <=0)
+            {
+                final Dialog d2 = this.lastAct.getDialog(this.current, R.string.advice_no_players);
+                d2.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        sk.finish();
+                    }
+                });
+                d2.show();
+            }
+            else {
+                /* Find and setup list and buttons functions*/
+                final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+                final Button btn = this.current.findViewById(R.id.func_skill_btn);
+                btn.setHint("single");
+                final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, true, 2, list);
+                final RuntimeActivity r = this.lastAct;
+                final ClazzSkill thisSkill = this;
 
-            list.setAdapter(adapter);
+                list.setAdapter(adapter);
 
-            final Dialog d = r.getDialog(this.current, "You can select 2 players!");
-            d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    d.dismiss();
-                }
-            });
-            btn.setOnClickListener(new View.OnClickListener() {
-                public View.OnClickListener secondListener = new View.OnClickListener() {
+                final Dialog d = r.getDialog(this.current, R.string.swordman_only_two);
+                d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btn.setHint("twice");
-                        Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
+                        d.dismiss();
+                    }
+                });
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public View.OnClickListener secondListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            btn.setHint("twice");
+                            Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
+
+                        }
+                    };
+
+                    @Override
+                    public void onClick(View v) {
+                        ((Button) d.findViewById(R.id.doalog_ok)).setText(R.string.attack_twice);
+                        ((Button) d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+                        if (adapter.getSelectedCount() < 2 && !btn.getHint().equals("twice")) {
+                            d.show();
+                        } else if (adapter.getSelectedCount() < 2) {
+                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 2);
+                            r.goNext(v);
+                        } else {
+                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1);
+                            lastAct.getPlayers().get(adapter.getSelectedCodes()[1]).giveDamage(r, 1);
+                            r.goNext(v);
+                        }
 
                     }
-                };
-                @Override
-                public void onClick(View v)
-                {
-                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
-                    ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
-                    if(adapter.getSelectedCount() < 2 && !btn.getHint().equals("twice"))
-                    {
-                        d.show();
-                    } else if (adapter.getSelectedCount() < 2)
-                    {
-                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 2);
-                        r.goNext(v);
-                    }
-                    else
-                    {
-                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
-                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[1]).giveDamage(r, 1);
-                        r.goNext(v);
-                    }
-
-                }
-            });
-
+                });
+            }
         }
     }
 

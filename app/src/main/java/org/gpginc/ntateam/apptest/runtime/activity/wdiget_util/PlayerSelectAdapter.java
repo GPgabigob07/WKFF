@@ -25,6 +25,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
 {
     private List<Object> inf = new ArrayList<>();
     private final List<Boolean> selectedIndexes = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     private LayoutInflater inflater;
 
     public boolean isShowField() {
@@ -53,13 +54,13 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
     {
         super(context, R.layout.player_adapter_view, objects);
         this.limit = limitOfChecks;
+        final List<Object> list =  new ArrayList<>();
         this.inf = objects;
         if(noNames)
         {
-            final List<Object> list =  new ArrayList<>();
             for(Object p : objects)
             {
-                list.add("Player " + context.getSkill().getLastAct().getPlayers().indexOf(p));
+                list.add("Player " + ((Player)p).getCod());
             }
             this.inf = list;
         }
@@ -68,6 +69,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
         for(Object o :objects)
         {
             this.selectedIndexes.add(false);
+            this.players.add((Player)o);
         }
 
     }
@@ -116,15 +118,15 @@ public class PlayerSelectAdapter extends ArrayAdapter<Object>
         return this.selectedIndexes.get(position);
     }
 
-    public int[] getSelectedIndexes()
+    public int[] getSelectedCodes()
     {
         int[] a = new int[this.limit];
         int aux = 0;
-        for(int i = 0; i < this.selectedIndexes.size(); ++i)
+        for(int i = 0; i < this.players.size(); ++i)
         {
            if(this.selectedIndexes.get(i))
            {
-               a[aux] = i;
+               a[aux] = this.players.get(i).getCod();
                ++aux;
            }
         }

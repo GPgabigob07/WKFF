@@ -54,7 +54,7 @@ public class ArcherAttack extends ClazzSkill
             int asd = 0;
             for(Player pP : lastAct.getPlayers())
             {
-                attackable.add(pP);
+                if(!p.getName().equals(pP.getName()))attackable.add(pP);
                 Main.p(pP.getName());
             }
             final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
@@ -62,7 +62,7 @@ public class ArcherAttack extends ClazzSkill
             btn.setHint("single");
             final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, false, 1, list);
             final RuntimeActivity r = this.lastAct;
-            final Dialog d = r.getDialog(this.current,"You can select just 1 player!");
+            final Dialog d = r.getDialog(this.current,R.string.select_only_one_player);
             d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,7 +82,7 @@ public class ArcherAttack extends ClazzSkill
                 public void onClick(View v)
                 {
 
-                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Attack twice");
+                    ((Button)d.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
                     ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
 
                     if(adapter.getSelectedCount() < 1)
@@ -90,7 +90,7 @@ public class ArcherAttack extends ClazzSkill
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
+                        lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1);
                         r.goNext(v);
                     }
                 }

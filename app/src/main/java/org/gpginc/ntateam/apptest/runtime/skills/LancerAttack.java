@@ -68,7 +68,7 @@ public class LancerAttack extends ClazzSkill
             int asd = 1;
             for(int i = 0; i< lastAct.getPlayers().size(); ++i)
             {
-                if(!lastAct.getPlayers().get(i).equals(p)&& (lastAct.getPlayers().get(i).getField() == attackingField | lastAct.getPlayers().get(i).getField() == pField))
+                if(!lastAct.getPlayers().get(i).getName().equals(p.getName()) && (lastAct.getPlayers().get(i).getField() == attackingField || lastAct.getPlayers().get(i).getField() == pField))
                 {
                     attackable.add(lastAct.getPlayers().get(i));
                     Main.p(lastAct.getPlayers().get(i).getName());
@@ -79,7 +79,7 @@ public class LancerAttack extends ClazzSkill
             btn.setHint("single");
             final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, true, 1, list);
             final RuntimeActivity r = this.lastAct;
-            final Dialog d = r.getDialog(this.current, "You can select just 1 player!");
+            final Dialog d = r.getDialog(this.current, R.string.select_only_one_player);
             d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,14 +101,14 @@ public class LancerAttack extends ClazzSkill
                 @Override
                 public void onClick(View v)
                 {
-                    ((Button)d.findViewById(R.id.doalog_ok)).setText("Confirm");
+                    ((Button)d.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
                     ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
                     if(adapter.getSelectedCount() < 1)
                     {
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        lastAct.getPlayers().get(adapter.getSelectedIndexes()[0]).giveDamage(r, 1);
+                        lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1);
                         r.goNext(v);
                     }
                 }

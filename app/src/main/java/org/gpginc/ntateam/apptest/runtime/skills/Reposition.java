@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
@@ -51,7 +52,7 @@ public class Reposition extends ClazzSkill
             p.getClazz().setCurrentPlayer(null);
             final String cK = p.getKingdom();
             final SkillRun sk = this.current;
-            final Dialog d = this.lastAct.getDialog(this.current,"You are able to move someone from your kingdom, do you want to?");
+            final Dialog d = this.lastAct.getDialog(this.current,R.string.reposition_message);
             final ClazzSkill thisSkill = this;
             final RuntimeActivity rt = this.lastAct;
 
@@ -67,7 +68,7 @@ public class Reposition extends ClazzSkill
                     {
                         if(k.getKingdom().equals(cK) && !k.equals(p))
                         {
-                            p("["+lastAct.getPlayers().indexOf(k) +"] " + k.getName());
+                            p("["+k.getCod()+"] " + k.getName());
                             gone.add(k);
                         }
                     }
@@ -83,7 +84,8 @@ public class Reposition extends ClazzSkill
                         @Override
                         public void onClick(View v) {
 
-                            final Dialog d2 = thisSkill.getLastAct().getDialog(sk, "You might select someone...");//New dialog
+                            final Dialog d2 = thisSkill.getLastAct().getDialog(sk, R.string.
+                                    reposition_alert);//New dialog
 
                             ((Button)d2.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
                             ((Button)d2.findViewById(R.id.doalog_ok)).setOnClickListener(new View.OnClickListener() {
@@ -114,7 +116,14 @@ public class Reposition extends ClazzSkill
                 }
             });
             ((Button)d.findViewById(R.id.doalog_cancel)).setText(R.string.no_btn);
-            d.findViewById(R.id.doalog_cancel).setOnClickListener(rt.dialogDismiss(d, true));
+            d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.dismiss();
+                    sk.finish();
+                }
+            });
+
             //----------------------DIALOG SETUP----------------------//
             d.show(); //Shows the dialog
 

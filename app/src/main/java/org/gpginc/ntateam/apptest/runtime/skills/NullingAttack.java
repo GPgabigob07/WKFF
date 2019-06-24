@@ -42,7 +42,7 @@ public class NullingAttack extends ClazzSkill
             Player p = (Player) o;
             if(p.attacked && !this.isPassiveRun() || this.isPassiveRun())
             {
-                final Dialog d = this.lastAct.getDialog(this.current, "During this phase you won't take damage");
+                final Dialog d = this.lastAct.getDialog(this.lastAct, R.string.dtpywttd);
                 d.setContentView(R.layout.dialog_protection_appied);
                 d.findViewById(R.id.back_btn_skill_dialog).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -51,7 +51,7 @@ public class NullingAttack extends ClazzSkill
                     }
                 });
                 PopupWindow popupWindow = new PopupWindow(d.getContext());
-                popupWindow.showAsDropDown(this.lastAct.findViewById(R.id.id_selectable_players_layout));
+                popupWindow.showAsDropDown(this.lastAct.findViewById(R.id.content_cp_layout));
                 d.show();
             } else if(p.attacked)
             {

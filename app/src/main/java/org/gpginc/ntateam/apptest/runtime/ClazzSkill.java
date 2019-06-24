@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.SkillRun;
@@ -132,6 +133,11 @@ public abstract class ClazzSkill implements Skill {
 		return this.layout != -1;
 	}
 
+	protected void goNext(View v)
+	{
+		this.getLastAct().goNext(v);
+		if(this.current!=null)this.current.finish();
+	}
 	public enum Type implements Serializable
 	{
 		MAHOU,

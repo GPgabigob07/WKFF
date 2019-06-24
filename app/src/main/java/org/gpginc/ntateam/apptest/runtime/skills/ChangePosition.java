@@ -57,7 +57,7 @@ public class ChangePosition extends ClazzSkill
             this.current.findViewById(R.id.change_field_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog d = r.getDialog(sk,"You are in this field");
+                    final Dialog d = r.getDialog(sk,R.string.same_field);
                     d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -73,8 +73,12 @@ public class ChangePosition extends ClazzSkill
                         setDownFieldMemory(r.currentPlayer().getField());
                         r.currentPlayer().setField(pager.getCurrentItem() + 1);
                         setUpFieldMemory(r.currentPlayer().getField());
-                        if(thisSkill.isExternal())thisSkill.external = false;
-                        r.goNext(v);
+                        if(thisSkill.isExternal())
+                        {
+                            sk.finish();
+                            thisSkill.external = false;
+                        }
+                        else r.goNext(v);
                     }
                 }
             });
