@@ -66,7 +66,7 @@ public class Reposition extends ClazzSkill
                     //Get all players that apply to the condition
                     for(Player k : lastAct.getPlayers())
                     {
-                        if(k.getKingdom().equals(cK) && !k.equals(p))
+                        if(k.getKingdom().equals(cK) && !k.getName().equals(p.getName()))
                         {
                             p("["+k.getCod()+"] " + k.getName());
                             gone.add(k);
@@ -95,7 +95,7 @@ public class Reposition extends ClazzSkill
                                 }
                             });
                             ((Button)d2.findViewById(R.id.doalog_cancel)).setText(R.string.cancel_reposition_dialog_btn);
-                            d2.findViewById(R.id.doalog_cancel).setOnClickListener(rt.dialogDismiss(d2, true));
+                            d2.findViewById(R.id.doalog_cancel).setOnClickListener(sk.dialogDismiss(d2, true));
 
                             if(adapter.getSelectedCount() < 1)
                             {
@@ -123,6 +123,7 @@ public class Reposition extends ClazzSkill
                     sk.finish();
                 }
             });
+
 
             //----------------------DIALOG SETUP----------------------//
             d.show(); //Shows the dialog

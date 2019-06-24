@@ -38,4 +38,5 @@
     <string name="dtpywttd">During this phase, you wont take any damage</string>
     <string name="reposition_message">You are able to move someone from your kingdom, do you want to?</string>
     <string name="reposition_alert">You might select someone...</string>
+    <string name="next">Next!</string>
 </resources>

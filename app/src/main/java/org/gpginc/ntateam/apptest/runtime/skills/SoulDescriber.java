@@ -1,14 +1,23 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
+import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
+import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +42,64 @@ public class SoulDescriber extends ClazzSkill
     }
 
     @Override
-    public void runSkill(@Nullable Object o)
-    {
-        if(o!=null)
-        {
-            Player p = Main.getPlayer((Player) o);
-            Random rand = new Random();
-            p("This playes is from " + p.getKingdom());
-            if(rand.nextInt(25) == 5)p("And is  " + p.getClazz());
-            if(rand.nextInt(25)  <5)p("And is in field " + p.getField());
+    public void runSkill(@Nullable Object o) {
+        Player p = (Player) o;
+        int asd = 0;
+        final List<Object> attackable = new ArrayList<>();
+        for (Player pP : lastAct.getPlayers()) {
+            if (!p.getName().equals(pP.getName())) attackable.add(pP);
+            Main.p(pP.getName());
         }
+        final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+        final Button btn = this.current.findViewById(R.id.func_skill_btn);
+        btn.setHint("single");
+        final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, false, 1, list);
+        final RuntimeActivity r = this.lastAct;
+        final SkillRun sk = this.current;
+        final Dialog d = r.getDialog(this.current, R.string.select_only_one_player);
+        d.findViewById(R.id.doalog_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        list.setAdapter(adapter);
+        btn.setOnClickListener(new View.OnClickListener() {
+            public View.OnClickListener secondListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.dismiss();
+
+                }
+            };
+
+            @Override
+            public void onClick(View v) {
+
+                ((Button) d.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
+                ((Button) d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+
+                if (adapter.getSelectedCount() < 1) {
+                    d.show();
+                } else if (adapter.getSelectedCount() == 1) {
+                   Dialog d3 = r.getDialog(sk, R.string.lancer_atk_info);
+                   d3.setContentView(R.layout.skr_listitem_intel);
+                   TextView playerName, playerClazz;
+                   ImageView field, kingdom;
+                   playerClazz = d3.findViewById(R.id.intel_player_clazz);
+                   playerName = d3.findViewById(R.id.intel_player_name);
+                   field =  d3.findViewById(R.id.field_showner_intel);
+                   kingdom =  d3.findViewById(R.id.kingdom_emblem_intel);
+                   playerClazz.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getClazz().getName()));
+                   playerName.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getName()));
+                   field.setImageResource(Util.getFieldFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
+                   kingdom.setImageResource(Util.getKindomFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
+                   d3.show();
+                }
+            }
+        });
     }
+
     public static final Creator<SoulDescriber> CREATOR = new Creator<SoulDescriber>()
     {
         @Override

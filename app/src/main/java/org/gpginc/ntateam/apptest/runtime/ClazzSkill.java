@@ -144,6 +144,5 @@ public abstract class ClazzSkill implements Skill {
 		ATTACK,
 		PASSIVE,
 		ATTACK_TRIGGER;
-
 	}
 }

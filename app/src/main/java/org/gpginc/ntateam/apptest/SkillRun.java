@@ -1,11 +1,13 @@
 package org.gpginc.ntateam.apptest;
 
+import android.app.Dialog;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
@@ -41,5 +43,17 @@ public class SkillRun extends AppCompatActivity{
     public ClazzSkill getSkill()
     {
         return this.currentSkill;
+    }
+
+    public View.OnClickListener dialogDismiss(final Dialog d, final Boolean endAct)
+    {
+        final SkillRun r = this;
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+                if(endAct)r.finish();
+            }
+        };
     }
 }

@@ -1,5 +1,6 @@
 package org.gpginc.ntateam.apptest.runtime.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -241,14 +242,14 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
        d.show();
    }
 
-   public View.OnClickListener dialogDismiss(final Dialog d, final Boolean end)
+   public View.OnClickListener dialogDismiss(final Dialog d, final Boolean endAct)
    {
        final RuntimeActivity r = this;
        return new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                d.dismiss();
-               if(end)r.finish();
+               if(endAct)r.finish();
            }
        };
    }
