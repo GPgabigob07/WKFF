@@ -17,7 +17,7 @@ public class Player implements Parcelable
 	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected;
 	private String kingdom;
 	private Clazz clazz;
-	private final List<Parcelable> attackers = new ArrayList<>();
+	private List<Player> attackers = new ArrayList<>();
 	private Player lastAttacker;
 	private final String name;
 	//private boolean[] bools = new boolean[]{this.isBlind, this.isProtected, this.isStunned, this.isDragonProtected};
@@ -35,38 +35,38 @@ public class Player implements Parcelable
 	}
 
 	protected Player(Parcel in) {
-		this.lifePoints = in.readInt();
-		this.damageTaken = in.readInt();
-		this.currentField = in.readInt();
-		this.cod = in.readInt();
-		this.isStunned = in.readByte() != 0;
-		this.attacked = in.readByte() != 0;
-		this.isBlind = in.readByte() != 0;
-		this.isProtected = in.readByte() != 0;
-		this.isDragonProtected = in.readByte() != 0;
-		this.kingdom = in.readString();
-		this.clazz = in.readParcelable(Clazz.class.getClassLoader());
-		this.lastAttacker = in.readParcelable(Player.class.getClassLoader());
-		this.name = in.readString();
-		Main.p(this.name + " INHERITED FROM PLAYER (construct): "+ this.attacked);
+		lifePoints = in.readInt();
+		damageTaken = in.readInt();
+		currentField = in.readInt();
+		cod = in.readInt();
+		isStunned = in.readByte() != 0;
+		attacked = in.readByte() != 0;
+		isBlind = in.readByte() != 0;
+		isProtected = in.readByte() != 0;
+		isDragonProtected = in.readByte() != 0;
+		kingdom = in.readString();
+		clazz = in.readParcelable(Clazz.class.getClassLoader());
+		attackers = in.createTypedArrayList(Player.CREATOR);
+		lastAttacker = in.readParcelable(Player.class.getClassLoader());
+		name = in.readString();
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(this.lifePoints);
-		dest.writeInt(this.damageTaken);
-		dest.writeInt(this.currentField);
-		dest.writeInt(this.cod);
-		dest.writeByte((byte) (this.isStunned ? 1 : 0));
-		dest.writeByte((byte) (this.attacked ? 1 : 0));
-		Main.p(this.name + " INHERITED FROM PLAYER (deconstruct): "+ this.attacked);
-		dest.writeByte((byte) (this.isBlind ? 1 : 0));
-		dest.writeByte((byte) (this.isProtected ? 1 : 0));
-		dest.writeByte((byte) (this.isDragonProtected ? 1 : 0));
-		dest.writeString(this.kingdom);
-		dest.writeParcelable(this.clazz, flags);
-		dest.writeParcelable(this.lastAttacker, flags);
-		dest.writeString(this.name);
+		dest.writeInt(lifePoints);
+		dest.writeInt(damageTaken);
+		dest.writeInt(currentField);
+		dest.writeInt(cod);
+		dest.writeByte((byte) (isStunned ? 1 : 0));
+		dest.writeByte((byte) (attacked ? 1 : 0));
+		dest.writeByte((byte) (isBlind ? 1 : 0));
+		dest.writeByte((byte) (isProtected ? 1 : 0));
+		dest.writeByte((byte) (isDragonProtected ? 1 : 0));
+		dest.writeString(kingdom);
+		dest.writeParcelable(clazz, flags);
+		dest.writeTypedList(attackers);
+		dest.writeParcelable(lastAttacker, flags);
+		dest.writeString(name);
 	}
 
 	@Override

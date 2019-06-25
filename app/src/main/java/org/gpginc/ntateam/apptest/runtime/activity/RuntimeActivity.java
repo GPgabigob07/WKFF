@@ -237,6 +237,15 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
        d.findViewById(R.id.doalog_ok).setOnClickListener(this.dialogDismiss(d, false));
        return d;
    }
+    public Dialog getDialog(Context t, String info)
+    {
+        final Dialog d = new Dialog(t);
+        d.setContentView(R.layout.dialog_demo);
+        ((TextView)d.findViewById(R.id.dialog_info)).setText(info);
+        d.findViewById(R.id.doalog_cancel).setOnClickListener(this.dialogDismiss(d, false));
+        d.findViewById(R.id.doalog_ok).setOnClickListener(this.dialogDismiss(d, false));
+        return d;
+    }
    public void openDialog(Dialog d)
    {
        d.show();

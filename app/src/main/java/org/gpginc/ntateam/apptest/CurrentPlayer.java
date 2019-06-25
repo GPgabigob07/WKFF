@@ -1,22 +1,16 @@
 package org.gpginc.ntateam.apptest;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
-import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CurrentPlayer extends RuntimeActivity {
@@ -51,18 +45,22 @@ public class CurrentPlayer extends RuntimeActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                /* Snackbar.make(view, skills.get(position).getName(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                Intent skill = new Intent(cpA, SkillRun.class);
-                skill.putExtra("cskill", skills.get(position).getName());
-                skill.putExtra("PLAYER_EXECUTE", cpA.currentPlayer());
                 skills.get(position).setLastAct(cpA);
-                startActivity(skill);
+               if(skills.get(position).hasLayout()) {
+                   Intent skill = new Intent(cpA, SkillRun.class);
+                   skill.putExtra("cskill", skills.get(position).getName());
+                   skill.putExtra("PLAYER_EXECUTE", cpA.currentPlayer());
+                   startActivity(skill);
+               } else{
+                   skills.get(position).runSkill(currentPlayer());
+               }
 
             }
         });
         /**
          * Seting clazz and kingdom
          */
-        ((TextView)findViewById(R.id.kingdom)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.currentPlayer().getKingdom());
+        ((TextView)findViewById(R.id.kingdom_inspect)).setText(/*this.OUT_KINGDOMS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.currentPlayer().getKingdom());
         ((TextView)findViewById(R.id.clazz)).setText(/*this.OUT_CLAZZS.get(this.PLAYER_NAMES.indexOf(this.CURRENT_PLAYER))*/this.currentPlayer().getClazz().getName());
         this.currentPlayer().getClazz().runPassive(this);
 

@@ -3,17 +3,11 @@ package org.gpginc.ntateam.apptest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
-import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -21,12 +15,9 @@ import android.widget.Toast;
 
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
-import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerListAdapter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -63,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void addPlayer(View view)
     {
-        String name = ((EditText)findViewById(R.id.player_name)).getText().toString();
+        String name = ((EditText)findViewById(R.id.player_clazz)).getText().toString();
         if(!name.equals("") || name != null) {
             if(!PLAYER_NAMES.contains(name)) {
                 PLAYER_NAMES.add(name);
@@ -71,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 ExpandableListView listinha = findViewById(R.id.player_list);
 
                 listinha.setAdapter(new PlayerListAdapter<String>(this, PLAYER_NAMES, this));
-                ((EditText) findViewById(R.id.player_name)).setText("");
+                ((EditText) findViewById(R.id.player_clazz)).setText("");
             } else {
                 Snackbar.make(view, R.string.player_name_justexist, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

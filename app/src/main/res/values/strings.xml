@@ -19,7 +19,7 @@
     <string name="default_func_skill_btn">Select</string>
     <string name="lancer_atk_info">Theres just one player that you can attack, strange...</string>
     <string name="player_info_attack_single_or_twice">Select some player to attack!</string>
-    <string name="swordman_dialog_info_1">You select 2 players!</string>
+    <string name="swordman_dialog_info_1">You can select 2 players!</string>
     <string name="title_section1">Ruins</string>
     <string name="title_section2">Jungle</string>
     <string name="title_section3">Castle</string>
@@ -32,11 +32,14 @@
     <string name="ywa">You were Attacked!</string>
     <string name="dntw">You won\'t take damage this phase.</string>
     <string name="advice_no_players">There\'s no players in your field, you might move to another.</string>
-    <string name="select_only_one_player">You can select 1 player!</string>
+    <string name="select_only_one_player">You might select someone!</string>
     <string name="attack_twice">Attack Twice!</string>
     <string name="same_field">You are in this field!</string>
     <string name="dtpywttd">During this phase, you wont take any damage</string>
     <string name="reposition_message">You are able to move someone from your kingdom, do you want to?</string>
     <string name="reposition_alert">You might select someone...</string>
     <string name="next">Next!</string>
+    <string name="countered"> attack countered!</string>
+    <string name="magician_counter_info_attackers">You were attacked more than can counter...</string>
+    <string name="you_cant_counter">You weren\'t able to counter that Attack!</string>
 </resources>

@@ -1,5 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime.util;
 
+import android.support.annotation.DrawableRes;
+
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
@@ -21,6 +23,7 @@ public class Util
                 return R.drawable.unkown_e;
         }
     }
+    @DrawableRes
     public static int getKindomFor(Player p)
     {
         switch (p.getKingdom())

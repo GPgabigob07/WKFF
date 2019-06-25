@@ -49,17 +49,17 @@ public class Clazzs
     /**
      * Skills Declaration
      */
-    public static final ClazzSkill SOUL_DESCRIBER;
-    public static final ClazzSkill KING_KNOWNS;
-    public static final ClazzSkill ARCHERY_ATTACK;
-    public static final ClazzSkill LANCER_ATTACK;
-    public static final ClazzSkill SWORDMAN_ATTACK;
-    public static final ClazzSkill SPY_KNOWLEDGE;
-    public static final ClazzSkill NULLING_ATTACK;
-    public static final ClazzSkill ABSOLUTE_DEFENSE;
-    public static final ClazzSkill MADICIAN_COUNTER;
-    public static final ClazzSkill CHANGE_POSITION;
-    public static final ClazzSkill REPOSITION;
+    public static final ClazzSkill SOUL_DESCRIBER;//Done
+    //public static final ClazzSkill KING_KNOWNS;
+    public static final ClazzSkill ARCHERY_ATTACK;//Done
+    public static final ClazzSkill LANCER_ATTACK;//Done
+    public static final ClazzSkill SWORDMAN_ATTACK;//Done
+    public static final ClazzSkill SPY_KNOWLEDGE;//Done
+    public static final ClazzSkill NULLING_ATTACK;//Done
+    public static final ClazzSkill ABSOLUTE_DEFENSE;//Done
+    public static final ClazzSkill MADICIAN_COUNTER;//Attempt done
+    public static final ClazzSkill CHANGE_POSITION;//Done
+    public static final ClazzSkill REPOSITION;//Done
 
     /**
      * Classes init
@@ -70,24 +70,24 @@ public class Clazzs
          * Skills
          */
         SOUL_DESCRIBER = new SoulDescriber("Soul Describer", ClazzSkill.Type.MAHOU, false, R.layout.skill_run_player_selection_layout);
-        KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
+       // KING_KNOWNS = new KingKnowns("SEE ALL", ClazzSkill.Type.MAHOU, false);
         ARCHERY_ATTACK = new ArcherAttack("Use Bow", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         LANCER_ATTACK = new LancerAttack("Use Lance", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         SWORDMAN_ATTACK = new SwordmanAttack("Use Sword", ClazzSkill.Type.ATTACK, false, R.layout.skill_run_player_selection_layout);
         SPY_KNOWLEDGE = new SpyKnwoledge("INTEL", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_intel);
         NULLING_ATTACK = new NullingAttack("Nulling Direct Attack", ClazzSkill.Type.ATTACK_TRIGGER, false);
         ABSOLUTE_DEFENSE = new AbsoluteDefense("ABSOLUTE DEFENSE", ClazzSkill.Type.PASSIVE, false, R.layout.empty_skillrun);
-        MADICIAN_COUNTER = new MagicianCounter("Madician Counter", ClazzSkill.Type.MAHOU, true);
+        MADICIAN_COUNTER = new MagicianCounter("Magician Counter", ClazzSkill.Type.MAHOU, true);
         CHANGE_POSITION = new ChangePosition("Change Position", ClazzSkill.Type.MAHOU, false, R.layout.skill_run_field_change);
         REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_player_selection_layout);
 
 
-        ARCHERY = new Clazz("Archery Madician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
-        SWORDMAN = new Clazz("Knight Madician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
-        SUPREME = new Clazz("Supreme Madician").bindSkill(SOUL_DESCRIBER).bindSkill(KING_KNOWNS).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
-        ADC = new Clazz("Adc Support Madician").bindSkill(ABSOLUTE_DEFENSE);
+        ARCHERY = new Clazz("Archery Magician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
+        SWORDMAN = new Clazz("Knight Magician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
+        SUPREME = new Clazz("Supreme Magician").bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
+        ADC = new Clazz("Adc Support Magician").bindSkill(ABSOLUTE_DEFENSE);
         DRAGON_HUNTER = new Clazz("Dragon Hunter");
-        LANCER = new Clazz("Lancer Madician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
+        LANCER = new Clazz("Lancer Magician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
         SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
     }
 

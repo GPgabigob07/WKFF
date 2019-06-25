@@ -99,6 +99,7 @@ public class SwordmanAttack extends ClazzSkill
                         public void onClick(View v) {
                             btn.setHint("twice");
                             Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
+                            d.dismiss();
 
                         }
                     };

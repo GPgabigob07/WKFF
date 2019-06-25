@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.R;
@@ -82,18 +84,23 @@ public class SoulDescriber extends ClazzSkill
                 if (adapter.getSelectedCount() < 1) {
                     d.show();
                 } else if (adapter.getSelectedCount() == 1) {
-                   Dialog d3 = r.getDialog(sk, R.string.lancer_atk_info);
-                   d3.setContentView(R.layout.skr_listitem_intel);
+                   final Dialog d3 = r.getDialog(sk, R.string.lancer_atk_info);
+                   d3.setContentView(R.layout.skr_soul_inspect);
                    TextView playerName, playerClazz;
-                   ImageView field, kingdom;
-                   playerClazz = d3.findViewById(R.id.intel_player_clazz);
-                   playerName = d3.findViewById(R.id.intel_player_name);
-                   field =  d3.findViewById(R.id.field_showner_intel);
-                   kingdom =  d3.findViewById(R.id.kingdom_emblem_intel);
+                   RelativeLayout kingdom;
+                   playerClazz = d3.findViewById(R.id.player_clazz);
+                   playerName = d3.findViewById(R.id.player_name);
+                   kingdom =  d3.findViewById(R.id.kingdom_inspect);
                    playerClazz.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getClazz().getName()));
                    playerName.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getName()));
-                   field.setImageResource(Util.getFieldFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
-                   kingdom.setImageResource(Util.getKindomFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
+                   kingdom.setBackgroundResource(Util.getKindomFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
+                   kingdom.setOnClickListener(lastAct.dialogDismiss(d3, false));
+                   d3.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                       @Override
+                       public void onDismiss(DialogInterface dialog) {
+                           lastAct.findViewById(R.id.next_player_btn).performClick();
+                       }
+                   });
                    d3.show();
                 }
             }
