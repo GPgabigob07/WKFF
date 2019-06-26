@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SkillRun"></activity>
+        <activity
+            android:name=".PrePlayer"
+            android:label="@string/title_activity_pre_player"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SkillRun" />
         <activity android:name=".CurrentPlayer" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -19,4 +23,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

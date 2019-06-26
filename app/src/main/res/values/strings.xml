@@ -42,4 +42,9 @@
     <string name="countered"> attack countered!</string>
     <string name="magician_counter_info_attackers">You were attacked more than can counter...</string>
     <string name="you_cant_counter">You weren\'t able to counter that Attack!</string>
+    <string name="title_activity_pre_player">PrePlayer</string>
+    <string name="title_activity_wfscfeetrvccasdfvasdfvasdfvasdfvasdfvsdfvas">
+        wfscfeetrvccasdfvasdfvasdfvasdfvasdfvsdfvas
+    </string>
+    <string name="show_player">Show</string>
 </resources>

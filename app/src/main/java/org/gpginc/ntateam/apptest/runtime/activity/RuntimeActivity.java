@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.CurrentPlayer;
+import org.gpginc.ntateam.apptest.PrePlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
@@ -265,14 +266,14 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     public void goNext(View view)
     {
         if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
-            Intent next = new Intent(this, CurrentPlayer.class);
+            Intent next = new Intent(this, PrePlayer.class);
             next.putExtras(this.getNextPlayer());
             startActivity(next);
             this.finish();
         } else {
             Main.damageStep(this.ON_PLAYERS);
             this.GONE_PLAYERS.clear();
-            Intent next = new Intent(this, CurrentPlayer.class);
+            Intent next = new Intent(this, PrePlayer.class);
             next.putExtras(this.getNextPlayer());
             startActivity(next);
             this.finish();

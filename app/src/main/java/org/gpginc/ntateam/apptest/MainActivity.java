@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putIntegerArrayList("PlayerFields", lists[2]);
             bundle.putParcelableArrayList("Players", lists[3]);
 
-            Intent go = new Intent(this, CurrentPlayer.class);
+            Intent go = new Intent(this, PrePlayer.class);
 
 
             go.putExtras(bundle);

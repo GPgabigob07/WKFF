@@ -98,7 +98,7 @@ public class SoulDescriber extends ClazzSkill
                    d3.setOnDismissListener(new DialogInterface.OnDismissListener() {
                        @Override
                        public void onDismiss(DialogInterface dialog) {
-                           lastAct.findViewById(R.id.next_player_btn).performClick();
+                           lastAct.findViewById(R.id.next_player_bt).performClick();
                        }
                    });
                    d3.show();
