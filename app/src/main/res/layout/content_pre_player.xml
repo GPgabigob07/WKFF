@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/togglePlayer"
-        android:layout_width="414dp"
-        android:layout_height="424dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
+        android:layout_width="366dp"
+        android:layout_height="393dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:onClick="switchs"
         app:layout_constraintBottom_toTopOf="@+id/show_player"
         app:layout_constraintEnd_toEndOf="parent"

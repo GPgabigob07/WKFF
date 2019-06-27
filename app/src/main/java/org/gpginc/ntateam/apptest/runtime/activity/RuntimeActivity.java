@@ -40,6 +40,11 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     protected ArrayList<Player> ON_PLAYERS = new ArrayList<>();
     protected Integer currrentPlayerCod = -1;
 
+    /**
+     * GLOBAL
+     */
+    public static final String LAST_STATE = "CODE_HASH-LASTSTATEMANAGE.SYS";
+
     /*public Player getCP() {
         return CP;
     }
@@ -228,8 +233,24 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
         return next;
     }
+    public void enableNextTo(Bundle i)
+    {
+        i.putBundle(LAST_STATE, this.enableNext());
+    }
 
-   public Dialog getDialog(Context t, @StringRes int info)
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        enableNextTo(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        this.load(savedInstanceState.getBundle(LAST_STATE));
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public Dialog getDialog(Context t, @StringRes int info)
    {
        final Dialog d = new Dialog(t);
        d.setContentView(R.layout.dialog_demo);

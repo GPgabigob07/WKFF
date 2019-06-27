@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             go.putExtras(bundle);
             startActivity(go);
+            this.finish();
         } else {
             Snackbar.make(view, R.string.least4players, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
