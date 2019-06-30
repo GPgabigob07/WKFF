@@ -1,9 +1,19 @@
 package org.gpginc.ntateam.apptest.runtime.util;
 
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.gpginc.ntateam.apptest.runtime.Main.p;
 
 public class Util
 {
@@ -35,5 +45,127 @@ public class Util
             default:
                 return R.drawable.unkown_e;
         }
+    }
+    @StringRes
+    public static int getDeadInfoFor(Player p)
+    {
+        if(!p.isDead) {
+            if (p.life() == 0) {
+                return R.string.dead_info_1;
+            } else if (p.life() < 0) {
+                return R.string.dead_info_2;
+            }
+        }
+        return -1;
+    }
+
+    public static String getCrypto(String s)
+    {
+        String[] sp = s.split("");
+        String output = "";
+        for(String crypted : sp)
+        {
+            output+=crypt(crypted);
+        }
+        return output;
+    }
+    public static String getDecrypt(String s)
+    {
+        String[] sp = s.split("");
+        String output = "";
+        for(String crypted : sp)
+        {
+            output+=decrypt(crypted);
+        }
+        return output;
+    }
+
+
+    static String crypt(String s)
+    {
+        List<String> alpha_minos = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
+        List<String> alpha_MAJOR = Arrays.asList("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
+        Map<String, String> intRegex = new HashMap<>();
+        /*map init*/
+        intRegex.put("0", "§-i§");
+        intRegex.put("1", "§i§");
+        intRegex.put("2", "§ii§");
+        intRegex.put("3", "§iii§");
+        intRegex.put("4", "§iv§");
+        intRegex.put("5", "§v§");
+        intRegex.put("6", "§vi§");
+        intRegex.put("7", "§vii§");
+        intRegex.put("8", "§viii§");
+        intRegex.put("9", "§ix§");
+        /*map end*/
+        if(alpha_minos.contains(s))
+        {
+            if(alpha_minos.indexOf(s) > alpha_minos.size() -3)
+            {
+                return alpha_minos.get(alpha_minos.indexOf(s) + 3 - 26);
+            } else return alpha_minos.get(alpha_minos.indexOf(s) + 3);
+        } else if (alpha_MAJOR.contains(s))
+        {
+            if(alpha_MAJOR.indexOf(s) > alpha_MAJOR.size() -3)
+            {
+                return alpha_MAJOR.get(alpha_MAJOR.indexOf(s) + 3 - 26);
+            } else return alpha_MAJOR.get(alpha_MAJOR.indexOf(s) + 3);
+
+        } else if (intRegex.containsKey(s))
+        {
+            return intRegex.get(s);
+        }else return s;
+    }
+    static String decrypt(String s)
+    {
+        List<String> alpha_minos = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
+        List<String> alpha_MAJOR = Arrays.asList("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
+        Map<String, String> intRegex = new HashMap<>();
+        /*map init*/
+        intRegex.put("0", "§-i§");
+        intRegex.put("1", "§i§");
+        intRegex.put("2", "§ii§");
+        intRegex.put("3", "§iii§");
+        intRegex.put("4", "§iv§");
+        intRegex.put("5", "§v§");
+        intRegex.put("6", "§vi§");
+        intRegex.put("7", "§vii§");
+        intRegex.put("8", "§viii§");
+        intRegex.put("9", "§ix§");
+        /*map end*/
+        if(alpha_minos.contains(s))
+        {
+            if(alpha_minos.indexOf(s) < alpha_minos.size() +3)
+            {
+                return alpha_minos.get(alpha_minos.indexOf(s) - 3 + 26);
+            } else return alpha_minos.get(alpha_minos.indexOf(s) - 3);
+        } else if (alpha_MAJOR.contains(s))
+        {
+            if(alpha_MAJOR.indexOf(s) < alpha_MAJOR.size() +3)
+            {
+                return alpha_MAJOR.get(alpha_MAJOR.indexOf(s) - 3 + 26);
+            } else return alpha_MAJOR.get(alpha_MAJOR.indexOf(s) - 3);
+
+        } else if (intRegex.containsKey(s))
+        {
+            return intRegex.get(s);
+        }else return s;
+    }
+
+    public static String[] settingsDefault()
+    {
+        return new String[]{
+                getCrypto("//-SETTINGS-FILE--DO--NOT--MODIFY-//"),
+                getCrypto("-|§BOOL§autoLoadSavedPlayers→0§----|"),
+                getCrypto("-|§BOOL§checkServer→0§-------------|"),
+                getCrypto("-|§CLASS§ARCHERY→1§----------------|"),
+                getCrypto("-|§CLASS§SWORDMAN→1§---------------|"),
+                getCrypto("-|§CLASS§LANCER→1§-----------------|"),
+                getCrypto("-|§CLASS§DRAGONH→1§----------------|"),
+                getCrypto("-|§CLASS§SUPPORT→1§----------------|"),
+                getCrypto("-|§CLASS§SPY→1§--------------------|"),
+                getCrypto("//--------------------------------//")
+
+        };
     }
 }

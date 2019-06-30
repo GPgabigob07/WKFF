@@ -19,6 +19,8 @@ public class Clazz implements Parcelable
 	@Nullable
 	private Player cPlayer;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
+
+	public boolean enabled = true;
 	public Clazz(String name)
 	{
 		this.name = name;
@@ -54,6 +56,7 @@ public class Clazz implements Parcelable
 		{
 			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
 		}
+		enabled = in.readByte() != 0;
 	}
 
 	@Override
@@ -67,7 +70,7 @@ public class Clazz implements Parcelable
 			names.add(c.getName());
 		}
 		dest.writeStringList(names);
-
+		dest.writeByte((byte) (enabled ? 1 : 0));
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class Clazz implements Parcelable
 		Main.p("Skill: " + skill.getName() + " added to " + this.getName());
 		return this;
 	}
-	public String getPseudoName() 
+	public String getPseudoName()
 	{
 		return !this.pseudoName.equals(null) ? this.pseudoName : "namebug";
 	}

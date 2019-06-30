@@ -4,20 +4,16 @@
     <string name="add">add</string>
     <string name="go_btn_text">GO!</string>
     <string name="dialog_text">This Player Already Exists</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skills">Skills:</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="player_name_noname">You must put a name there...</string>
+    <string name="player_name_noname">You must put a name there\.\.\.</string>
     <string name="current_player_name">CurrentPlayerName</string>
     <string name="least4players">Game needs at least 4 playes to start!</string>
     <string name="del_player">Delete</string>
     <string name="player_name_justexist">Player Already Exists</string>
     <string name="swordman_only_two">Only two players, if one, this one will be attacked twice.</string>
-    <string name="swordman_info_spc">SO, only one player, that might be a good thing, or not...</string>
+    <string name="swordman_info_spc">SO, only one player, that might be a good thing, or not\.\.\.</string>
     <string name="default_func_skill_btn">Select</string>
-    <string name="lancer_atk_info">Theres just one player that you can attack, strange...</string>
+    <string name="lancer_atk_info">Theres just one player that you can attack, strange\.\.\.</string>
     <string name="player_info_attack_single_or_twice">Select some player to attack!</string>
     <string name="swordman_dialog_info_1">You can select 2 players!</string>
     <string name="title_section1">Ruins</string>
@@ -37,14 +33,33 @@
     <string name="same_field">You are in this field!</string>
     <string name="dtpywttd">During this phase, you wont take any damage</string>
     <string name="reposition_message">You are able to move someone from your kingdom, do you want to?</string>
-    <string name="reposition_alert">You might select someone...</string>
+    <string name="reposition_alert">You might select someone\.\.\.</string>
     <string name="next">Next!</string>
     <string name="countered"> attack countered!</string>
-    <string name="magician_counter_info_attackers">You were attacked more than can counter...</string>
+    <string name="magician_counter_info_attackers">You were attacked more than can counter\.\.\.</string>
     <string name="you_cant_counter">You weren\'t able to counter that Attack!</string>
-    <string name="title_activity_pre_player">PrePlayer</string>
-    <string name="title_activity_wfscfeetrvccasdfvasdfvasdfvasdfvasdfvsdfvas">
-        wfscfeetrvccasdfvasdfvasdfvasdfvasdfvsdfvas
-    </string>
+    <string name="title_activity_pre_player">Waiting Player</string>>
     <string name="show_player">Show</string>
+    <string name="wkff_label">WKFF?</string>
+    <string name="title_activity_damage_step">DamageStep</string>
+    <string name="dead_info_1">Has died this turn.</string>
+    <string name="dead_info_2">Has died, and was completly terminated by:</string>
+    <string name="no_one_died">No one died this turn.</string>
+    <string name="bugstr">BUG</string>
+    <string name="title_activity_main_plus_settings">MainPlusSettings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="wkff_long">Which Kingdom Falss First?</string>
+    <string name="settingsStr">Settings</string>
 </resources>

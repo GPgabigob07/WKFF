@@ -10,17 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MainPlusSettings"
+            android:label="@string/title_activity_main_plus_settings"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DamageStep"
+            android:label="@string/title_activity_damage_step"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".PrePlayer"
             android:label="@string/title_activity_pre_player"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SkillRun" />
         <activity android:name=".CurrentPlayer" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

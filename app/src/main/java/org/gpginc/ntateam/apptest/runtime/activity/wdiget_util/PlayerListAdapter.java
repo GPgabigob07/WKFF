@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.MainActivity;
+import org.gpginc.ntateam.apptest.MainPlusSettings;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
@@ -19,7 +20,7 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
 {
     private final Context context;
     private final List<T> owners;
-    private final MainActivity activity;
+    private final MainPlusSettings activity;
     private LayoutInflater inflater;
    // private final String[][] subowners;
 
@@ -30,7 +31,7 @@ public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapt
      * @param owners
      * @param activity
      */
-    public PlayerListAdapter(Context context, List<T> owners, MainActivity activity)
+    public PlayerListAdapter(Context context, List<T> owners, MainPlusSettings activity)
     {
         this.context = context;
         this.owners = owners;

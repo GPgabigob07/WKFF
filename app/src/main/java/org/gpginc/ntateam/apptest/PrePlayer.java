@@ -23,8 +23,8 @@ public class PrePlayer extends RuntimeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_player);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setTitle(R.string.title_activity_pre_player);
+        //setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ((ImageView)findViewById(R.id.togglePlayer)).setImageResource(this.currentRes);
         findViewById(R.id.show_player).setVisibility(View.INVISIBLE);
         ((TextView)findViewById(R.id.current_player_name_view)).setText(currentPlayer().getName());

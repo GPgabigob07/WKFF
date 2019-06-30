@@ -12,10 +12,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.CurrentPlayer;
+import org.gpginc.ntateam.apptest.DamageStep;
 import org.gpginc.ntateam.apptest.PrePlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
@@ -115,22 +117,29 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.load(getIntent().getExtras());
+        setTitle(R.string.wkff_label);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if(toolbar!=null)setSupportActionBar(toolbar);
+
     }
 
     protected Bundle getNextPlayer()
     {
         final Bundle next = new Bundle();
         Random rand = new Random();
-        int nextPlayerI =-1;
+        int nextPlayerI = -1;
         if(this.GONE_PLAYERS.size() == this.PLAYER_NAMES.size())this.finish();
-        else do {
+
+        do {
             nextPlayerI = rand.nextInt(this.PLAYER_NAMES.size());
-            this.CURRENT_PLAYER = this.PLAYER_NAMES.get(nextPlayerI);
-            //this.CP = this.ON_PLAYERS.get(nextPlayerI);
             this.currrentPlayerCod = this.ON_PLAYERS.get(nextPlayerI).getCod();
-        }while(this.GONE_PLAYERS.contains(nextPlayerI));
+        }
+        while(this.GONE_PLAYERS.contains(nextPlayerI) | this.currentPlayer().isDead);
+
         this.GONE_PLAYERS.add(nextPlayerI);
+        this.CURRENT_PLAYER = this.PLAYER_NAMES.get(nextPlayerI);
+
         next.putString("CPN", this.CURRENT_PLAYER);
         //next.putParcelable("CP", this.CP);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
@@ -294,7 +303,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         } else {
             Main.damageStep(this.ON_PLAYERS);
             this.GONE_PLAYERS.clear();
-            Intent next = new Intent(this, PrePlayer.class);
+            Intent next = new Intent(this, DamageStep.class);
             next.putExtras(this.getNextPlayer());
             startActivity(next);
             this.finish();
@@ -302,6 +311,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     }
     public Player currentPlayer()
     {
+        System.err.println("CurrentPlayer = "  +this.ON_PLAYERS.get(this.currrentPlayerCod).toString());
         return this.ON_PLAYERS.get(this.currrentPlayerCod);
     }
 

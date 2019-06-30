@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
@@ -30,6 +31,8 @@ public class SkillRun extends AppCompatActivity{
         this.currentSkill = getTypedSkill(d.getString("cskill"));
         this.ongoingPlayer = d.getParcelable("PLAYER_EXECUTE");
         setContentView(this.currentSkill.getLayout());
+        setTitle(this.currentSkill.getName());
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         this.currentSkill.setCurrent(this);
         this.currentSkill.runSkill(this.ongoingPlayer);
 

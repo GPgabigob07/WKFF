@@ -2,14 +2,17 @@ package org.gpginc.ntateam.apptest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 import java.util.List;
 
@@ -23,12 +26,15 @@ public class CurrentPlayer extends RuntimeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_player);
+        setTitle(R.string.wkff_label);
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         if(this.currentPlayer().attacked)this.currentPlayer().getClazz().runAttackTrigger(this);
         /*
         Set players name in window
          */
         TextView playerName = findViewById(R.id.current_player_name_view);
         playerName.setText(this.CURRENT_PLAYER);
+        ((ImageView)findViewById(R.id.kingdom_emblem)).setImageResource(Util.getKindomFor(this.currentPlayer()));
 
         /**
          * SetP player skills into the list

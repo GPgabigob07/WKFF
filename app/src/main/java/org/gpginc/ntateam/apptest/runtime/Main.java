@@ -1,6 +1,9 @@
 package org.gpginc.ntateam.apptest.runtime;
 
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+
+import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,12 +23,15 @@ public class Main
 	private final ArrayList<String> OUT_CLAZZS = new ArrayList<>();
 	private final ArrayList<String> OUT_KINGDOMS = new ArrayList<>();
 	private final ArrayList<Integer> OUT_FIELDS = new ArrayList<>();
-
-	private static final Clazzs clazzs = new Clazzs();
 	private static boolean GAMING = false;
+
+	public static final String SETTINGS = Util.getCrypto("SETTING_02365-drawer.file-crypto");
 	
 	
-	
+	public static class Settings
+	{
+
+	}
 	/*public static void main(String[] args)
 	{
 		preInit();
@@ -43,9 +49,9 @@ public class Main
 		p("init start");
 
 
-		CLASSES.addAll(clazzs.CLAZZS);
+		CLASSES.addAll(Clazzs.CLAZZS);
 		for (Clazz c:
-			 clazzs.CLAZZS) {
+			 Clazzs.CLAZZS) {
 			p(c.getName());
 			for (ClazzSkill cs:
 				 c.getSkills()) {
@@ -115,7 +121,7 @@ public class Main
 		int sorted = 0;
 		boolean  MSc =false;
 		final List<Player> done = new ArrayList<>();
-		final List<Clazz> doneclazzs = new ArrayList<>();
+		final List<Clazz> doneClazzs = new ArrayList<>();
 		Player cp = null;
 		p("post init start");
 		if(PLAYERS.size() % 2 != 0)
@@ -127,7 +133,7 @@ public class Main
 				i2 = rand.nextInt(PLAYERS.size());
 				cp = PLAYERS.get(i2);
 			}
-			setupPlayer(cp, clazzs.SPY, "UNKOWN", 5);
+			setupPlayer(cp, Clazzs.SPY, "UNKOWN", 5);
 			done.add(cp);
 			++sorted;
 		}
@@ -146,7 +152,7 @@ public class Main
 			if(MSc == false)
 			{
 				MSc = true;
-				setupPlayer(cp, clazzs.SUPREME, cKgn, cField);
+				setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
 				done.add(cp);
 				cField = rand.nextInt(4) + 1;
 				if(cKgn.equals("OHXER")) cKgn = "CAMELOT";
@@ -159,16 +165,16 @@ public class Main
 				    i2 = rand.nextInt(PLAYERS.size());
 					cp = PLAYERS.get(i2);
 				}
-				setupPlayer(cp, clazzs.SUPREME, cKgn, cField);
+				setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
 				done.add(cp);
 				++sorted;
 				++sorted;
 				cField = rand.nextInt(4) + 1;
 				p(cField);
 			}
-			else if(!cCls.equals(clazzs.SUPREME) && !cCls.equals(clazzs.DRAGON_HUNTER)&& !cp.hasClazz() && !cp.hasKingdom())
+			else if(!cCls.equals(Clazzs.SUPREME) && !cCls.equals(Clazzs.DRAGON_HUNTER)&& !cp.hasClazz() && !cp.hasKingdom())
 			{
-				setupPlayer(cp, rand.nextInt(1000) < 3 ? clazzs.DRAGON_HUNTER : cCls, cKgn, cField);
+				setupPlayer(cp, rand.nextInt(1000) < 3 ? Clazzs.DRAGON_HUNTER : cCls, cKgn, cField);
 				done.add(cp);
 				if(cKgn.equals("OHXER")) cKgn = "CAMELOT";
 				else cKgn = "OHXER";
@@ -286,15 +292,15 @@ public class Main
 			}
 		}
 	}
-	public static final void damageStep(List<Player> players)
+	public static boolean damageStep(final List<Player> players)
 	{
 		List<Player> playersKilled = new ArrayList<>();
-		
-		for(Player p : PLAYERS)
+		boolean flag = false;
+		for(Player p : players)
 		{
 			p.damageStep();
 			p(p.getName() + " status: ");
-			p(p.life());
+			p("Current Life:"+p.life());
 			p("Protections: ");
 			p(p.isProtected ? "ADC Protection ON" : "ADC Protection OFF" );
 			p(p.isDragonProtected ? "Dragon Protection ON" : "Dragon Protection OFF" );
@@ -309,23 +315,24 @@ public class Main
 					p("Was attacked by " + o.getName());
 				}
 			}
-			if(p.life()==0)
-			{
-				p("Has died this turn");
-				playersKilled.add(p);
-			} else if (p.life() < 0)
-			{
-				p("Has died, and " + p.getAttackers().get(p.getAttackers().size()-1).getName() + " had guaranteed that wont come back to this world");
-				playersKilled.add(p);
-			}
-			p("");
+			if(!p.isDead) {
+                if (p.life() == 0) {
+                    p("Has died this turn");
+                    playersKilled.add(p);
+					flag = true;
+                    p.kill();
+                } else if (p.life() < 0) {
+                    p("Has died, and " + p.getAttackers().get(p.getAttackers().size() - 1).getName() + " had guaranteed that wont come back to this world");
+                    playersKilled.add(p);
+					flag = true;
+                    p.kill();
+                }
+            }
+			p("Someone died: "+flag);
 			
 			p.re_setup();
 		}
-		for(Player pp : playersKilled)
-		{
-			players.remove(pp);
-		}
+		return flag;
 	}
 	static void firstSkillCaller(Player p)
 	{

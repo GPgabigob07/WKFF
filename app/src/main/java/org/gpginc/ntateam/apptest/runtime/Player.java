@@ -14,7 +14,7 @@ import java.util.List;
 public class Player implements Parcelable
 {
 	private int lifePoints = 3, damageTaken, currentField, cod;
-	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected;
+	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected, isDead;
 	private String kingdom;
 	private Clazz clazz;
 	private List<Player> attackers = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Player implements Parcelable
 		isBlind = in.readByte() != 0;
 		isProtected = in.readByte() != 0;
 		isDragonProtected = in.readByte() != 0;
+		isDead = in.readByte() != 0;
 		kingdom = in.readString();
 		clazz = in.readParcelable(Clazz.class.getClassLoader());
 		attackers = in.createTypedArrayList(Player.CREATOR);
@@ -62,6 +63,7 @@ public class Player implements Parcelable
 		dest.writeByte((byte) (isBlind ? 1 : 0));
 		dest.writeByte((byte) (isProtected ? 1 : 0));
 		dest.writeByte((byte) (isDragonProtected ? 1 : 0));
+		dest.writeByte((byte) (isDead ? 1 : 0));
 		dest.writeString(kingdom);
 		dest.writeParcelable(clazz, flags);
 		dest.writeTypedList(attackers);
@@ -202,6 +204,7 @@ public class Player implements Parcelable
 	public Player damageStep()
 	{
 		this.lifePoints -= (!this.isProtected || !this.isDragonProtected) ? this.damageTaken : 0;
+		this.isDead = (!this.isDragonProtected) ? this.lifePoints <= 0 : false;
 		return this;
 	}
 	public int life()
@@ -241,4 +244,8 @@ public class Player implements Parcelable
 	{
 		return this.name;
 	}
+
+    public void kill() {
+	    this.isDead = true;
+    }
 }

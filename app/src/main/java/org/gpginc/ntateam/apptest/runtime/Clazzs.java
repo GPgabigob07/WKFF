@@ -38,13 +38,13 @@ public class Clazzs
     /**
      * Classes Declaration
      */
-    public static final Clazz ARCHERY;
-    public static final Clazz SWORDMAN;
-    public static final Clazz LANCER;
-    public static final Clazz SUPREME;
-    public static final Clazz SPY;
-    public static final Clazz DRAGON_HUNTER;
-    public static final Clazz ADC;
+    public static final Clazz ARCHERY; //Arqueiro
+    public static final Clazz SWORDMAN; //Espadachim
+    public static final Clazz LANCER; //Lanceiro
+    public static final Clazz SUPREME; //Mago supremo
+    public static final Clazz SPY; // Espião
+    public static final Clazz DRAGON_HUNTER; //Caçador de Dragões
+    public static final Clazz ADC; // Feiticeiro
 
     /**
      * Skills Declaration
