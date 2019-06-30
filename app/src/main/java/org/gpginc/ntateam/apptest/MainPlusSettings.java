@@ -7,6 +7,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,12 +24,14 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerListAdapter;
+import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.Settings_path.ClazzSelector.ClazzSelectorLineAdapter;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,7 +48,10 @@ public class MainPlusSettings extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plus_settings);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ((NavigationView)findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,9 +59,10 @@ public class MainPlusSettings extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setTitle(R.string.wkff_label);
-        setSupportActionBar(toolbar);
+
         this.main.preInit();
         final ListView list = findViewById(R.id.player_list);
 
@@ -142,6 +150,7 @@ public class MainPlusSettings extends AppCompatActivity
         for(Clazz c : Clazzs.CLAZZS)
         {
             editor.putBoolean(c.getName(), c.enabled);
+            Main.p(c.getName()+ c.enabled);
         }
     }
 
@@ -151,6 +160,7 @@ public class MainPlusSettings extends AppCompatActivity
         for(Clazz c : Clazzs.CLAZZS)
         {
             c.enabled = pref.getBoolean(c.getName(), true);
+            Main.p(c.getName()+ c.enabled);
         }
     }
     public void openDialog()
@@ -203,11 +213,16 @@ public class MainPlusSettings extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        ViewFlipper currentLay = findViewById(R.id.current_main_layout);
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            currentLay.setDisplayedChild(0);
         } else if (id == R.id.nav_gallery) {
-
+            currentLay.setDisplayedChild(1);
+            RecyclerView rM = currentLay.findViewById(R.id.set_clazz_list);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+            rM.setLayoutManager(layoutManager);
+            rM.setAdapter(new ClazzSelectorLineAdapter());
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {

@@ -85,7 +85,7 @@ public class Clazzs
         ARCHERY = new Clazz("Archery Magician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
         SWORDMAN = new Clazz("Knight Magician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
         SUPREME = new Clazz("Supreme Magician").bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
-        ADC = new Clazz("Adc Support Magician").bindSkill(ABSOLUTE_DEFENSE);
+        ADC = new Clazz("Support Magician").bindSkill(ABSOLUTE_DEFENSE);
         DRAGON_HUNTER = new Clazz("Dragon Hunter");
         LANCER = new Clazz("Lancer Magician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
         SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);

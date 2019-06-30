@@ -120,7 +120,10 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         setTitle(R.string.wkff_label);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if(toolbar!=null)setSupportActionBar(toolbar);
+        if(toolbar!=null) {
+            setSupportActionBar(toolbar);
+            toolbar.setBackgroundResource(R.drawable.side_nav_bar);
+        }
 
     }
 

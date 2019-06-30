@@ -8,18 +8,30 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/activity_main"
+    <ViewFlipper
+        android:id="@+id/current_main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/main_layout"
+            layout="@layout/activity_main" />
+        <include
+            android:id="@+id/settings_layout"
+            layout="@layout/activity_settings"/>
+    </ViewFlipper>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@drawable/side_nav_bar"
+        android:backgroundTintMode="src_over"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main_plus_settings"
+        app:itemBackground="@color/empty_color"
+        app:itemTextAppearance="@style/textViews"
         app:menu="@menu/activity_main_plus_settings_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -140,14 +140,19 @@ public class Main
 		do
 		{
 			int i2 = rand.nextInt(PLAYERS.size());
-			int i3 = rand.nextInt(CLASSES.size());
+			int i3 = 0;
 			cp = PLAYERS.get(i2);
 			while(done.contains(cp))
 			{
 			    i2 = rand.nextInt(PLAYERS.size());
 				cp = PLAYERS.get(i2);
 			}
-			Clazz cCls = CLASSES.get(i3);
+			Clazz cCls;
+			do
+			{
+				i3 = rand.nextInt(CLASSES.size());
+				cCls = CLASSES.get(i3);
+			} while(cCls.enabled);
 
 			if(MSc == false)
 			{
