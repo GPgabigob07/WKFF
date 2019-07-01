@@ -153,4 +153,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="set_client_clazzs">Players Classes:</string>
+    <string name="skill_label">Skill</string>
 </resources>

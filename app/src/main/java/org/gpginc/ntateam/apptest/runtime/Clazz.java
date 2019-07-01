@@ -20,6 +20,7 @@ public class Clazz implements Parcelable
 	private Player cPlayer;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 
+
 	public boolean enabled = true;
 	public Clazz(String name)
 	{

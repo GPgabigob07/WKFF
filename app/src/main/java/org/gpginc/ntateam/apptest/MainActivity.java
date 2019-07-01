@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setTitle(R.string.wkff_label);
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        this.main.preInit();
+        //this.main.preInit();
         final ListView list = findViewById(R.id.player_list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -23,6 +23,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -42,16 +44,18 @@ public class MainPlusSettings extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final ArrayList<String> PLAYER_NAMES = new ArrayList<>();
-    private static final Main main = new Main();
 
+    private boolean loaded = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plus_settings);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ((NavigationView)findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
+        /*----------------------------------*/
+        /*----------------------------------*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,25 +64,11 @@ public class MainPlusSettings extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setTitle(R.string.wkff_label);
 
-        this.main.preInit();
-        final ListView list = findViewById(R.id.player_list);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
 
-                if(view.isSelected())
-                {
-                    Toast.makeText(list.getContext(), "SELECTED", Toast.LENGTH_SHORT).show();
-                } else Toast.makeText(list.getContext(), "UNSELECTED", Toast.LENGTH_SHORT).show();
-                /*if(list.getCheckedItemCount() > 0)((Button) findViewById(R.id.del_player)).setVisibility(View.VISIBLE);
-                else ((Button)findViewById(R.id.del_player)).setVisibility(View.INVISIBLE);*/
-            }
-        });
         GifImageView gif = findViewById(R.id.title_animation);
     }
 
@@ -105,7 +95,7 @@ public class MainPlusSettings extends AppCompatActivity
     public void start(View view)
     {
         if(PLAYER_NAMES.size() >=4) {
-            final ArrayList[] lists = this.main.postInit(PLAYER_NAMES);
+            final ArrayList[] lists = Main.postInit(PLAYER_NAMES);
             Bundle bundle = new Bundle();
 
             bundle.putStringArrayList("PlayerNames", PLAYER_NAMES);
@@ -152,6 +142,7 @@ public class MainPlusSettings extends AppCompatActivity
             editor.putBoolean(c.getName(), c.enabled);
             Main.p(c.getName()+ c.enabled);
         }
+        editor.commit();
     }
 
     public void loadClazzsByMainstream()

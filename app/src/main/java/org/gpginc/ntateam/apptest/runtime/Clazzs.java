@@ -38,33 +38,33 @@ public class Clazzs
     /**
      * Classes Declaration
      */
-    public static final Clazz ARCHERY; //Arqueiro
-    public static final Clazz SWORDMAN; //Espadachim
-    public static final Clazz LANCER; //Lanceiro
-    public static final Clazz SUPREME; //Mago supremo
-    public static final Clazz SPY; // Espião
-    public static final Clazz DRAGON_HUNTER; //Caçador de Dragões
-    public static final Clazz ADC; // Feiticeiro
+    public static  Clazz ARCHERY; //Arqueiro
+    public static  Clazz SWORDMAN; //Espadachim
+    public static  Clazz LANCER; //Lanceiro
+    public static  Clazz SUPREME; //Mago supremo
+    public static  Clazz SPY; // Espião
+    public static  Clazz DRAGON_HUNTER; //Caçador de Dragões
+    public static  Clazz ADC; // Feiticeiro
 
     /**
      * Skills Declaration
      */
-    public static final ClazzSkill SOUL_DESCRIBER;//Done
-    //public static final ClazzSkill KING_KNOWNS;
-    public static final ClazzSkill ARCHERY_ATTACK;//Done
-    public static final ClazzSkill LANCER_ATTACK;//Done
-    public static final ClazzSkill SWORDMAN_ATTACK;//Done
-    public static final ClazzSkill SPY_KNOWLEDGE;//Done
-    public static final ClazzSkill NULLING_ATTACK;//Done
-    public static final ClazzSkill ABSOLUTE_DEFENSE;//Done
-    public static final ClazzSkill MADICIAN_COUNTER;//Attempt done
-    public static final ClazzSkill CHANGE_POSITION;//Done
-    public static final ClazzSkill REPOSITION;//Done
+    public static  ClazzSkill SOUL_DESCRIBER;//Done
+    //public static  ClazzSkill KING_KNOWNS;
+    public static  ClazzSkill ARCHERY_ATTACK;//Done
+    public static  ClazzSkill LANCER_ATTACK;//Done
+    public static  ClazzSkill SWORDMAN_ATTACK;//Done
+    public static  ClazzSkill SPY_KNOWLEDGE;//Done
+    public static  ClazzSkill NULLING_ATTACK;//Done
+    public static  ClazzSkill ABSOLUTE_DEFENSE;//Done
+    public static  ClazzSkill MADICIAN_COUNTER;//Attempt done
+    public static  ClazzSkill CHANGE_POSITION;//Done
+    public static  ClazzSkill REPOSITION;//Done
 
     /**
      * Classes init
      */
-    static {
+    static{
 
         /**
          * Skills
