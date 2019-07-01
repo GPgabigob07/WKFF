@@ -1,5 +1,6 @@
 package org.gpginc.ntateam.apptest.runtime;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ public class Main
 	/*loader*/
 	private static int skillLoaderProgress = 0;
 	private static int clazzLoaderProgress = 0;
+	public static boolean gameLoaded = false;
 	/*public static void main(String[] args)
 	{
 		preInit();
@@ -43,118 +45,85 @@ public class Main
 			damageStep();
 		}
 	}*/
-	public static boolean preInit(final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2)
+	@UiThread
+	public static void preInit(final Activity a, final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2)
 	{
-		p("init start");
-		par1.setText("INIT START");
-		final Handler h = new Handler();
-
-		for (final Clazz c : Clazzs.CLAZZS) {
-			new Thread(new Runnable() {
-				public void run() {
+		a.runOnUiThread(new Runnable() {
+			public void run() {
+				p("init start");
+				par1.setText("INIT START");
+				for (final Clazz c : Clazzs.CLAZZS) {
 					par1.setText(c.getName());
 					bar1.setMax(c.getSkills().size() + 1);
 					Main.p("Loading: " + c.getName()+"\n\n\n\n\n\n\n--------------------------------------------------------------------------------------");
 					if(c.hasSkills())
 					{
 						for(final ClazzSkill sk : c.getSkills()) {
-							new Thread(new Runnable() {
-								public void run() {
-									while (clazzLoaderProgress < bar1.getMax() -1) {
-										clazzLoaderProgress += 1;
-										// Update the progress bar and display the
-										//current value in the text view
-										h.post(new Runnable() {
-											public void run() {
-												bar1.setProgress(clazzLoaderProgress);
-												initSkill(sk, bar2, par2);
-											}
-										});
-										try {
-											// Sleep for 200 milliseconds.
-											Thread.sleep(1000);
-										} catch (InterruptedException e) {
-											e.printStackTrace();
-										}
-									}
+							while (clazzLoaderProgress < bar1.getMax() -1) {
+								clazzLoaderProgress += 1;
+								bar1.setProgress(clazzLoaderProgress);
+								Runnable instantSk = initSkill(a, sk, bar2, par2);
+								a.runOnUiThread(instantSk);
+								try {
+									while(!sk.isLoaded);
+
+									Thread.sleep(100);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
 								}
-							}).start();
+							}
 						}
-
 					}
-
 					try {
 						// Sleep for 200 milliseconds.
-						Thread.sleep(1500);
+						Thread.sleep(150);
 						c.enabled = prefer.getBoolean(c.getName(), true);
-						clazzLoaderProgress = 0;
 						bar1.setProgress(clazzLoaderProgress + 1);
+						clazzLoaderProgress = 0;
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-			}).start();
-		}
-		KINGDOMS.add("OHXER");
-		KINGDOMS.add("CAMELOT");
-		p("sucess init");
-		par1.setText("INIT DONE");
-		return true;
+				Main.gameLoaded = true;
+			}
+
+		});
 	}
 	@UiThread
-	public static void initSkill(final ClazzSkill skill, final ProgressBar bar2, final TextView par2)
+	public static Runnable initSkill(Activity a, final ClazzSkill skill, final ProgressBar bar2, final TextView par2)
 	{
+		return new Runnable()
+		{
+			public void run()
+			{
+				bar2.setVisibility(View.VISIBLE);
+				par2.setVisibility(View.VISIBLE);
 
-		final Handler h = new Handler();
-		bar2.setVisibility(View.VISIBLE);
-		par2.setVisibility(View.VISIBLE);
+				par2.setText(skill.getName());
+				bar2.setMax(10);
+				bar2.setIndeterminate(false);
 
-		par2.setText(skill.getName());
-		bar2.setMax(100);
-		bar2.setIndeterminate(false);
-
-		Main.p("Loading :"+skill.getName()+"\n-\n--\n-------------------------------------------------------------------------------");
-
-		long ct = System.currentTimeMillis();
-
-		/*while(aux < 100) {
-			Main.p("progress loop");
-			h.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					bar2.incrementProgressBy(1);
-				}
-			}, 2);
-			++aux;
-			Main.p(skill.getName() + ": " + bar2.getProgress()+"%, "+aux+"%");
-		}*/
-		new Thread(new Runnable() {
-			public void run() {
-				while (skillLoaderProgress < 100) {
+				Main.p("Loading :"+skill.getName()+"\n-\n--\n-------------------------------------------------------------------------------");
+				while (skillLoaderProgress < 10) {
 					skillLoaderProgress += 1;
-					// Update the progress bar and display the
-					//current value in the text view
-					h.post(new Runnable() {
-						public void run() {
-							bar2.setProgress(skillLoaderProgress);
-							//textView.setText(progressStatus+"/"+progressBar.getMax());
-						}
-					});
+
+					bar2.setProgress(skillLoaderProgress);
+
 					try {
 						// Sleep for 200 milliseconds.
-						Thread.sleep(500);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
+				skill.isLoaded = true;
+				par2.setText("");
+				bar2.setProgress(0);
+				bar2.setVisibility(View.INVISIBLE);
+				par2.setVisibility(View.INVISIBLE);
+				skillLoaderProgress = 0;
 			}
-		}).start();
-
-		par2.setText("");
-		bar2.setProgress(0);
-		bar2.setVisibility(View.INVISIBLE);
-		par2.setVisibility(View.INVISIBLE);
-		skillLoaderProgress = 0;
+		};
 	}
 	
 	static void playerSelection()

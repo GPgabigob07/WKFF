@@ -20,6 +20,7 @@ public abstract class ClazzSkill implements Skill {
 	private boolean passiveRun;
 	protected boolean isCounter = false;
 	public boolean external = false;
+	public boolean isLoaded = false;
 
 	/**
 	 * Commonly {@link CurrentPlayer}

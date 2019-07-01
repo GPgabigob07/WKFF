@@ -1,8 +1,10 @@
 package org.gpginc.ntateam.apptest.runtime.util;
 
+import android.app.Dialog;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.view.View;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
@@ -167,5 +169,18 @@ public class Util
                 getCrypto("//--------------------------------//")
 
         };
+    }
+
+    public static Dialog dismissed(final Dialog d)
+    {
+        View.OnClickListener out = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        };
+        d.findViewById(R.id.doalog_cancel).setOnClickListener(out);
+        d.findViewById(R.id.doalog_ok).setOnClickListener(out);
+        return d;
     }
 }

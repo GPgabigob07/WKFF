@@ -12,14 +12,14 @@
 
         <ImageView
             android:id="@+id/holder_set_clazz_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             app:srcCompat="@drawable/ic_menu_manage" />
 
         <Switch
             android:id="@+id/holder_set_clazz_name_switch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/empty_color"
             android:paddingStart="7dp"
@@ -27,7 +27,7 @@
             android:text="ClazzName"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
 </LinearLayout>
