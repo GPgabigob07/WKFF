@@ -55,6 +55,7 @@ public class MainPlusSettings extends AppCompatActivity
         setSupportActionBar(toolbar);
         ((NavigationView)findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
         /*----------------------------------*/
+        Main.preInit();
         /*----------------------------------*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -172,8 +173,9 @@ public class MainPlusSettings extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else if(((ViewFlipper)findViewById(R.id.current_main_layout)).getDisplayedChild() != 0) {
+            ((ViewFlipper)findViewById(R.id.current_main_layout)).setDisplayedChild(0);
+        }else {super.onBackPressed();
         }
     }
 

@@ -34,21 +34,13 @@ public class Main
 	private static int skillLoaderProgress = 0;
 	private static int clazzLoaderProgress = 0;
 	public static boolean gameLoaded = false;
-	/*public static void main(String[] args)
-	{
-		preInit();
-		playerSelection();
-		postInit();
-		while(GAMING)
-		{
-			firstPhase();
-			damageStep();
-		}
-	}*/
+
 	@UiThread
-	public static void preInit(final Activity a, final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2)
+	public static void preInit(/*final Activity a, final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2*/)
 	{
-		a.runOnUiThread(new Runnable() {
+		/*MAYBE BE USED IN A NEAR FUTURE*/
+
+		/*a.runOnUiThread(new Runnable() {
 			public void run() {
 				p("init start");
 				par1.setText("INIT START");
@@ -87,7 +79,10 @@ public class Main
 				Main.gameLoaded = true;
 			}
 
-		});
+		});*/
+		CLASSES.addAll(Clazzs.CLAZZS);
+		KINGDOMS.add("OHXER");
+		KINGDOMS.add("CAMELOT");
 	}
 	@UiThread
 	public static Runnable initSkill(Activity a, final ClazzSkill skill, final ProgressBar bar2, final TextView par2)
@@ -168,22 +163,10 @@ public class Main
 	
 	public static ArrayList[] postInit(ArrayList<String> players)
 	{
-		int cod = 0;
-		Random rand = new Random();
-		for(String p : players)
-		{
-			PLAYERS.add(new Player(p).withCod(cod));
-			++cod;
-		}
+		/*int cod = 0;
 
-		int i = rand.nextInt(2);
-		int cField = rand.nextInt(4) + 1;
-		String cKgn = KINGDOMS.get(i);
-		int sorted = 0;
-		boolean  MSc =false;
-		final List<Player> done = new ArrayList<>();
-		final List<Clazz> doneClazzs = new ArrayList<>();
-		Player cp = null;
+
+
 		p("post init start");
 		if(PLAYERS.size() % 2 != 0)
 		{
@@ -213,7 +196,7 @@ public class Main
 			{
 				i3 = rand.nextInt(CLASSES.size());
 				cCls = CLASSES.get(i3);
-			} while(cCls.enabled);
+			} while(!cCls.enabled);
 
 			if(MSc == false)
 			{
@@ -257,7 +240,50 @@ public class Main
 			if(s.getClazz()!=null)p("is a "+s.getClazz().getName());
 			if(s.getKingdom()!=null)p("and belongs to "+ s.getKingdom()+"\n");
 		}
-		GAMING = true;
+		GAMING = true;*/
+		/*New method*/
+        Random rand = new Random();
+        int cod = 0;
+        /*Player set*/
+        for(String p : players)
+        {
+            PLAYERS.add(new Player(p).withCod(cod));
+            ++cod;
+        }
+        /*---Value declaration---*/
+        int i,i1,i2, cField, sorted = 0;
+        String cKgn;
+        boolean  MSc =false;
+        final List<Player> done = new ArrayList<>();
+        Player cp = null;
+        /*-----------------------*/
+
+        /*Unbreakable game, side by side, equals members, and always one spy if player count isn't par*/
+        if(PLAYERS.size() % 2 != 0)
+        {
+            i2 = rand.nextInt(PLAYERS.size());
+            cp = PLAYERS.get(i2);
+            while(done.contains(cp))
+            {
+                i2 = rand.nextInt(PLAYERS.size());
+                cp = PLAYERS.get(i2);
+            }
+            setupPlayer(cp, Clazzs.SPY, "UNKOWN", 5);
+            done.add(cp);
+            ++sorted;
+        }
+        /*Loop through players and set all-of-them*/
+        do
+        {
+            if(!MSc)
+            {
+                do { i2 = rand.nextInt(PLAYERS.size()); cp = PLAYERS.get(i2); }while(!done.contains(cp));
+
+            }
+
+
+        } while(sorted < PLAYERS.size());
+
 		return new ArrayList[]{OUT_CLAZZS, OUT_KINGDOMS, OUT_FIELDS, PLAYERS};
 	}
 	/**

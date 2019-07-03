@@ -16,6 +16,8 @@ import org.gpginc.ntateam.apptest.runtime.skills.Reposition;
 import org.gpginc.ntateam.apptest.runtime.skills.SoulDescriber;
 import org.gpginc.ntateam.apptest.runtime.skills.SpyKnwoledge;
 import org.gpginc.ntateam.apptest.runtime.skills.SwordmanAttack;
+import org.gpginc.ntateam.apptest.runtime.util.annotation.RarityHandler;
+import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,12 +40,19 @@ public class Clazzs
     /**
      * Classes Declaration
      */
+    @RarityHandler(rarity = Rarity.RARE)
     public static  Clazz ARCHERY; //Arqueiro
+    @RarityHandler(rarity = Rarity.COMMOM)
     public static  Clazz SWORDMAN; //Espadachim
+    @RarityHandler(rarity = Rarity.COMMOM)
     public static  Clazz LANCER; //Lanceiro
+    @RarityHandler(rarity = Rarity.ALWAYS)
     public static  Clazz SUPREME; //Mago supremo
+    @RarityHandler(rarity = Rarity.MASTERRARE)
     public static  Clazz SPY; // Espião
+    @RarityHandler(rarity = Rarity.MASTERRARE)
     public static  Clazz DRAGON_HUNTER; //Caçador de Dragões
+    @RarityHandler(rarity = Rarity.ULTRARARE)
     public static  Clazz ADC; // Feiticeiro
 
     /**

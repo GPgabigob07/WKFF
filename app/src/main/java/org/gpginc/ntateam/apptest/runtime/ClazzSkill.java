@@ -13,6 +13,7 @@ import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.util.Skill;
 
+
 import java.io.Serializable;
 
 public abstract class ClazzSkill implements Skill {
