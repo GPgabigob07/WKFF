@@ -27,8 +27,6 @@ public class Main
 	private static final ArrayList<String> OUT_CLAZZS = new ArrayList<>();
 	private static final ArrayList<String> OUT_KINGDOMS = new ArrayList<>();
 	private static final ArrayList<Integer> OUT_FIELDS = new ArrayList<>();
-	private static boolean GAMING = false;
-
 	public static final String SETTINGS = Util.getCrypto("SETTING_02365-drawer.file-crypto");
 	/*loader*/
 	private static int skillLoaderProgress = 0;
@@ -163,85 +161,6 @@ public class Main
 	
 	public static ArrayList[] postInit(ArrayList<String> players)
 	{
-		/*int cod = 0;
-
-
-
-		p("post init start");
-		if(PLAYERS.size() % 2 != 0)
-		{
-			int i2 = rand.nextInt(PLAYERS.size());
-			cp = PLAYERS.get(i2);
-			while(done.contains(cp))
-			{
-				i2 = rand.nextInt(PLAYERS.size());
-				cp = PLAYERS.get(i2);
-			}
-			setupPlayer(cp, Clazzs.SPY, "UNKOWN", 5);
-			done.add(cp);
-			++sorted;
-		}
-		do
-		{
-			int i2 = rand.nextInt(PLAYERS.size());
-			int i3 = 0;
-			cp = PLAYERS.get(i2);
-			while(done.contains(cp))
-			{
-			    i2 = rand.nextInt(PLAYERS.size());
-				cp = PLAYERS.get(i2);
-			}
-			Clazz cCls;
-			do
-			{
-				i3 = rand.nextInt(CLASSES.size());
-				cCls = CLASSES.get(i3);
-			} while(!cCls.enabled);
-
-			if(MSc == false)
-			{
-				MSc = true;
-				setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
-				done.add(cp);
-				cField = rand.nextInt(4) + 1;
-				if(cKgn.equals("OHXER")) cKgn = "CAMELOT";
-				else cKgn = "OHXER";
-				i2 = rand.nextInt(PLAYERS.size());
-				i3 = rand.nextInt(CLASSES.size());
-				cp = PLAYERS.get(i2);
-				while(done.contains(cp))
-				{
-				    i2 = rand.nextInt(PLAYERS.size());
-					cp = PLAYERS.get(i2);
-				}
-				setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
-				done.add(cp);
-				++sorted;
-				++sorted;
-				cField = rand.nextInt(4) + 1;
-				p(cField);
-			}
-			else if(!cCls.equals(Clazzs.SUPREME) && !cCls.equals(Clazzs.DRAGON_HUNTER)&& !cp.hasClazz() && !cp.hasKingdom())
-			{
-				setupPlayer(cp, rand.nextInt(1000) < 3 ? Clazzs.DRAGON_HUNTER : cCls, cKgn, cField);
-				done.add(cp);
-				if(cKgn.equals("OHXER")) cKgn = "CAMELOT";
-				else cKgn = "OHXER";
-				++sorted;
-				cField = rand.nextInt(4) + 1;
-				p(cField);
-			}
-				//p(sorted);
-		} while(sorted < PLAYERS.size());
-		
-		for(Player s : PLAYERS)
-		{
-			if(s.getName()!=null)p(s.getName());
-			if(s.getClazz()!=null)p("is a "+s.getClazz().getName());
-			if(s.getKingdom()!=null)p("and belongs to "+ s.getKingdom()+"\n");
-		}
-		GAMING = true;*/
-		/*New method*/
         Random rand = new Random();
         int cod = 0;
         /*Player set*/
@@ -252,22 +171,17 @@ public class Main
         }
         /*---Value declaration---*/
         int i,i1,i2, cField, sorted = 0;
-        String cKgn;
+        String cKgn = KINGDOMS.get(rand.nextInt(KINGDOMS.size()));
         boolean  MSc =false;
         final List<Player> done = new ArrayList<>();
         Player cp = null;
+        Clazz cCz = null;
         /*-----------------------*/
 
         /*Unbreakable game, side by side, equals members, and always one spy if player count isn't par*/
         if(PLAYERS.size() % 2 != 0)
         {
-            i2 = rand.nextInt(PLAYERS.size());
-            cp = PLAYERS.get(i2);
-            while(done.contains(cp))
-            {
-                i2 = rand.nextInt(PLAYERS.size());
-                cp = PLAYERS.get(i2);
-            }
+			i2 = rand.nextInt(PLAYERS.size()); cp = PLAYERS.get(i2);
             setupPlayer(cp, Clazzs.SPY, "UNKOWN", 5);
             done.add(cp);
             ++sorted;
@@ -277,15 +191,42 @@ public class Main
         {
             if(!MSc)
             {
-                do { i2 = rand.nextInt(PLAYERS.size()); cp = PLAYERS.get(i2); }while(!done.contains(cp));
-
+            	for(int zs = 0; zs<2;++zs) {
+					do {
+						i2 = rand.nextInt(PLAYERS.size());
+						cp = PLAYERS.get(i2);
+						cField = rand.nextInt(4) + 1;
+						if(!done.contains(cp))break;
+					} while (true);
+					if (cKgn.equals("OHXER")) cKgn = "CAMELOT";
+					else cKgn = "OHXER";
+					setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
+					done.add(cp);
+					++sorted;
+				}
+            	MSc = true;
             }
 
+            cField = rand.nextInt(4) + 1;
+			if (cKgn.equals("OHXER")) cKgn = "CAMELOT";
+			else cKgn = "OHXER";
+			do{ i = rand.nextInt(100); i2 = rand.nextInt(Clazzs.CLAZZS.size()); cCz = Clazzs.CLAZZS.get(i2);}while (!isClazzAcceptable(i, cCz));
+			cp = PLAYERS.get(rand.nextInt(PLAYERS.size()));
+			setupPlayer(cp, cCz, cKgn, cField);
+			done.add(cp);
+			++sorted;
 
         } while(sorted < PLAYERS.size());
 
 		return new ArrayList[]{OUT_CLAZZS, OUT_KINGDOMS, OUT_FIELDS, PLAYERS};
 	}
+
+	static boolean isClazzAcceptable(int r, Clazz c)
+	{
+		if(r <= c.getRARITY().getPercent())return c.enabled ? true : false;
+		return false;
+	}
+
 	/**
 	 *
 	 * @param clazz

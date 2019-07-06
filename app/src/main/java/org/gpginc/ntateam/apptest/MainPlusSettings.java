@@ -56,6 +56,7 @@ public class MainPlusSettings extends AppCompatActivity
         ((NavigationView)findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
         /*----------------------------------*/
         Main.preInit();
+        loadClazzsByMainstream();
         /*----------------------------------*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -179,7 +180,7 @@ public class MainPlusSettings extends AppCompatActivity
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_plus_settings, menu);
@@ -199,7 +200,7 @@ public class MainPlusSettings extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

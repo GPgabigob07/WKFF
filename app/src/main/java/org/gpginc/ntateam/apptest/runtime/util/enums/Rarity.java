@@ -1,37 +1,45 @@
 package org.gpginc.ntateam.apptest.runtime.util.enums;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import org.gpginc.ntateam.apptest.runtime.util.IntInterval;
 
+import java.io.Serializable;
+
 public enum Rarity
-{
-    ALWAYS(),
-    COMMOM(IntInterval.HUNDRED_BOUND, 2),
-    RARE(new IntInterval(0, 50), 10),
-    ULTRARARE(new IntInterval(0,5), 50),
-    MASTERRARE(IntInterval.THOUSAND_BOUND, 500);
-
-    @Nullable
-    private IntInterval interval;
-    @Nullable
-    private final int fixedValue;
-
-    Rarity(@Nullable IntInterval interval, @Nullable int fixedValue) {
-        this.interval = interval;
-        this.fixedValue = fixedValue;
-    }
-    Rarity()
     {
-        this.interval = null;
-        this.fixedValue = 0;
+    ALWAYS(0),
+    COMMON(100),
+    RARE(35),
+    ULTRARARE(15),
+    MASTERRARE(1);
+
+
+    public static final Rarity[] RARITIES = {COMMON, RARE, ULTRARARE, MASTERRARE};
+
+    private final int p100t;
+
+    Rarity(@Nullable int  percent) {
+        this.p100t = percent;
     }
 
-    public IntInterval getInterval() {
-        return interval;
+    public int getPercent() {
+        return p100t;
     }
 
-    public int getFixedValue() {
-        return fixedValue;
+    public static Rarity withName(String name)
+    {
+        for(Rarity r : RARITIES)
+        {
+            if(r.R().equals(name)) return r;
+        }
+        return Rarity.ALWAYS;
+    }
+
+    public String R()
+    {
+        return this.name();
     }
 }

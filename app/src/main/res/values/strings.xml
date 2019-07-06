@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Which Kingdom Falls First?</string>
     <string name="player_name">Player Name</string>
-    <string name="add">add</string>
+    <string name="Add">add</string>
     <string name="go_btn_text">GO!</string>
     <string name="dialog_text">This Player Already Exists</string>
     <string name="skills">Skills:</string>

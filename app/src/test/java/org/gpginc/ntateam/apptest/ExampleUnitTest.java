@@ -1,17 +1,14 @@
-package org.gpginc.ntateam.apptest;
+package org.gpginc.ntateam.apptest.runtime.util;
 
-import org.junit.Test;
+import android.os.AsyncTask;
+import android.view.View;
 
-import static org.junit.Assert.*;
+/**import org.gpginc.ntateam.apptest.LoadingGame;
+import org.gpginc.ntateam.apptest.runtime.Clazz;
+import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-}
+public class Initializer
+{
+    public class ClazzLoader extends AsyncTask<Clazz, Integer, Boolean>
+    {
+        priv**/

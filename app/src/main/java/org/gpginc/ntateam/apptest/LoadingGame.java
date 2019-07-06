@@ -24,7 +24,7 @@ import org.gpginc.ntateam.apptest.runtime.util.Util;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
+@Deprecated
 public class LoadingGame extends AppCompatActivity {
 
 

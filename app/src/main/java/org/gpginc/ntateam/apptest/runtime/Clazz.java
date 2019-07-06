@@ -8,8 +8,11 @@ import android.support.annotation.Nullable;
 import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.annotation.RarityHandler;
+import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
 import java.io.Serializable;
+import java.lang.annotation.AnnotationTypeMismatchException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +23,13 @@ public class Clazz implements Parcelable
 	private Player cPlayer;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 
+	private final Rarity RARITY;
+
 
 	public boolean enabled = true;
-	public Clazz(String name)
-	{
+	public Clazz(String name, Rarity r){
 		this.name = name;
+		this.RARITY = r;
 		String[] namep = name.split(" ");
 		String a = "";
 		for(String s : namep)
@@ -36,6 +41,11 @@ public class Clazz implements Parcelable
 		Main.p(this.name +" "+ this.pseudoName);
 		Clazzs.CLAZZS.add(this);
 		Clazzs.CLAZZ_MAP.put(this.name, this);
+/*		if(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class) == null)
+		{
+			throw new AnnotationTypeMismatchException(this.getClass().getMethod("Clazz", String.class), "Clazz declaration error, no rarity handler attached!" +
+					"\n at " + this.getClass().getDeclaringClass());
+		} else Main.p("Clazz was created perfectly!\n");*/
 	}
 	/**
 	 * Use this constructor for SPY based classes
@@ -44,8 +54,28 @@ public class Clazz implements Parcelable
 	{
 		this.name = "SPY";
 		this.pseudoName = "SPY";
+		this.RARITY = Rarity.MASTERRARE;
+//		Main.p(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class).rarity());
 	}
 
+/*
+ArrayList<String> names =  new ArrayList();
+		in.readStringList(names);
+for(String name :  names)
+		{
+			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
+		}
+
+		for(ClazzSkill c : this.SKILLS)
+		{
+			names.add(c.getName());
+		}
+		dest.writeStringList(names);
+ */
+
+	public Rarity getRARITY() {
+		return RARITY;
+	}
 
 	protected Clazz(Parcel in) {
 		name = in.readString();
@@ -58,6 +88,7 @@ public class Clazz implements Parcelable
 			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
 		}
 		enabled = in.readByte() != 0;
+		RARITY = Rarity.withName(in.readString());
 	}
 
 	@Override
@@ -72,6 +103,7 @@ public class Clazz implements Parcelable
 		}
 		dest.writeStringList(names);
 		dest.writeByte((byte) (enabled ? 1 : 0));
+		dest.writeString(this.RARITY.R());
 	}
 
 	@Override

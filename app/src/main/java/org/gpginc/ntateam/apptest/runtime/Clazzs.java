@@ -1,6 +1,7 @@
 package org.gpginc.ntateam.apptest.runtime;
 
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ import org.gpginc.ntateam.apptest.runtime.skills.SwordmanAttack;
 import org.gpginc.ntateam.apptest.runtime.util.annotation.RarityHandler;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
+import java.lang.annotation.AnnotationTypeMismatchException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,7 @@ import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 public class Clazzs
 {
      public static List<Clazz> CLAZZS = new ArrayList<>();
-     public static final Map<String, Clazz> CLAZZ_MAP = new HashMap<>();
+     public static final Map<Integer, Clazz> CLAZZ_MAP = new HashMap<>();
      public static final Map<String, ClazzSkill> SKILL_MAP = new HashMap<>();
 
     /**
@@ -42,13 +44,13 @@ public class Clazzs
      */
     @RarityHandler(rarity = Rarity.RARE)
     public static  Clazz ARCHERY; //Arqueiro
-    @RarityHandler(rarity = Rarity.COMMOM)
+    @RarityHandler(rarity = Rarity.COMMON)
     public static  Clazz SWORDMAN; //Espadachim
-    @RarityHandler(rarity = Rarity.COMMOM)
+    @RarityHandler(rarity = Rarity.COMMON)
     public static  Clazz LANCER; //Lanceiro
     @RarityHandler(rarity = Rarity.ALWAYS)
     public static  Clazz SUPREME; //Mago supremo
-    @RarityHandler(rarity = Rarity.MASTERRARE)
+   // @RarityHandler(rarity = Rarity.MASTERRARE)
     public static  Clazz SPY; // Espião
     @RarityHandler(rarity = Rarity.MASTERRARE)
     public static  Clazz DRAGON_HUNTER; //Caçador de Dragões
@@ -91,13 +93,15 @@ public class Clazzs
         REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_player_selection_layout);
 
 
-        ARCHERY = new Clazz("Archery Magician").bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
-        SWORDMAN = new Clazz("Knight Magician").bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
-        SUPREME = new Clazz("Supreme Magician").bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
-        ADC = new Clazz("Support Magician").bindSkill(ABSOLUTE_DEFENSE);
-        DRAGON_HUNTER = new Clazz("Dragon Hunter");
-        LANCER = new Clazz("Lancer Magician").bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);;
+        ARCHERY = new Clazz(R.string.clazz_archery, Rarity.RARE).bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
+        SWORDMAN = new Clazz(R.string.clazz_swordman, Rarity.COMMON).bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
+        SUPREME = new Clazz(R.string.clazz_supreme, Rarity.ALWAYS).bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
+        ADC = new Clazz(R.string.clazz_adc, Rarity.ULTRARARE).bindSkill(ABSOLUTE_DEFENSE);
+        DRAGON_HUNTER = new Clazz(R.string.clazz_dh, Rarity.MASTERRARE);
+        LANCER = new Clazz(R.string.clazz_lancer, Rarity.COMMON).bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);
         SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
+
+
     }
 
 

@@ -7,6 +7,7 @@ public class IntInterval extends Number
 
     public static final IntInterval HUNDRED_BOUND = new IntInterval(0, 100);
     public static final IntInterval THOUSAND_BOUND = new IntInterval(0, 1000);
+    public static final IntInterval NULL = new IntInterval(0,0);
 
     protected int start;
     protected int end;
@@ -38,9 +39,12 @@ public class IntInterval extends Number
 
     public int getRandomIn()
     {
+
         int out = 0;
-        do out = new Random().nextInt(end); while(in(out));
-        return out;
+        if(end != 0) {
+            do out = new Random().nextInt(end); while (in(out));
+        }
+        return end!=0 ? out : 0;
     }
 
     @Override
