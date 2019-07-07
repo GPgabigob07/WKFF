@@ -4,18 +4,12 @@ import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
 import static org.gpginc.ntateam.apptest.runtime.Main.p;
 
 public class NullingAttack extends ClazzSkill
@@ -40,7 +34,7 @@ public class NullingAttack extends ClazzSkill
         if(o!=null)
         {
             Player p = (Player) o;
-            if(p.attacked && !this.isPassiveRun() || this.isPassiveRun())
+            if(p.attacked || this.isPassiveRun())
             {
                 final Dialog d = this.lastAct.getDialog(this.lastAct, R.string.dtpywttd);
                 d.setContentView(R.layout.dialog_protection_appied);

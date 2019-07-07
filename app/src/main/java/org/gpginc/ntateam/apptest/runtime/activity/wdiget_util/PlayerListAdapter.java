@@ -9,14 +9,13 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import org.gpginc.ntateam.apptest.MainActivity;
 import org.gpginc.ntateam.apptest.MainPlusSettings;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
 import java.util.List;
 
-public class PlayerListAdapter<T extends Object> extends BaseExpandableListAdapter
+public class PlayerListAdapter<T> extends BaseExpandableListAdapter
 {
     private final Context context;
     private final List<T> owners;

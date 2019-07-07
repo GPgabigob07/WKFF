@@ -1,8 +1,6 @@
 package org.gpginc.ntateam.apptest.runtime;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.view.View;
@@ -23,7 +21,7 @@ public class Main
 	private static final List<Clazz> CLASSES = new ArrayList<>();
 	private static final List<String> KINGDOMS = new ArrayList<>();
 	private static Integer playerInField1=0, playerInField2=0, playerInField3=0, playerInField4=0;
-	public static final ArrayList<Player> PLAYERS = new ArrayList<Player>();
+	public static final ArrayList<Player> PLAYERS = new ArrayList<>();
 	private static final ArrayList<String> OUT_CLAZZS = new ArrayList<>();
 	private static final ArrayList<String> OUT_KINGDOMS = new ArrayList<>();
 	private static final ArrayList<Integer> OUT_FIELDS = new ArrayList<>();
@@ -34,7 +32,7 @@ public class Main
 	public static boolean gameLoaded = false;
 
 	@UiThread
-	public static void preInit(/*final Activity a, final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2*/)
+	public static void preInit(final Activity a/*, final SharedPreferences prefer,final ProgressBar bar1, final ProgressBar bar2,final TextView par1, final TextView par2*/)
 	{
 		/*MAYBE BE USED IN A NEAR FUTURE*/
 
@@ -78,7 +76,11 @@ public class Main
 			}
 
 		});*/
-		CLASSES.addAll(Clazzs.CLAZZS);
+		for (Clazz c : Clazzs.CLAZZS)
+		{
+			c.setResources(a.getResources());
+			CLASSES.add(c);
+		}
 		KINGDOMS.add("OHXER");
 		KINGDOMS.add("CAMELOT");
 	}
@@ -196,8 +198,7 @@ public class Main
 						i2 = rand.nextInt(PLAYERS.size());
 						cp = PLAYERS.get(i2);
 						cField = rand.nextInt(4) + 1;
-						if(!done.contains(cp))break;
-					} while (true);
+					} while (done.contains(cp));
 					if (cKgn.equals("OHXER")) cKgn = "CAMELOT";
 					else cKgn = "OHXER";
 					setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
@@ -223,7 +224,7 @@ public class Main
 
 	static boolean isClazzAcceptable(int r, Clazz c)
 	{
-		if(r <= c.getRARITY().getPercent())return c.enabled ? true : false;
+		if(r <= c.getRARITY().getPercent())return c.enabled;
 		return false;
 	}
 
@@ -235,7 +236,7 @@ public class Main
 	private static void setupPlayer(Player p, Clazz clazz, String kingdom, int field)
 	{
 		p.setClazz(clazz).setKingdom(kingdom).setField(field);
-		OUT_CLAZZS.add(clazz.getName());
+		OUT_CLAZZS.add(clazz.getNameLikeStr());
 		OUT_KINGDOMS.add(kingdom);
 		OUT_FIELDS.add(field);
 		setUpFieldMemory(field);

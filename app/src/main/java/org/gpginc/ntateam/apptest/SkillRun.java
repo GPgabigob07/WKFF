@@ -1,10 +1,6 @@
 package org.gpginc.ntateam.apptest;
 
 import android.app.Dialog;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,15 +10,14 @@ import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
-import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
-import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.FieldSliderFragment;
 
 public class SkillRun extends AppCompatActivity{
 
     private ClazzSkill currentSkill;
     public Player ongoingPlayer;
 
-    public SkillRun(){};
+    public SkillRun(){}
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

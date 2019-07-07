@@ -1,19 +1,14 @@
 package org.gpginc.ntateam.apptest;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.DmgStp_Util.DmgLineAdapter;
-import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.Intel_SkillUtil.IntelLineAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

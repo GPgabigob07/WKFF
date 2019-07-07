@@ -1,15 +1,9 @@
 package org.gpginc.ntateam.apptest.runtime;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.skills.AbsoluteDefense;
 import org.gpginc.ntateam.apptest.runtime.skills.ArcherAttack;
 import org.gpginc.ntateam.apptest.runtime.skills.ChangePosition;
-import org.gpginc.ntateam.apptest.runtime.skills.KingKnowns;
 import org.gpginc.ntateam.apptest.runtime.skills.LancerAttack;
 import org.gpginc.ntateam.apptest.runtime.skills.MagicianCounter;
 import org.gpginc.ntateam.apptest.runtime.skills.NullingAttack;
@@ -20,24 +14,17 @@ import org.gpginc.ntateam.apptest.runtime.skills.SwordmanAttack;
 import org.gpginc.ntateam.apptest.runtime.util.annotation.RarityHandler;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
-import java.lang.annotation.AnnotationTypeMismatchException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.input;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
-import static org.gpginc.ntateam.apptest.runtime.Main.setDownFieldMemory;
-import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
 public class Clazzs
 {
      public static List<Clazz> CLAZZS = new ArrayList<>();
      public static final Map<Integer, Clazz> CLAZZ_MAP = new HashMap<>();
      public static final Map<String, ClazzSkill> SKILL_MAP = new HashMap<>();
+
 
     /**
      * Classes Declaration
@@ -102,11 +89,5 @@ public class Clazzs
         SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
 
 
-    }
-
-
-    public static Clazz getClazzByInheritedName(String s)
-    {
-        return CLAZZ_MAP.get(s);
     }
 }

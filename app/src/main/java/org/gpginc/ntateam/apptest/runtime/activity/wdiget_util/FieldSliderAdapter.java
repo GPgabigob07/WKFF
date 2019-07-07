@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import org.gpginc.ntateam.apptest.R;
 
-import java.net.ContentHandler;
-
 public class FieldSliderAdapter extends FragmentPagerAdapter {
 
     private final Context c;

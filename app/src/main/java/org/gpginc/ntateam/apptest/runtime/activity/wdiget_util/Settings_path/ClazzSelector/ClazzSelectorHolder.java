@@ -12,8 +12,8 @@ import org.gpginc.ntateam.apptest.runtime.Clazz;
 public class ClazzSelectorHolder extends RecyclerView.ViewHolder
 {
 
-    public ImageView icon;
-    public Switch inheritedClazz;
+    public final ImageView icon;
+    public final Switch inheritedClazz;
 
     public ClazzSelectorHolder(@NonNull View itemView, Clazz c) {
         super(itemView);

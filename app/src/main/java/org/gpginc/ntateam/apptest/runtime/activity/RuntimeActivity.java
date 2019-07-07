@@ -1,6 +1,5 @@
 package org.gpginc.ntateam.apptest.runtime.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,19 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.DamageStep;
 import org.gpginc.ntateam.apptest.PrePlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
-import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class RuntimeActivity extends AppCompatActivity implements Parcelable
@@ -158,31 +154,16 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         if(savedInstanceState!=null)
         {
-            for(String player : savedInstanceState.getStringArrayList("PlayerNames"))
-            {
-                this.PLAYER_NAMES.add(player);
-               // System.out.println(player);
-            }
-            for(String clazz : savedInstanceState.getStringArrayList("PlayerClazz"))
-            {
-                this.OUT_CLAZZS.add(clazz);
-               // System.out.println(clazz);
-            }
-            for(String KGN : savedInstanceState.getStringArrayList("PlayerKingdoms"))
-            {
-                this.OUT_KINGDOMS.add(KGN);
-              //  System.out.println(KGN);
-            }
-            for(Integer i : savedInstanceState.getIntegerArrayList("PlayerFields"))
-            {
-                this.OUT_FIELDS.add(i);
-               // System.out.println("Field: "+i);
-            }
-            for(Integer i : savedInstanceState.getIntegerArrayList("GonePlayers"))
-            {
-                this.GONE_PLAYERS.add(i);
-                //System.out.println("gone " +i);
-            }
+            // System.out.println(player);
+            this.PLAYER_NAMES.addAll(savedInstanceState.getStringArrayList("PlayerNames"));
+            // System.out.println(clazz);
+            this.OUT_CLAZZS.addAll(savedInstanceState.getStringArrayList("PlayerClazz"));
+            //  System.out.println(KGN);
+            this.OUT_KINGDOMS.addAll(savedInstanceState.getStringArrayList("PlayerKingdoms"));
+            // System.out.println("Field: "+i);
+            this.OUT_FIELDS.addAll(savedInstanceState.getIntegerArrayList("PlayerFields"));
+            //System.out.println("gone " +i);
+            this.GONE_PLAYERS.addAll(savedInstanceState.getIntegerArrayList("GonePlayers"));
             for(Parcelable p : savedInstanceState.getParcelableArrayList("Players"))
             {
                 this.ON_PLAYERS.add((Player)p);
@@ -304,12 +285,15 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             startActivity(next);
             this.finish();
         } else {
-            Main.damageStep(this.ON_PLAYERS);
-            this.GONE_PLAYERS.clear();
-            Intent next = new Intent(this, DamageStep.class);
-            next.putExtras(this.getNextPlayer());
-            startActivity(next);
-            this.finish();
+            if(Main.damageStep(this.ON_PLAYERS)) {
+                this.GONE_PLAYERS.clear();
+                Intent next = new Intent(this, DamageStep.class);
+                next.putExtras(this.getNextPlayer());
+                startActivity(next);
+                this.finish();
+            } else {
+
+            }
         }
     }
     public Player currentPlayer()
@@ -322,6 +306,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         return this.ON_PLAYERS;
     }
+
     @Nullable
     public Player findByCode(int code)
     {

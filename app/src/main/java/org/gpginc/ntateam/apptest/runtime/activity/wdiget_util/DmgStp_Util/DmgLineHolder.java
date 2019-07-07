@@ -10,8 +10,10 @@ import org.gpginc.ntateam.apptest.R;
 
 public class DmgLineHolder extends RecyclerView.ViewHolder
 {
-    protected TextView playerName, playerClazz, deadInfo;
-    protected ImageView kingdom;
+    protected final TextView playerName;
+    protected final TextView playerClazz;
+    protected final TextView deadInfo;
+    protected final ImageView kingdom;
 
     public DmgLineHolder(@NonNull View itemView) {
         super(itemView);

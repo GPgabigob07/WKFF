@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,14 +17,8 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import org.gpginc.ntateam.apptest.runtime.Clazz;
@@ -54,10 +47,7 @@ public class MainPlusSettings extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ((NavigationView)findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
-        /*----------------------------------*/
-        Main.preInit();
-        loadClazzsByMainstream();
-        /*----------------------------------*/
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,6 +64,15 @@ public class MainPlusSettings extends AppCompatActivity
         GifImageView gif = findViewById(R.id.title_animation);
     }
 
+    @Override
+    protected void onStart() {
+        /*----------------------------------*/
+        Main.preInit(this);
+        loadClazzsByMainstream();
+        /*----------------------------------*/
+        super.onStart();
+    }
+
     public void addPlayer(View view)
     {
         String name = ((EditText)findViewById(R.id.player_clazz)).getText().toString();
@@ -83,7 +82,7 @@ public class MainPlusSettings extends AppCompatActivity
 
                 ExpandableListView listinha = findViewById(R.id.player_list);
 
-                listinha.setAdapter(new PlayerListAdapter<String>(this, PLAYER_NAMES, this));
+                listinha.setAdapter(new PlayerListAdapter<>(this, PLAYER_NAMES, this));
                 ((EditText) findViewById(R.id.player_clazz)).setText("");
             } else {
                 Snackbar.make(view, R.string.player_name_justexist, Snackbar.LENGTH_LONG)
@@ -94,6 +93,7 @@ public class MainPlusSettings extends AppCompatActivity
                     .setAction("Action", null).show();
         }
     }
+    @SuppressWarnings("unchecked")
     public void start(View view)
     {
         if(PLAYER_NAMES.size() >=4) {
@@ -141,8 +141,8 @@ public class MainPlusSettings extends AppCompatActivity
         SharedPreferences.Editor editor = pref.edit();
         for(Clazz c : Clazzs.CLAZZS)
         {
-            editor.putBoolean(c.getName(), c.enabled);
-            Main.p(c.getName()+ c.enabled);
+            editor.putBoolean(c.getNameLikeStr(), c.enabled);
+            Main.p(c.getNameLikeStr()+ c.enabled);
         }
         editor.commit();
     }
@@ -152,8 +152,8 @@ public class MainPlusSettings extends AppCompatActivity
         SharedPreferences pref = getSharedPreferences(Main.SETTINGS, 0);
         for(Clazz c : Clazzs.CLAZZS)
         {
-            c.enabled = pref.getBoolean(c.getName(), true);
-            Main.p(c.getName()+ c.enabled);
+            c.enabled = pref.getBoolean(c.getNameLikeStr(), true);
+            Main.p(c.getNameLikeStr()+ c.enabled);
         }
     }
     public void openDialog()
@@ -217,16 +217,7 @@ public class MainPlusSettings extends AppCompatActivity
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
             rM.setLayoutManager(layoutManager);
             rM.setAdapter(new ClazzSelectorLineAdapter());
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -1,12 +1,6 @@
 package org.gpginc.ntateam.apptest.runtime.util.enums;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
-
-import org.gpginc.ntateam.apptest.runtime.util.IntInterval;
-
-import java.io.Serializable;
 
 public enum Rarity
     {

@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,10 +21,6 @@ import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
 
 public class SoulDescriber extends ClazzSkill
 {
@@ -52,7 +46,7 @@ public class SoulDescriber extends ClazzSkill
             if (!p.getName().equals(pP.getName())) attackable.add(pP);
             Main.p(pP.getName());
         }
-        final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+        final ListView list = this.current.findViewById(R.id.players_list);
         final Button btn = this.current.findViewById(R.id.func_skill_btn);
         btn.setHint("single");
         final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, false, 1, list);
@@ -79,7 +73,7 @@ public class SoulDescriber extends ClazzSkill
             public void onClick(View v) {
 
                 ((Button) d.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
-                ((Button) d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+                d.findViewById(R.id.doalog_ok).setOnClickListener(this.secondListener);
 
                 if (adapter.getSelectedCount() < 1) {
                     d.show();

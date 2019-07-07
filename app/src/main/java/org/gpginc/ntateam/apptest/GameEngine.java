@@ -1,7 +1,5 @@
 package org.gpginc.ntateam.apptest;
 
-import android.os.Parcelable;
-
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Player;
@@ -88,7 +86,7 @@ public class GameEngine
 
     static boolean isClazzAcceptable(int r, Clazz c)
     {
-        if(r <= c.getRARITY().getPercent())return c.enabled ? true : false;
+        if(r <= c.getRARITY().getPercent())return c.enabled;
         return false;
     }
 

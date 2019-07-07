@@ -4,13 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 public class Player implements Parcelable
 {
 	private int lifePoints = 3, damageTaken, currentField, cod;
@@ -204,7 +203,7 @@ public class Player implements Parcelable
 	public Player damageStep()
 	{
 		this.lifePoints -= (!this.isProtected || !this.isDragonProtected) ? this.damageTaken : 0;
-		this.isDead = (!this.isDragonProtected) ? this.lifePoints <= 0 : false;
+		this.isDead = (!this.isDragonProtected) && this.lifePoints <= 0;
 		return this;
 	}
 	public int life()

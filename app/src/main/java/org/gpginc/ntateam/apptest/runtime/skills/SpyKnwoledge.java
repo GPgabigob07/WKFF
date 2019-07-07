@@ -1,6 +1,5 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
-import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;

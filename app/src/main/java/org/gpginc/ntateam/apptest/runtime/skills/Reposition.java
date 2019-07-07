@@ -1,12 +1,10 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -21,11 +19,7 @@ import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapt
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.input;
 import static org.gpginc.ntateam.apptest.runtime.Main.p;
-import static org.gpginc.ntateam.apptest.runtime.Main.setDownFieldMemory;
-import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
 public class Reposition extends ClazzSkill
 {
@@ -80,7 +74,7 @@ public class Reposition extends ClazzSkill
                     list.setAdapter(adapter);
 
                     //Set up: 'Select' button
-                    ((Button)sk.findViewById(R.id.func_skill_btn)).setOnClickListener(new View.OnClickListener() {
+                    sk.findViewById(R.id.func_skill_btn).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
@@ -88,7 +82,7 @@ public class Reposition extends ClazzSkill
                                     reposition_alert);//New dialog
 
                             ((Button)d2.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
-                            ((Button)d2.findViewById(R.id.doalog_ok)).setOnClickListener(new View.OnClickListener() {
+                            d2.findViewById(R.id.doalog_ok).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     d2.dismiss();

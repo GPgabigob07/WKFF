@@ -1,13 +1,9 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -21,11 +17,6 @@ import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapt
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
-import static org.gpginc.ntateam.apptest.runtime.Main.setDownFieldMemory;
-import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
 public class ArcherAttack extends ClazzSkill
 {
@@ -57,7 +48,7 @@ public class ArcherAttack extends ClazzSkill
                 if(!p.getName().equals(pP.getName()))attackable.add(pP);
                 Main.p(pP.getName());
             }
-            final ListView list = ((ListView) this.current.findViewById(R.id.players_list));
+            final ListView list = this.current.findViewById(R.id.players_list);
             final Button btn = this.current.findViewById(R.id.func_skill_btn);
             btn.setHint("single");
             final PlayerSelectAdapter adapter = new PlayerSelectAdapter(this.current, attackable, false, 1, list);
@@ -83,7 +74,7 @@ public class ArcherAttack extends ClazzSkill
                 {
 
                     ((Button)d.findViewById(R.id.doalog_ok)).setText(android.R.string.ok);
-                    ((Button)d.findViewById(R.id.doalog_ok)).setOnClickListener(this.secondListener);
+                    d.findViewById(R.id.doalog_ok).setOnClickListener(this.secondListener);
 
                     if(adapter.getSelectedCount() < 1)
                     {

@@ -15,10 +15,10 @@ public class FieldSliderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.skr_fragment_slider, container, false);
 
-        TextView tv = (TextView) v.findViewById(R.id.title);
+        TextView tv = v.findViewById(R.id.title);
         tv.setText(getArguments().getString("text"));
 
-        ImageView imageView = (ImageView) v.findViewById(R.id.field_bg);
+        ImageView imageView = v.findViewById(R.id.field_bg);
         imageView.setBackgroundResource(getArguments().getInt("img"));
 
         return v;

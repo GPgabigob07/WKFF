@@ -2,15 +2,9 @@ package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
 import static org.gpginc.ntateam.apptest.runtime.Main.p;

@@ -19,16 +19,13 @@ import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
-import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerListAdapter;
-import org.gpginc.ntateam.apptest.runtime.util.Util;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
+@SuppressWarnings("unchecked")
 public class MainActivity extends AppCompatActivity {
 
     private static final ArrayList<String> PLAYER_NAMES = new ArrayList<>();
@@ -91,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view)
     {
         if(PLAYER_NAMES.size() >=4) {
-            final ArrayList[] lists = this.main.postInit(PLAYER_NAMES);
+            final ArrayList[] lists = Main.postInit(PLAYER_NAMES);
             Bundle bundle = new Bundle();
 
             bundle.putStringArrayList("PlayerNames", PLAYER_NAMES);
@@ -135,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         for(Clazz c : Clazzs.CLAZZS)
         {
-            editor.putBoolean(c.getName(), c.enabled);
+            editor.putBoolean(c.getNameLikeStr(), c.enabled);
         }
     }
 
@@ -144,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences(Main.SETTINGS, 0);
         for(Clazz c : Clazzs.CLAZZS)
         {
-            c.enabled = pref.getBoolean(c.getName(), true);
+            c.enabled = pref.getBoolean(c.getNameLikeStr(), true);
         }
     }
     public void openDialog()

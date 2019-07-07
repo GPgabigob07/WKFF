@@ -4,19 +4,11 @@ import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Player;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
 
 public class AbsoluteDefense extends ClazzSkill
 {
@@ -29,7 +21,7 @@ public class AbsoluteDefense extends ClazzSkill
         super(name, type, isCounter, layout);
     }
 
-    public AbsoluteDefense(Parcel in) {
+    private AbsoluteDefense(Parcel in) {
         super(in);
     }
 

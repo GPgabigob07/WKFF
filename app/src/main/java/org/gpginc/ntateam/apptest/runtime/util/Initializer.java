@@ -47,7 +47,7 @@ public class Initializer
                     }
                 }
             }
-            c.enabled = this.game.prefer.getBoolean(c.getName(), true);
+            c.enabled = this.game.prefer.getBoolean(c.getNameLikeStr(), true);
             return true;
         }
 

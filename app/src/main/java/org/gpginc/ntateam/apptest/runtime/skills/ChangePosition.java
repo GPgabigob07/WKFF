@@ -1,15 +1,10 @@
 package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
@@ -19,12 +14,6 @@ import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.FieldSliderAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.input;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
 import static org.gpginc.ntateam.apptest.runtime.Main.setDownFieldMemory;
 import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 
@@ -48,7 +37,7 @@ public class ChangePosition extends ClazzSkill
     {
         if(o!=null)
         {
-            final ViewPager pager = (ViewPager) this.current.findViewById(R.id.pager);
+            final ViewPager pager = this.current.findViewById(R.id.pager);
             final ClazzSkill thisSkill = this;
             pager.setAdapter(new FieldSliderAdapter(this.current.getSupportFragmentManager(), this.current));
 

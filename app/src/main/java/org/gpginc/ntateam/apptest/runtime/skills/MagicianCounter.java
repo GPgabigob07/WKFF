@@ -2,14 +2,8 @@ package org.gpginc.ntateam.apptest.runtime.skills;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
@@ -18,14 +12,9 @@ import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
-import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.PLAYERS;
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
-import static org.gpginc.ntateam.apptest.runtime.Clazzs.*;
 
 public class MagicianCounter extends ClazzSkill
 {
@@ -52,10 +41,7 @@ public class MagicianCounter extends ClazzSkill
             {
                 final List<Object> attackable = new ArrayList<>();
                 final SkillRun sk = this.current;
-                for(Player atk : p.getAttackers())
-                {
-                    attackable.add(atk);
-                }
+                attackable.addAll(p.getAttackers());
                 final Player countered = p.getAttackers().get(0);
                 Main.p("COUNTER TARGET: " +countered.getName());
 

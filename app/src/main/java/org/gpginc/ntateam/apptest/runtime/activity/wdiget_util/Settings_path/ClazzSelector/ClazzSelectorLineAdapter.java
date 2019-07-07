@@ -9,7 +9,6 @@ import android.widget.CompoundButton;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
-import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.Intel_SkillUtil.IntelLineHolder;
 
 public class ClazzSelectorLineAdapter extends RecyclerView.Adapter<ClazzSelectorHolder> {
 

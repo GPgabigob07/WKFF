@@ -154,4 +154,11 @@
     </string>
     <string name="set_client_clazzs">Players Classes:</string>
     <string name="skill_label">Skill</string>
+    <string name="clazz_archery">Archery Magician</string>
+    <string name="clazz_spy">SPY</string>
+    <string name="clazz_swordman">Knight Magician</string>
+    <string name="clazz_supreme">Supreme Magician</string>
+    <string name="clazz_adc">Support Magician</string>
+    <string name="clazz_dh">Dragon Hunter</string>
+    <string name="clazz_lancer">Lancer Magician</string>
 </resources>

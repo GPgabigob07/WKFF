@@ -1,44 +1,42 @@
 package org.gpginc.ntateam.apptest.runtime;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 
 import org.gpginc.ntateam.apptest.CurrentPlayer;
+import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
-import org.gpginc.ntateam.apptest.runtime.util.annotation.RarityHandler;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
-import java.io.Serializable;
-import java.lang.annotation.AnnotationTypeMismatchException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Clazz implements Parcelable
 {
-	private final String name, pseudoName;
+	@StringRes
+	private final int name;
 	@Nullable
 	private Player cPlayer;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
+
+	private Resources resources;
+
+	public void setResources(Resources resources) {
+		this.resources = resources;
+	}
 
 	private final Rarity RARITY;
 
 
 	public boolean enabled = true;
-	public Clazz(String name, Rarity r){
+	public Clazz(@StringRes int name, Rarity r){
 		this.name = name;
 		this.RARITY = r;
-		String[] namep = name.split(" ");
-		String a = "";
-		for(String s : namep)
-		{
-			a+= s.split("")[0];
-			Main.p("\n\n\n\n\n\n\n\n\n\n"+s);
-		}
-		this.pseudoName = a;
-		Main.p(this.name +" "+ this.pseudoName);
 		Clazzs.CLAZZS.add(this);
 		Clazzs.CLAZZ_MAP.put(this.name, this);
 /*		if(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class) == null)
@@ -52,8 +50,8 @@ public class Clazz implements Parcelable
 	 */
 	public Clazz()
 	{
-		this.name = "SPY";
-		this.pseudoName = "SPY";
+		this.name = R.string.clazz_spy;
+
 		this.RARITY = Rarity.MASTERRARE;
 //		Main.p(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class).rarity());
 	}
@@ -78,10 +76,9 @@ for(String name :  names)
 	}
 
 	protected Clazz(Parcel in) {
-		name = in.readString();
-		pseudoName = in.readString();
+		name = in.readInt();
 		cPlayer = in.readParcelable(Player.class.getClassLoader());
-		ArrayList<String> names =  new ArrayList();
+		ArrayList<String> names =  new ArrayList<>();
 		in.readStringList(names);
 		for(String name :  names)
 		{
@@ -93,10 +90,9 @@ for(String name :  names)
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(name);
-		dest.writeString(pseudoName);
+		dest.writeInt(name);
 		dest.writeParcelable(cPlayer, flags);
-		ArrayList<String> names =  new ArrayList();
+		ArrayList<String> names =  new ArrayList<>();
 		for(ClazzSkill c : this.SKILLS)
 		{
 			names.add(c.getName());
@@ -128,10 +124,6 @@ for(String name :  names)
 		this.SKILLS.add(skill);
 		Main.p("Skill: " + skill.getName() + " added to " + this.getName());
 		return this;
-	}
-	public String getPseudoName()
-	{
-		return !this.pseudoName.equals(null) ? this.pseudoName : "namebug";
 	}
 	public ArrayList<ClazzSkill> getSkills() {
 		// TODO Auto-generated method stub
@@ -197,9 +189,11 @@ for(String name :  names)
 			s.setPassiveRun(false);
 		}
 	}
-
-	public String getName()
+	@StringRes
+	public int getName()
 	{
 		return this.name;
 	}
+
+	public String getNameLikeStr(Resources rs){return rs.getString(this.name);}
 }

@@ -2,20 +2,16 @@ package org.gpginc.ntateam.apptest.runtime.util;
 
 import android.app.Dialog;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.gpginc.ntateam.apptest.runtime.Main.p;
 
 public class Util
 {
@@ -64,22 +60,22 @@ public class Util
     public static String getCrypto(String s)
     {
         String[] sp = s.split("");
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for(String crypted : sp)
         {
-            output+=crypt(crypted);
+            output.append(crypt(crypted));
         }
-        return output;
+        return output.toString();
     }
     public static String getDecrypt(String s)
     {
         String[] sp = s.split("");
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for(String crypted : sp)
         {
-            output+=decrypt(crypted);
+            output.append(decrypt(crypted));
         }
-        return output;
+        return output.toString();
     }
 
 
