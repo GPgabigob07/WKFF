@@ -161,4 +161,9 @@
     <string name="clazz_adc">Support Magician</string>
     <string name="clazz_dh">Dragon Hunter</string>
     <string name="clazz_lancer">Lancer Magician</string>
+    <string name="event_defeat_supreme">Defeat Supreme Magician</string>
+    <string name="title_activity_game_end">GameEnd</string>
+    <string name="gamover">Game Over!</string>
+    <string name="over_dead_player">Player that cause fall:</string>
+    <string name="over_event_descr">Some Event Description</string>
 </resources>

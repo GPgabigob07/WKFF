@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoadingGame">
-
-        </activity>
-        <!--activity
+        <activity
+            android:name=".GameEnd"
+            android:label="@string/title_activity_game_end"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".LoadingGame"></activity>
+        <!--
+activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.NoActionBar" /-->
+            android:theme="@style/AppTheme.NoActionBar" /
+        -->
         <activity
             android:name=".MainPlusSettings"
             android:label="@string/title_activity_main_plus_settings"

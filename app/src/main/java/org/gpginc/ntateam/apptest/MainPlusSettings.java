@@ -100,6 +100,13 @@ public class MainPlusSettings extends AppCompatActivity
             final ArrayList[] lists = Main.postInit(PLAYER_NAMES);
             Bundle bundle = new Bundle();
 
+            Main.p(getResources() != null ? "\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\nHas resources\n-*-*-*-*-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*--*\n\n\n" : "\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\nHas  NO  resources\n-*-*-*-*-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*--*\n\n\n");
+            for(Object p : lists[3])
+            {
+                Main.p("/------------------------------/");
+                Main.p(((Player)p).getName() + "  "+(((Player)p).getClazz().getNameLikeStr(this.getResources())));
+                Main.p("/------------------------------/");
+            }
             bundle.putStringArrayList("PlayerNames", PLAYER_NAMES);
             Random rand = new Random();
 
@@ -116,9 +123,9 @@ public class MainPlusSettings extends AppCompatActivity
                 Main.p(((Player)o).getName());
             }
             bundle.putIntegerArrayList("GonePlayers", a);
-            bundle.putStringArrayList("PlayerClazz", lists[0]);
-            bundle.putStringArrayList("PlayerKingdoms", lists[1]);
-            bundle.putIntegerArrayList("PlayerFields", lists[2]);
+          //  bundle.putStringArrayList("PlayerClazz", lists[0]);
+         //   bundle.putStringArrayList("PlayerKingdoms", lists[1]);
+         //   bundle.putIntegerArrayList("PlayerFields", lists[2]);
             bundle.putParcelableArrayList("Players", lists[3]);
 
             Intent go = new Intent(this, PrePlayer.class);
@@ -141,8 +148,8 @@ public class MainPlusSettings extends AppCompatActivity
         SharedPreferences.Editor editor = pref.edit();
         for(Clazz c : Clazzs.CLAZZS)
         {
-            editor.putBoolean(c.getNameLikeStr(), c.enabled);
-            Main.p(c.getNameLikeStr()+ c.enabled);
+            editor.putBoolean(c.getNameLikeStr(getResources()), c.enabled);
+            Main.p(c.getNameLikeStr(getResources())+ c.enabled);
         }
         editor.commit();
     }
@@ -152,8 +159,8 @@ public class MainPlusSettings extends AppCompatActivity
         SharedPreferences pref = getSharedPreferences(Main.SETTINGS, 0);
         for(Clazz c : Clazzs.CLAZZS)
         {
-            c.enabled = pref.getBoolean(c.getNameLikeStr(), true);
-            Main.p(c.getNameLikeStr()+ c.enabled);
+            c.enabled = pref.getBoolean(c.getNameLikeStr(getResources()), true);
+            Main.p(c.getNameLikeStr(getResources())+ c.enabled);
         }
     }
     public void openDialog()

@@ -142,9 +142,9 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         next.putString("CPN", this.CURRENT_PLAYER);
         //next.putParcelable("CP", this.CP);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-        next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
-        next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
-        next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
+       // next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
+        //next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
+        //next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
         next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
@@ -157,11 +157,11 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             // System.out.println(player);
             this.PLAYER_NAMES.addAll(savedInstanceState.getStringArrayList("PlayerNames"));
             // System.out.println(clazz);
-            this.OUT_CLAZZS.addAll(savedInstanceState.getStringArrayList("PlayerClazz"));
+           // this.OUT_CLAZZS.addAll(savedInstanceState.getStringArrayList("PlayerClazz"));
             //  System.out.println(KGN);
-            this.OUT_KINGDOMS.addAll(savedInstanceState.getStringArrayList("PlayerKingdoms"));
+           // this.OUT_KINGDOMS.addAll(savedInstanceState.getStringArrayList("PlayerKingdoms"));
             // System.out.println("Field: "+i);
-            this.OUT_FIELDS.addAll(savedInstanceState.getIntegerArrayList("PlayerFields"));
+           // this.OUT_FIELDS.addAll(savedInstanceState.getIntegerArrayList("PlayerFields"));
             //System.out.println("gone " +i);
             this.GONE_PLAYERS.addAll(savedInstanceState.getIntegerArrayList("GonePlayers"));
             for(Parcelable p : savedInstanceState.getParcelableArrayList("Players"))
@@ -218,9 +218,9 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         next.putString("CPN", this.CURRENT_PLAYER);
         //next.putParcelable("CP", this.CP);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-        next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
-        next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
-        next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
+       // next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
+       // next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
+        //next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
         next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);

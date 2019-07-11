@@ -175,7 +175,7 @@ public class Main
         int i,i1,i2, cField, sorted = 0;
         String cKgn = KINGDOMS.get(rand.nextInt(KINGDOMS.size()));
         boolean  MSc =false;
-        final List<Player> done = new ArrayList<>();
+        final List<Player> done = new ArrayList<>(),as_super = new ArrayList<>();
         Player cp = null;
         Clazz cCz = null;
         /*-----------------------*/
@@ -203,6 +203,7 @@ public class Main
 					else cKgn = "OHXER";
 					setupPlayer(cp, Clazzs.SUPREME, cKgn, cField);
 					done.add(cp);
+					as_super.add(cp);
 					++sorted;
 				}
             	MSc = true;
@@ -212,7 +213,11 @@ public class Main
 			if (cKgn.equals("OHXER")) cKgn = "CAMELOT";
 			else cKgn = "OHXER";
 			do{ i = rand.nextInt(100); i2 = rand.nextInt(Clazzs.CLAZZS.size()); cCz = Clazzs.CLAZZS.get(i2);}while (!isClazzAcceptable(i, cCz));
-			cp = PLAYERS.get(rand.nextInt(PLAYERS.size()));
+			do {
+				i2 = rand.nextInt(PLAYERS.size());
+				cp = PLAYERS.get(i2);
+				cField = rand.nextInt(4) + 1;
+			} while (done.contains(cp));
 			setupPlayer(cp, cCz, cKgn, cField);
 			done.add(cp);
 			++sorted;
@@ -236,9 +241,9 @@ public class Main
 	private static void setupPlayer(Player p, Clazz clazz, String kingdom, int field)
 	{
 		p.setClazz(clazz).setKingdom(kingdom).setField(field);
-		OUT_CLAZZS.add(clazz.getNameLikeStr());
+		/*OUT_CLAZZS.add(clazz.getNameLikeStr());
 		OUT_KINGDOMS.add(kingdom);
-		OUT_FIELDS.add(field);
+		OUT_FIELDS.add(field);*/
 		setUpFieldMemory(field);
 	}
 	public static void p(Object n)
@@ -285,7 +290,7 @@ public class Main
 	}
 	
 	
-	static void waitPlayerChange(Player p)
+	/**static void waitPlayerChange(Player p)
 	{
 		for(int a = 0; a<100; ++a)p("");
 		
@@ -298,9 +303,9 @@ public class Main
 		p.showField();
 		for(int a = 0; a<5; ++a)p("");
 		
-	}
+	}**/
 	
-	static void firstPhase()
+	/*static void firstPhase()
 	{
 		Random rand = new Random();
 		p("FIRST PHASE");
@@ -325,7 +330,7 @@ public class Main
 				
 			}
 		}
-	}
+	}*/
 	public static boolean damageStep(final List<Player> players)
 	{
 		List<Player> playersKilled = new ArrayList<>();

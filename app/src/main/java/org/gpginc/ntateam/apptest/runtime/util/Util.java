@@ -1,11 +1,13 @@
 package org.gpginc.ntateam.apptest.runtime.util;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 
 import org.gpginc.ntateam.apptest.R;
+import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
 import java.util.Arrays;
@@ -179,4 +181,13 @@ public class Util
         d.findViewById(R.id.doalog_ok).setOnClickListener(out);
         return d;
     }
+
+    public static Bundle getEndGame(Event evt, Player player)
+    {
+        Bundle out = new Bundle();
+        //out.put
+        out.putParcelable("Target", player);
+        return out;
+    }
+
 }

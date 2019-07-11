@@ -12,7 +12,6 @@ import android.widget.TextView;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
-import org.gpginc.ntateam.apptest.runtime.util.Initializer;
 
 @Deprecated
 public class LoadingGame extends AppCompatActivity {
@@ -34,13 +33,7 @@ public class LoadingGame extends AppCompatActivity {
         par1 = findViewById(R.id.loading_what);
         par2 = findViewById(R.id.spec_loading_what);
 
-        Initializer init = new Initializer();
-        for(Clazz c : Clazzs.CLAZZS) {
-            Initializer.ClazzLoader clazzLoader = init.new ClazzLoader(this, c);
-            clazzLoader.execute(c);
 
-            while (clazzLoader.getStatus()== AsyncTask.Status.RUNNING)Main.p(clazzLoader.onLoad.getName() + " "+clazzLoader.getStatus());
-        }
         Intent i = new Intent(this, MainPlusSettings.class);
         //startActivity(i);
         //finish();

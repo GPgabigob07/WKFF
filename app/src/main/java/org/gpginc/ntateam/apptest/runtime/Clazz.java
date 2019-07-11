@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
@@ -39,6 +40,7 @@ public class Clazz implements Parcelable
 		this.RARITY = r;
 		Clazzs.CLAZZS.add(this);
 		Clazzs.CLAZZ_MAP.put(this.name, this);
+		Main.p(this.getName());
 /*		if(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class) == null)
 		{
 			throw new AnnotationTypeMismatchException(this.getClass().getMethod("Clazz", String.class), "Clazz declaration error, no rarity handler attached!" +
@@ -196,4 +198,11 @@ for(String name :  names)
 	}
 
 	public String getNameLikeStr(Resources rs){return rs.getString(this.name);}
+
+	@NonNull
+	@Override
+	public String toString() {
+		return String.valueOf(this.getName());
+	}
 }
+

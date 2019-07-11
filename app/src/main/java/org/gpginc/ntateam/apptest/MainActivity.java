@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         for(Clazz c : Clazzs.CLAZZS)
         {
-            editor.putBoolean(c.getNameLikeStr(), c.enabled);
+            editor.putBoolean(c.getNameLikeStr(getResources()), c.enabled);
         }
     }
 
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences(Main.SETTINGS, 0);
         for(Clazz c : Clazzs.CLAZZS)
         {
-            c.enabled = pref.getBoolean(c.getNameLikeStr(), true);
+            c.enabled = pref.getBoolean(c.getNameLikeStr(getResources()), true);
         }
     }
     public void openDialog()
