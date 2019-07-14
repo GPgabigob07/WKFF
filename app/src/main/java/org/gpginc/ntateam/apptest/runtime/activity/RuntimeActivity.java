@@ -20,6 +20,7 @@ import org.gpginc.ntateam.apptest.PrePlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 
@@ -36,6 +37,8 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     protected ArrayList<Integer> GONE_PLAYERS = new ArrayList<>();
 
     protected ArrayList<Player> ON_PLAYERS = new ArrayList<>();
+    protected ArrayList<Event> EVENTS = new ArrayList<>();
+
     protected Integer currrentPlayerCod = -1;
 
     /**
@@ -223,6 +226,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         //next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
         next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
+        next.putParcelableArrayList("Events", this.EVENTS);
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
         return next;
     }
@@ -292,9 +296,17 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
                 startActivity(next);
                 this.finish();
             } else {
-
+                for(Event evt :  getEvents())
+                {
+                    if(evt.condition.matchSircunstances(this.currentPlayer())) evt.whatWillDo.happends(this);
+                }
             }
         }
+    }
+
+    public List<Event> getEvents()
+    {
+        return this.EVENTS;
     }
     public Player currentPlayer()
     {

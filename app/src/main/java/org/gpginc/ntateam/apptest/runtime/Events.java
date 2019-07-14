@@ -3,6 +3,8 @@ package org.gpginc.ntateam.apptest.runtime;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 
 import org.gpginc.ntateam.apptest.GameEnd;
 import org.gpginc.ntateam.apptest.R;
@@ -37,4 +39,18 @@ public class Events
             }
         });
     }
+
+
+    @Nullable
+    public static Event byName(@StringRes int name)
+    {
+        if(EVT_MAP.containsKey(name))
+        {
+            return EVT_MAP.get(name);
+        } else {
+            Main.p("Event not found");
+            return null;
+        }
+    }
+
 }
