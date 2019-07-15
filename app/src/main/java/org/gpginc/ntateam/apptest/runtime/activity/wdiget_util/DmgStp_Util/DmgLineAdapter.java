@@ -34,6 +34,7 @@ public class DmgLineAdapter extends RecyclerView.Adapter<DmgLineHolder>
         holder.kingdom.setImageResource(Util.getKindomFor(p));
         holder.playerClazz.setText(p.getClazz().getName());
         holder.deadInfo.setText(Util.getDeadInfoFor(p) != -1 ? Util.getDeadInfoFor(p) : R.string.bugstr);
+        if(p.life() < 0) holder.deadInfo.setText(holder.deadInfo.getText() + " " + p.getLastAttacker().getName());
         holder.playerName.setText(p.getName());
     }
 

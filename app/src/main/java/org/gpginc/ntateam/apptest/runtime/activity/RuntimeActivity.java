@@ -23,6 +23,7 @@ import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.util.GameEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +46,6 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
      * GLOBAL
      */
     public static final String LAST_STATE = "CODE_HASH-LASTSTATEMANAGE.SYS";
-
-    /*public Player getCP() {
-        return CP;
-    }
-
-    public void setCP(Player CP) {
-        this.CP = CP;
-    }*/
 
     protected String CURRENT_PLAYER ="Suposed to A Player Name here..";
     //protected Player CP = null;
@@ -143,13 +136,10 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         this.CURRENT_PLAYER = this.PLAYER_NAMES.get(nextPlayerI);
 
         next.putString("CPN", this.CURRENT_PLAYER);
-        //next.putParcelable("CP", this.CP);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-       // next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
-        //next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
-        //next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
         next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
+        next.putParcelableArrayList("Events", this.EVENTS);
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
         return next;
     }
@@ -157,23 +147,18 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         if(savedInstanceState!=null)
         {
-            // System.out.println(player);
             this.PLAYER_NAMES.addAll(savedInstanceState.getStringArrayList("PlayerNames"));
-            // System.out.println(clazz);
-           // this.OUT_CLAZZS.addAll(savedInstanceState.getStringArrayList("PlayerClazz"));
-            //  System.out.println(KGN);
-           // this.OUT_KINGDOMS.addAll(savedInstanceState.getStringArrayList("PlayerKingdoms"));
-            // System.out.println("Field: "+i);
-           // this.OUT_FIELDS.addAll(savedInstanceState.getIntegerArrayList("PlayerFields"));
-            //System.out.println("gone " +i);
             this.GONE_PLAYERS.addAll(savedInstanceState.getIntegerArrayList("GonePlayers"));
             for(Parcelable p : savedInstanceState.getParcelableArrayList("Players"))
             {
                 this.ON_PLAYERS.add((Player)p);
             }
+            for(Parcelable p1 : savedInstanceState.getParcelableArrayList("Events"))
+            {
+                this.EVENTS.add((Event) p1);
+            }
             this.CURRENT_PLAYER = savedInstanceState.getString("CPN");
             this.currrentPlayerCod = savedInstanceState.getInt("CurrentPlayerCod");
-            //this.CP = savedInstanceState.getParcelable("CP");
             Main.p("LOAD INFO");
             System.out.println(this.CURRENT_PLAYER);
             System.out.println(this.currentPlayer().getName());
@@ -210,7 +195,6 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
                     Main.p("NOT ATTACKED");
                     out_skills.add(c.getSkillAt(i));
                 }
-                //c.getSkillAt(i).setCurrent(this);
             }
         }
         return out_skills;
@@ -219,11 +203,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         Bundle next = new Bundle();
         next.putString("CPN", this.CURRENT_PLAYER);
-        //next.putParcelable("CP", this.CP);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-       // next.putStringArrayList("PlayerClazz", this.OUT_CLAZZS);
-       // next.putStringArrayList("PlayerKingdoms", this.OUT_KINGDOMS);
-        //next.putIntegerArrayList("PlayerFields", this.OUT_FIELDS);
         next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
         next.putParcelableArrayList("Events", this.EVENTS);
@@ -289,18 +269,20 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             startActivity(next);
             this.finish();
         } else {
-            if(Main.damageStep(this.ON_PLAYERS)) {
-                this.GONE_PLAYERS.clear();
-                Intent next = new Intent(this, DamageStep.class);
-                next.putExtras(this.getNextPlayer());
-                startActivity(next);
-                this.finish();
-            } else {
-                for(Event evt :  getEvents())
+            Main.damageStep(this.ON_PLAYERS);
+            for(GameEvent evt :  getEvents())
+            {
+                if(evt.check(this.currentPlayer()))
                 {
-                    if(evt.condition.matchSircunstances(this.currentPlayer())) evt.whatWillDo.happends(this);
+                    evt.exe(this.currentPlayer(), this);
+                    break;
                 }
             }
+            this.GONE_PLAYERS.clear();
+            Intent next = new Intent(this, DamageStep.class);
+            next.putExtras(this.getNextPlayer());
+            startActivity(next);
+            this.finish();
         }
     }
 

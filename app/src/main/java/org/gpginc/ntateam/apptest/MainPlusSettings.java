@@ -23,6 +23,8 @@ import android.widget.ViewFlipper;
 
 import org.gpginc.ntateam.apptest.runtime.Clazz;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
+import org.gpginc.ntateam.apptest.runtime.Event;
+import org.gpginc.ntateam.apptest.runtime.Events;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerListAdapter;
@@ -128,6 +130,17 @@ public class MainPlusSettings extends AppCompatActivity
          //   bundle.putIntegerArrayList("PlayerFields", lists[2]);
             bundle.putParcelableArrayList("Players", lists[3]);
 
+            int evtCOunt = 0;
+            final ArrayList<Event> evts = new ArrayList<>();
+            while(evtCOunt < 3)
+            {
+                int rar = rand.nextInt(100);
+                Event evt = Events.EVTS.get(rand.nextInt(Events.EVTS.size()));
+                if(isEvtAcceptable(evt, rar)) evts.add(evt);
+                ++evtCOunt;
+
+            }
+            bundle.putParcelableArrayList("Events", evts);
             Intent go = new Intent(this, PrePlayer.class);
 
 
@@ -141,6 +154,11 @@ public class MainPlusSettings extends AppCompatActivity
 
 
 
+    }
+
+    boolean isEvtAcceptable(Event evt, int rar)
+    {
+        return evt.getRarity().getPercent() <= rar;
     }
 
     public void setupClazzsByMainstream() {

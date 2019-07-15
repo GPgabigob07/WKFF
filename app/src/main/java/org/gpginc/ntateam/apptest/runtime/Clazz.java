@@ -204,5 +204,10 @@ for(String name :  names)
 	public String toString() {
 		return String.valueOf(this.getName());
 	}
+
+	public boolean equals(Clazz clazz)
+	{
+		return clazz.getName() == this.getName();
+	}
 }
 

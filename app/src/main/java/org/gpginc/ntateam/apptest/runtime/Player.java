@@ -247,4 +247,5 @@ public class Player implements Parcelable
     public void kill() {
 	    this.isDead = true;
     }
+
 }

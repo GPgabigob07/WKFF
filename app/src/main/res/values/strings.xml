@@ -164,6 +164,9 @@
     <string name="event_defeat_supreme">Defeat Supreme Magician</string>
     <string name="title_activity_game_end">GameEnd</string>
     <string name="gamover">Game Over!</string>
-    <string name="over_dead_player">Player that cause fall:</string>
+    <string name="over_dead_player">Player that causes fall:</string>
     <string name="over_event_descr">Some Event Description</string>
+    <string name="evt_descr_eds">Basically, all the war now it\'s done!\n
+    Finally one kingdom had found glory on the war, and, of course,\n
+    the other one, had falls miserably, and will never rise back!</string>
 </resources>

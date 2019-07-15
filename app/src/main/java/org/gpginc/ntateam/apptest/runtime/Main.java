@@ -224,6 +224,7 @@ public class Main
 
         } while(sorted < PLAYERS.size());
 
+
 		return new ArrayList[]{OUT_CLAZZS, OUT_KINGDOMS, OUT_FIELDS, PLAYERS};
 	}
 

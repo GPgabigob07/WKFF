@@ -9,6 +9,7 @@ import android.view.View;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -185,7 +186,7 @@ public class Util
     public static Bundle getEndGame(Event evt, Player player)
     {
         Bundle out = new Bundle();
-        //out.put
+        out.putInt("EVT", evt.getName());
         out.putParcelable("Target", player);
         return out;
     }
