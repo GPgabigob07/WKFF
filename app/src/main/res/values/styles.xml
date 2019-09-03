@@ -11,6 +11,7 @@
         <item name="android:textViewStyle">@style/textViews</item>
         <item name="android:editTextStyle">@style/CustomTextInputs</item>
         <item name="android:checkboxStyle">@style/CustomCheckBox</item>
+        <item name="toolbarStyle">@drawable/toolbar_shape</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

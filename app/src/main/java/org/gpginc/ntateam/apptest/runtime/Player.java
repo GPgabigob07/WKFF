@@ -13,7 +13,7 @@ import java.util.List;
 public class Player implements Parcelable
 {
 	private int lifePoints = 3, damageTaken, currentField, cod;
-	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected, isDead;
+	public boolean isStunned, attacked, isBlind, isProtected, isDragonProtected, isDead, isWinner;
 	private String kingdom;
 	private Clazz clazz;
 	private List<Player> attackers = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Player implements Parcelable
 		isProtected = in.readByte() != 0;
 		isDragonProtected = in.readByte() != 0;
 		isDead = in.readByte() != 0;
+		isWinner = in.readByte() != 0;
 		kingdom = in.readString();
 		clazz = in.readParcelable(Clazz.class.getClassLoader());
 		attackers = in.createTypedArrayList(Player.CREATOR);
@@ -63,6 +64,7 @@ public class Player implements Parcelable
 		dest.writeByte((byte) (isProtected ? 1 : 0));
 		dest.writeByte((byte) (isDragonProtected ? 1 : 0));
 		dest.writeByte((byte) (isDead ? 1 : 0));
+		dest.writeByte((byte) (isWinner ? 1 : 0));
 		dest.writeString(kingdom);
 		dest.writeParcelable(clazz, flags);
 		dest.writeTypedList(attackers);

@@ -14,12 +14,15 @@ public abstract class Event implements GameEvent
 {
     @StringRes
     private final int name, description;
+    private final int maxInGame;
     private final Rarity rarity;
+    private boolean needPlayers = false;
 
-    public Event(@StringRes int name, int description, Rarity rarity) {
+    public Event(@StringRes int name, int description, Rarity rarity, int maxInGame) {
         this.name = name;
         this.rarity = rarity;
         this.description = description;
+        this.maxInGame = maxInGame;
         Events.EVT_MAP.put(name, this);
         Events.EVTS.add(this);
     }
@@ -27,8 +30,13 @@ public abstract class Event implements GameEvent
         name = in.readInt();
         description = in.readInt();
         rarity = Rarity.withName(in.readString());
+        maxInGame = in.readInt();
     }
 
+    protected void setNeedPlayers()
+    {
+        this.needPlayers =true;
+    }
     public Rarity getRarity() {
         return rarity;
     }

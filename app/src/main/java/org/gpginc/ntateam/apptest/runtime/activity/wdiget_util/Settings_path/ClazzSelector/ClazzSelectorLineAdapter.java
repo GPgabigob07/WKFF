@@ -31,7 +31,7 @@ public class ClazzSelectorLineAdapter extends RecyclerView.Adapter<ClazzSelector
                 c.enabled = isChecked;
             }
         });
-        //icon.setImageResource(c.getIcon());
+        holder.icon.setImageResource(c.getIcon());
     }
 
     @Override

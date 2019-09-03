@@ -39,6 +39,7 @@ public class MainPlusSettings extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final ArrayList<String> PLAYER_NAMES = new ArrayList<>();
+    private static final ArrayList<Event> EVTS = new ArrayList<>();
 
     private boolean loaded = false;
     @Override
@@ -131,16 +132,15 @@ public class MainPlusSettings extends AppCompatActivity
             bundle.putParcelableArrayList("Players", lists[3]);
 
             int evtCOunt = 0;
-            final ArrayList<Event> evts = new ArrayList<>();
             while(evtCOunt < 3)
             {
                 int rar = rand.nextInt(100);
                 Event evt = Events.EVTS.get(rand.nextInt(Events.EVTS.size()));
-                if(isEvtAcceptable(evt, rar)) evts.add(evt);
+                if(isEvtAcceptable(evt, rar)) EVTS.add(evt);
                 ++evtCOunt;
 
             }
-            bundle.putParcelableArrayList("Events", evts);
+            bundle.putParcelableArrayList("Events", EVTS);
             Intent go = new Intent(this, PrePlayer.class);
 
 
@@ -158,7 +158,7 @@ public class MainPlusSettings extends AppCompatActivity
 
     boolean isEvtAcceptable(Event evt, int rar)
     {
-        return evt.getRarity().getPercent() <= rar;
+        return evt.getRarity().getPercent() <= rar && !this.EVTS.contains(evt);
     }
 
     public void setupClazzsByMainstream() {

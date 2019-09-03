@@ -169,4 +169,7 @@
     <string name="evt_descr_eds">Basically, all the war now it\'s done!\n
     Finally one kingdom had found glory on the war, and, of course,\n
     the other one, had falls miserably, and will never rise back!</string>
+    <string name="event_killing_spree">Killing Spree</string>
+    <string name="evt_descr_ks">Player was ordened, by powererd forces, that he might kill an given target.</string>
+
 </resources>

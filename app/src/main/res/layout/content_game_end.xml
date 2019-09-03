@@ -60,6 +60,25 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="204dp"
                 android:text="@string/over_event_descr" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="19dp" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/winner_img"
+                android:layout_width="wrap_content"
+                android:layout_height="123dp"
+                android:src="@drawable/winner_gif" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="19dp" />
+
+            <ListView
+                android:id="@+id/winners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

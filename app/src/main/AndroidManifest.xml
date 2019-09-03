@@ -38,9 +38,12 @@ activity
             android:name=".PrePlayer"
             android:label="@string/title_activity_pre_player"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SkillRun" />
-        <activity android:name=".CurrentPlayer" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SkillRun"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CurrentPlayer"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme" /> />
     </application>
 
 </manifest>

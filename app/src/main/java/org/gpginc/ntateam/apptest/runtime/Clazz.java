@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -23,6 +24,8 @@ public class Clazz implements Parcelable
 	private final int name;
 	@Nullable
 	private Player cPlayer;
+	@DrawableRes
+	private final int icon;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 
 	private Resources resources;
@@ -35,11 +38,17 @@ public class Clazz implements Parcelable
 
 
 	public boolean enabled = true;
-	public Clazz(@StringRes int name, Rarity r){
+
+	public int getIcon() {
+		return icon;
+	}
+
+	public Clazz(@StringRes int name, Rarity r, @DrawableRes int icon){
 		this.name = name;
 		this.RARITY = r;
 		Clazzs.CLAZZS.add(this);
 		Clazzs.CLAZZ_MAP.put(this.name, this);
+		this.icon = icon;
 		Main.p(this.getName());
 /*		if(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class) == null)
 		{
@@ -53,7 +62,7 @@ public class Clazz implements Parcelable
 	public Clazz()
 	{
 		this.name = R.string.clazz_spy;
-
+		this.icon= R.drawable.botao_adicionar;
 		this.RARITY = Rarity.MASTERRARE;
 //		Main.p(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class).rarity());
 	}
@@ -88,6 +97,7 @@ for(String name :  names)
 		}
 		enabled = in.readByte() != 0;
 		RARITY = Rarity.withName(in.readString());
+		icon = in.readInt();
 	}
 
 	@Override
@@ -102,6 +112,7 @@ for(String name :  names)
 		dest.writeStringList(names);
 		dest.writeByte((byte) (enabled ? 1 : 0));
 		dest.writeString(this.RARITY.R());
+		dest.writeInt(this.icon);
 	}
 
 	@Override

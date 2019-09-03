@@ -6,7 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.runtime.Event;
@@ -15,6 +17,8 @@ import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.util.Util;
+
+import java.util.ArrayList;
 
 public class GameEnd extends RuntimeActivity {
 
@@ -49,6 +53,17 @@ public class GameEnd extends RuntimeActivity {
 
                 ((TextView)findViewById(R.id.over_event_descr)).setText(this.endEvt.getDescription());
                 /*--------------*/
+
+                /*----Setup Winner's list-----*/
+                final ArrayList<String> names = new ArrayList<>();
+                for(Player p : this.ON_PLAYERS)
+                {
+                    names.add(p.getName());
+                }
+                ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
+                ((ListView)findViewById(R.id.winners)).setAdapter(adap);
+
+                /*----------------------------*/
             }
         }
     }

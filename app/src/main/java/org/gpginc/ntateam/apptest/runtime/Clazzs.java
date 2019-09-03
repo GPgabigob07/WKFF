@@ -80,12 +80,12 @@ public class Clazzs
         REPOSITION = new Reposition("Reposition", ClazzSkill.Type.PASSIVE, false, R.layout.skill_run_player_selection_layout);
 
 
-        ARCHERY = new Clazz(R.string.clazz_archery, Rarity.RARE).bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
-        SWORDMAN = new Clazz(R.string.clazz_swordman, Rarity.COMMON).bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
-        SUPREME = new Clazz(R.string.clazz_supreme, Rarity.ALWAYS).bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
-        ADC = new Clazz(R.string.clazz_adc, Rarity.ULTRARARE).bindSkill(ABSOLUTE_DEFENSE);
-        DRAGON_HUNTER = new Clazz(R.string.clazz_dh, Rarity.MASTERRARE);
-        LANCER = new Clazz(R.string.clazz_lancer, Rarity.COMMON).bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);
+        ARCHERY = new Clazz(R.string.clazz_archery, Rarity.RARE, R.drawable.clazz_archery).bindSkill(SOUL_DESCRIBER).bindSkill(ARCHERY_ATTACK).bindSkill(NULLING_ATTACK);
+        SWORDMAN = new Clazz(R.string.clazz_swordman, Rarity.COMMON, R.drawable.botao_adicionar).bindSkill(SWORDMAN_ATTACK).bindSkill(CHANGE_POSITION);
+        SUPREME = new Clazz(R.string.clazz_supreme, Rarity.ALWAYS, R.drawable.botao_adicionar).bindSkill(SOUL_DESCRIBER).bindSkill(MADICIAN_COUNTER).bindSkill(CHANGE_POSITION).bindSkill(REPOSITION);
+        ADC = new Clazz(R.string.clazz_adc, Rarity.ULTRARARE, R.drawable.botao_adicionar).bindSkill(ABSOLUTE_DEFENSE);
+        DRAGON_HUNTER = new Clazz(R.string.clazz_dh, Rarity.MASTERRARE, R.drawable.botao_adicionar);
+        LANCER = new Clazz(R.string.clazz_lancer, Rarity.COMMON, R.drawable.ic_clazz_lancer).bindSkill(LANCER_ATTACK).bindSkill(CHANGE_POSITION);
         SPY = new Clazz().bindSkill(SPY_KNOWLEDGE);
 
 
