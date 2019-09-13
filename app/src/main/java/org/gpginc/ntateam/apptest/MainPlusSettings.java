@@ -29,6 +29,7 @@ import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerListAdapter;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.Settings_path.ClazzSelector.ClazzSelectorLineAdapter;
+import org.gpginc.ntateam.apptest.runtime.util.TargetEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -126,9 +127,6 @@ public class MainPlusSettings extends AppCompatActivity
                 Main.p(((Player)o).getName());
             }
             bundle.putIntegerArrayList("GonePlayers", a);
-          //  bundle.putStringArrayList("PlayerClazz", lists[0]);
-         //   bundle.putStringArrayList("PlayerKingdoms", lists[1]);
-         //   bundle.putIntegerArrayList("PlayerFields", lists[2]);
             bundle.putParcelableArrayList("Players", lists[3]);
 
             int evtCOunt = 0;
@@ -136,9 +134,24 @@ public class MainPlusSettings extends AppCompatActivity
             {
                 int rar = rand.nextInt(100);
                 Event evt = Events.EVTS.get(rand.nextInt(Events.EVTS.size()));
-                if(isEvtAcceptable(evt, rar)) EVTS.add(evt);
-                ++evtCOunt;
-
+                if(isEvtAcceptable(evt, rar)) {
+                    if(evt.needPlayers)
+                    {
+                        Player p1;
+                        Player p2;
+                        do
+                        {
+                            p1 = (Player) lists[3].get(rand.nextInt(lists[3].size()));
+                            p2 = (Player) lists[3].get(rand.nextInt(lists[3].size()));
+                        } while (p1==p2 || p1.attachedToEvent || p2.getClazz().equals(Clazzs.SPY) || p2.attachedToEvent);
+                        Main.p("Target: " + p1.getName());
+                        Main.p("Owner: " + p2.getName());
+                        evt = ((TargetEvent)evt).newInstance(p1, p2);
+                    }
+                    Main.p(this.getResources().getString(evt.getName()));
+                    EVTS.add(evt);
+                    ++evtCOunt;
+                }
             }
             bundle.putParcelableArrayList("Events", EVTS);
             Intent go = new Intent(this, PrePlayer.class);
@@ -158,7 +171,12 @@ public class MainPlusSettings extends AppCompatActivity
 
     boolean isEvtAcceptable(Event evt, int rar)
     {
-        return evt.getRarity().getPercent() <= rar && !this.EVTS.contains(evt);
+        int c = 0;
+        for (Event e : this.EVTS)
+        {
+            if(e.getName()==evt.getName())++c;
+        }
+        return evt.getRarity().getPercent() <= rar && evt.getMax() > c;
     }
 
     public void setupClazzsByMainstream() {

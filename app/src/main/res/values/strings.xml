@@ -171,5 +171,7 @@
     the other one, had falls miserably, and will never rise back!</string>
     <string name="event_killing_spree">Killing Spree</string>
     <string name="evt_descr_ks">Player was ordened, by powererd forces, that he might kill an given target.</string>
+    <string name="battle_txt">Battle</string>
+    <string name="objective_txt">Objectives</string>
 
 </resources>

@@ -180,7 +180,7 @@ public class Main
         Clazz cCz = null;
         /*-----------------------*/
 
-        /*Unbreakable game, side by side, equals members, and always one spy if player count isn't par*/
+        /*Unbreakable game, side by side, equals members, and always one spy if player count isn't pair*/
         if(PLAYERS.size() % 2 != 0)
         {
 			i2 = rand.nextInt(PLAYERS.size()); cp = PLAYERS.get(i2);
@@ -332,13 +332,14 @@ public class Main
 			}
 		}
 	}*/
-	public static boolean damageStep(final List<Player> players)
+	public static boolean damageStep(@org.jetbrains.annotations.NotNull final List<Player> players)
 	{
 		List<Player> playersKilled = new ArrayList<>();
 		boolean flag = false;
 		for(Player p : players)
 		{
 			p.damageStep();
+			p("-------------------------------------------");
 			p(p.getName() + " status: ");
 			p("Current Life:"+p.life());
 			p("Protections: ");
@@ -347,6 +348,7 @@ public class Main
 			p("Effects:");
 			p(p.isBlind ? "Blinded" : "Can still seeing the sky...");
 			p(p.isStunned ? "Stunned" : "Till now, everything seems ok...");
+			p("-------------------------------------------\n\n");
 			if(p.attacked)
 			{
 				p("Attackers");

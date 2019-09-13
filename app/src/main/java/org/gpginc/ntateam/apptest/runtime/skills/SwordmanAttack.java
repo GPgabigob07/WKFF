@@ -105,11 +105,11 @@ public class SwordmanAttack extends ClazzSkill
                         if (adapter.getSelectedCount() < 2 && !btn.getHint().equals("twice")) {
                             d.show();
                         } else if (adapter.getSelectedCount() < 2) {
-                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 2);
+                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 2, false);
                             r.goNext(v);
                         } else {
-                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1);
-                            lastAct.getPlayers().get(adapter.getSelectedCodes()[1]).giveDamage(r, 1);
+                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1, false);
+                            lastAct.getPlayers().get(adapter.getSelectedCodes()[1]).giveDamage(r, 1, false);
                             r.goNext(v);
                         }
 

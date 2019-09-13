@@ -14,12 +14,6 @@
             android:label="@string/title_activity_game_end"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".LoadingGame"></activity>
-        <!--
-activity
-            android:name=".Settings"
-            android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.NoActionBar" /
-        -->
         <activity
             android:name=".MainPlusSettings"
             android:label="@string/title_activity_main_plus_settings"
@@ -43,7 +37,7 @@ activity
         <activity android:name=".CurrentPlayer"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme" /> />
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

@@ -5,36 +5,30 @@ import android.os.Parcel;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Event;
+import org.gpginc.ntateam.apptest.runtime.Events;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.TargetEvent;
+import org.gpginc.ntateam.apptest.runtime.util.enums.EventHandler;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
-public class KillingSpree extends Event {
+public class KillingSpree extends Event implements TargetEvent<KillingSpree> {
 
     private Player killer, target;
 
-    public Player getKiller() {
-        return killer;
-    }
-
-    public void setKiller(Player killer) {
-        this.killer = killer;
-    }
-
-    public Player getTarget() {
-        return target;
-    }
-
-    public void setTarget(Player target) {
-        this.target = target;
-    }
-
     public KillingSpree() {
-        super(R.string.event_killing_spree, R.string.evt_descr_ks, Rarity.RARE, 2);
+        super(R.string.event_killing_spree, R.string.evt_descr_ks, Rarity.RARE, 2, EventHandler.ON_DEATH, true);
         super.setNeedPlayers();
+    }
+    @Override
+    public Creator getCreator() {
+        return CREATOR;
     }
 
     protected KillingSpree(Parcel in) {
         super(in);
+        this.killer = in.readParcelable(Player.class.getClassLoader());
+        this.target = in.readParcelable(Player.class.getClassLoader());
         super.setNeedPlayers();
     }
 
@@ -44,7 +38,14 @@ public class KillingSpree extends Event {
     }
 
     @Override
-    public void exe(Player p, Activity a)
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(killer, 0);
+        dest.writeParcelable(target, 0);
+    }
+
+    @Override
+    public void exe(Player p, RuntimeActivity a)
     {
         killer.isWinner = true;
     }
@@ -61,4 +62,40 @@ public class KillingSpree extends Event {
             return new KillingSpree[size];
         }
     };
+
+    @Override
+    public Player getTarget() {
+        return this.target;
+    }
+
+    @Override
+    public KillingSpree setTarget(Player p) {
+        p.setAttachedToEvent();
+        this.target = p;
+        return this;
+    }
+
+    @Override
+    public Player getOwner() {
+        return this.killer;
+    }
+
+    @Override
+    public KillingSpree setOwner(Player p) {
+        p.setAttachedToEvent();
+        this.killer = p;
+        return this;
+    }
+
+    @Override
+    public KillingSpree newInstance(Player target, Player owner) {
+        return new KillingSpree().setOwner(owner).setTarget(target);
+    }
+
+    @Override
+    public KillingSpree base() {
+        Events.EVT_MAP.put(this.getName(), this);
+        Events.EVTS.add(this);
+        return this;
+    }
 }

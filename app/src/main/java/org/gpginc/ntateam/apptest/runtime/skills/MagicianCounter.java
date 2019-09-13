@@ -50,14 +50,14 @@ public class MagicianCounter extends ClazzSkill
 
 
                 //Dialog that says wo's attack was countered:
-                final Dialog counterDialog = lastAct.getDialog(lastAct, (countered.getName()) + lastAct.getResources().getString(R.string.countered));
+                final Dialog counterDialog = lastAct.getDialog(lastAct, (countered.getName()) + " " + lastAct.getResources().getString(R.string.countered));
 
                 counterDialog.findViewById(R.id.doalog_cancel).setOnClickListener(r.dialogDismiss(counterDialog, false));
                 counterDialog.findViewById(R.id.doalog_ok).setOnClickListener(r.dialogDismiss(counterDialog, false));
                 counterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        countered.giveDamage(lastAct, 1);
+                        countered.giveDamage(lastAct, 1, true);
                         p.increaseLifeIn(1);
                         lastAct.goNext(counterDialog.findViewById(R.id.doalog_ok));
                     }

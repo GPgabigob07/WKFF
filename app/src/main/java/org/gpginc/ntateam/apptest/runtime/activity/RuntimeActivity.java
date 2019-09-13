@@ -24,6 +24,7 @@ import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.util.GameEvent;
+import org.gpginc.ntateam.apptest.runtime.util.enums.EventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     protected ArrayList<String> OUT_KINGDOMS = new ArrayList<>();
     protected ArrayList<Integer> OUT_FIELDS = new ArrayList<>();
     protected ArrayList<String> PLAYER_NAMES = new ArrayList<>();
-    protected ArrayList<Integer> GONE_PLAYERS = new ArrayList<>();
+    protected ArrayList<String> GONE_PLAYERS = new ArrayList<>();
 
     protected ArrayList<Player> ON_PLAYERS = new ArrayList<>();
     protected ArrayList<Event> EVENTS = new ArrayList<>();
@@ -63,11 +64,6 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         OUT_KINGDOMS = in.createStringArrayList();
         PLAYER_NAMES = in.createStringArrayList();
         ON_PLAYERS = in.createTypedArrayList(Player.CREATOR);
-        if (in.readByte() == 0) {
-            currrentPlayerCod = null;
-        } else {
-            currrentPlayerCod = in.readInt();
-        }
         CURRENT_PLAYER = in.readString();
         layout = in.readInt();
     }
@@ -78,12 +74,6 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         dest.writeStringList(OUT_KINGDOMS);
         dest.writeStringList(PLAYER_NAMES);
         dest.writeTypedList(ON_PLAYERS);
-        if (currrentPlayerCod == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(currrentPlayerCod);
-        }
         dest.writeString(CURRENT_PLAYER);
         dest.writeInt(layout);
     }
@@ -114,7 +104,7 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         Toolbar toolbar = findViewById(R.id.toolbar);
         if(toolbar!=null) {
             setSupportActionBar(toolbar);
-            toolbar.setBackgroundResource(R.drawable.side_nav_bar);
+            toolbar.setBackgroundResource(R.drawable.toolbar_shape);
         }
 
     }
@@ -123,32 +113,31 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
     {
         final Bundle next = new Bundle();
         Random rand = new Random();
-        int nextPlayerI = -1;
-        if(this.GONE_PLAYERS.size() == this.PLAYER_NAMES.size())this.finish();
+        String nextPlayer;
+        int i;
+        if(this.GONE_PLAYERS.size() == this.PLAYER_NAMES.size())
+        {
+            this.finish();
+            return Bundle.EMPTY;
+        } else {
+            do {
+                i = rand.nextInt(this.PLAYER_NAMES.size());
+                nextPlayer = this.ON_PLAYERS.get(i).getName();
+                this.currrentPlayerCod = this.ON_PLAYERS.get(i).getCod();
+            }
+            while (this.GONE_PLAYERS.contains(nextPlayer) && this.currentPlayer().isDead);
 
-        do {
-            nextPlayerI = rand.nextInt(this.PLAYER_NAMES.size());
-            this.currrentPlayerCod = this.ON_PLAYERS.get(nextPlayerI).getCod();
+            this.GONE_PLAYERS.add(nextPlayer);
+            this.CURRENT_PLAYER = this.PLAYER_NAMES.get(i);
+            return this.enableNext();
         }
-        while(this.GONE_PLAYERS.contains(nextPlayerI) | this.currentPlayer().isDead);
-
-        this.GONE_PLAYERS.add(nextPlayerI);
-        this.CURRENT_PLAYER = this.PLAYER_NAMES.get(nextPlayerI);
-
-        next.putString("CPN", this.CURRENT_PLAYER);
-        next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-        next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
-        next.putParcelableArrayList("Players", this.ON_PLAYERS);
-        next.putParcelableArrayList("Events", this.EVENTS);
-        next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
-        return next;
     }
     protected void load(@Nullable Bundle savedInstanceState)
     {
         if(savedInstanceState!=null)
         {
             this.PLAYER_NAMES.addAll(savedInstanceState.getStringArrayList("PlayerNames"));
-            this.GONE_PLAYERS.addAll(savedInstanceState.getIntegerArrayList("GonePlayers"));
+            this.GONE_PLAYERS.addAll(savedInstanceState.getStringArrayList("GonePlayers"));
             for(Parcelable p : savedInstanceState.getParcelableArrayList("Players"))
             {
                 this.ON_PLAYERS.add((Player)p);
@@ -204,10 +193,11 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
         Bundle next = new Bundle();
         next.putString("CPN", this.CURRENT_PLAYER);
         next.putStringArrayList("PlayerNames", this.PLAYER_NAMES);
-        next.putIntegerArrayList("GonePlayers", this.GONE_PLAYERS);
+        next.putStringArrayList("GonePlayers", this.GONE_PLAYERS);
         next.putParcelableArrayList("Players", this.ON_PLAYERS);
         next.putParcelableArrayList("Events", this.EVENTS);
         next.putInt("CurrentPlayerCod", this.currrentPlayerCod);
+        next.putParcelable("CPA", this);
         return next;
     }
     public void enableNextTo(Bundle i)
@@ -263,26 +253,20 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
    }
     public void goNext(View view)
     {
-        if(this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
-            Intent next = new Intent(this, PrePlayer.class);
-            next.putExtras(this.getNextPlayer());
-            startActivity(next);
-            this.finish();
-        } else {
-            Main.damageStep(this.ON_PLAYERS);
-            for(GameEvent evt :  getEvents())
-            {
-                if(evt.check(this.currentPlayer()))
-                {
-                    evt.exe(this.currentPlayer(), this);
-                    break;
-                }
+        if(!checkEvents(EventHandler.ALWAYS)) {
+            if (this.GONE_PLAYERS.size() < this.ON_PLAYERS.size()) {
+                Intent next = new Intent(this, PrePlayer.class);
+                next.putExtras(this.getNextPlayer());
+                startActivity(next);
+                this.finish();
+            } else {
+                checkEvents(EventHandler.DAMAGE_STEP);
+                this.GONE_PLAYERS.clear();
+                Intent next = new Intent(this, DamageStep.class);
+                next.putExtras(this.getNextPlayer());
+                startActivity(next);
+                this.finish();
             }
-            this.GONE_PLAYERS.clear();
-            Intent next = new Intent(this, DamageStep.class);
-            next.putExtras(this.getNextPlayer());
-            startActivity(next);
-            this.finish();
         }
     }
 
@@ -309,6 +293,24 @@ public class RuntimeActivity extends AppCompatActivity implements Parcelable
             if(p.getCod() == code)return p;
         }
         return null;
+    }
+
+    protected boolean checkEvents(EventHandler kind)
+    {
+        for(Event e : getEvents())
+        {
+            if(e.getHandler().equals(kind))
+            {
+                for(Player p : getPlayers())
+                {
+                    if(e.check(p)){
+                        e.exe(p,this);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 

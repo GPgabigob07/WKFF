@@ -58,7 +58,7 @@ public class GameEnd extends RuntimeActivity {
                 final ArrayList<String> names = new ArrayList<>();
                 for(Player p : this.ON_PLAYERS)
                 {
-                    names.add(p.getName());
+                    if(p.isWinner)names.add(p.getName());
                 }
                 ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
                 ((ListView)findViewById(R.id.winners)).setAdapter(adap);

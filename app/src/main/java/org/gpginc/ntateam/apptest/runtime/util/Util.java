@@ -50,7 +50,7 @@ public class Util
     @StringRes
     public static int getDeadInfoFor(Player p)
     {
-        if(!p.isDead) {
+        if(p.isDead) {
             if (p.life() == 0) {
                 return R.string.dead_info_1;
             } else if (p.life() < 0) {

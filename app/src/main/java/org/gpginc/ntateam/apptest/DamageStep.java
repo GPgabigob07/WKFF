@@ -9,6 +9,7 @@ import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.DmgStp_Util.DmgLineAdapter;
+import org.gpginc.ntateam.apptest.runtime.util.enums.EventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,11 @@ public class DamageStep extends RuntimeActivity {
             List<Player> deads = new ArrayList<>();
             for(Player p : this.ON_PLAYERS)
             {
-                if(p.isDead)deads.add(p);
+                if(p.isDead)
+                {
+                    checkEvents(EventHandler.ON_DEATH);
+                    deads.add(p);
+                }
             }
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
 

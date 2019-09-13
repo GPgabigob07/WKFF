@@ -15,6 +15,7 @@ import org.gpginc.ntateam.apptest.runtime.Player;
 
 import java.util.List;
 
+
 public class PlayerListAdapter<T> extends BaseExpandableListAdapter
 {
     private final Context context;

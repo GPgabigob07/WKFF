@@ -10,6 +10,7 @@ import android.support.annotation.StringRes;
 import org.gpginc.ntateam.apptest.GameEnd;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.events.DefeatSupreme;
+import org.gpginc.ntateam.apptest.runtime.events.KillingSpree;
 import org.gpginc.ntateam.apptest.runtime.util.Util;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
@@ -24,10 +25,12 @@ public class Events
     public static List<Event> EVTS = new ArrayList<>();
 
     public static final Event DEFEAT_SUPREME;
+    public static final Event KILLING_SPREE;
 
     static
     {
         DEFEAT_SUPREME = new DefeatSupreme();
+        KILLING_SPREE = new KillingSpree().base();
     }
 
 

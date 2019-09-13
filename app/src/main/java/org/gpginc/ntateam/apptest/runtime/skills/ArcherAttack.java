@@ -81,7 +81,7 @@ public class ArcherAttack extends ClazzSkill
                         d.show();
                     } else if (adapter.getSelectedCount() ==1)
                     {
-                        lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1);
+                        lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1, false);
                         r.goNext(v);
                     }
                 }
