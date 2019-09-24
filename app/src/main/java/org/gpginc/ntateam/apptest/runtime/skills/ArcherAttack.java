@@ -21,12 +21,12 @@ import java.util.Random;
 public class ArcherAttack extends ClazzSkill
 {
 
-    public ArcherAttack(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public ArcherAttack(String name, Type type) {
+        super(name, type, false);
     }
 
-    public ArcherAttack(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public ArcherAttack(String name, Type type, int layout) {
+        super(name, type, layout, false);;
     }
 
     public ArcherAttack(Parcel in) {
@@ -83,11 +83,12 @@ public class ArcherAttack extends ClazzSkill
                     {
                         lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1, false);
                         r.goNext(v);
+                        current.finish();
                     }
                 }
             });
+            lastAct.changePlayer(p);
         }
-
     }
     public static final Creator<ArcherAttack> CREATOR = new Creator<ArcherAttack>()
     {

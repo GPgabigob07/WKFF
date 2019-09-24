@@ -14,7 +14,7 @@ import java.io.Serializable;
 public abstract class Event implements GameEvent
 {
     @StringRes
-    private final int name, description;
+    private final int name, description, endDescription;
     private final int maxInGame;
     private final Rarity rarity;
     private final EventHandler handler;
@@ -23,16 +23,17 @@ public abstract class Event implements GameEvent
     /**
      * USed to create some events that might set who wins in the end;
      * @param name Resource name
-     * @param description Resource description
+     * @param endDescription Resource endDescription
      * @param rarity {@link Rarity} rarity
      * @param maxInGame How many equals events can be in one game;
      * @param handler Basically, the runtime will call this event depending on it handler.
      * @param needBase This is set as true when the event need to be duplicated, as {@link org.gpginc.ntateam.apptest.runtime.events.KillingSpree}
      */
-    public Event(@StringRes int name, int description, Rarity rarity, int maxInGame, EventHandler handler, boolean needBase) {
+    public Event(@StringRes int name, @StringRes int description,@StringRes int endDescription, Rarity rarity, int maxInGame, EventHandler handler, boolean needBase) {
         this.name = name;
         this.rarity = rarity;
         this.description = description;
+        this.endDescription = endDescription;
         this.maxInGame = maxInGame;
         this.handler = handler;
         if(!needBase)
@@ -44,6 +45,7 @@ public abstract class Event implements GameEvent
     protected Event(Parcel in) {
         name = in.readInt();
         description = in.readInt();
+        endDescription = in.readInt();
         rarity = Rarity.withName(in.readString());
         handler = EventHandler.withName(in.readString());
         maxInGame = in.readInt();
@@ -57,8 +59,8 @@ public abstract class Event implements GameEvent
         return rarity;
     }
 
-    public int getDescription() {
-        return description;
+    public int getEndDescription() {
+        return endDescription;
     }
 
     @Override
@@ -70,6 +72,7 @@ public abstract class Event implements GameEvent
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(name);
         dest.writeInt(description);
+        dest.writeInt(endDescription);
         dest.writeString(rarity.R());
         dest.writeString(handler.name());
         dest.writeInt(maxInGame);
@@ -86,6 +89,10 @@ public abstract class Event implements GameEvent
 
     public int getMax() {
         return maxInGame;
+    }
+
+    public int getDescription() {
+        return description;
     }
 
     public abstract Creator getCreator();

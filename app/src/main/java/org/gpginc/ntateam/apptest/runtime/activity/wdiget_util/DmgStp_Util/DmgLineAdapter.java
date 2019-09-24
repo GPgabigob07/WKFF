@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import org.gpginc.ntateam.apptest.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.util.Util;
@@ -34,7 +35,10 @@ public class DmgLineAdapter extends RecyclerView.Adapter<DmgLineHolder>
         holder.kingdom.setImageResource(Util.getKindomFor(p));
         holder.playerClazz.setText(p.getClazz().getName());
         holder.deadInfo.setText(Util.getDeadInfoFor(p) != -1 ? Util.getDeadInfoFor(p) : R.string.bugstr);
-        if(p.life() < 0) holder.deadInfo.setText(holder.deadInfo.getText() + " " + p.getLastAttacker().getName());
+        if(p.life() < 0) holder.deadInfo.setText(holder.deadInfo.getText() + " " +
+                ((p.getLastAttacker() instanceof Dragon) ?
+                        ((Dragon)p.getLastAttacker()).getNameAsString() :
+                        ((Player)p.getLastAttacker()).getName())) ;
         holder.playerName.setText(p.getName());
     }
 

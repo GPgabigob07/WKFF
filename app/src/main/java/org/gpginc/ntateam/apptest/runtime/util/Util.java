@@ -6,11 +6,13 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 
+import org.gpginc.ntateam.apptest.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +52,10 @@ public class Util
     @StringRes
     public static int getDeadInfoFor(Player p)
     {
-        if(p.isDead) {
-            if (p.life() == 0) {
+        if(p.isDead)
+        {
+            if (p.getLastAttacker() instanceof Dragon) return R.string.died_by_dragon;
+            else if (p.life() == 0) {
                 return R.string.dead_info_1;
             } else if (p.life() < 0) {
                 return R.string.dead_info_2;
@@ -60,6 +64,20 @@ public class Util
         return -1;
     }
 
+    @DrawableRes
+    public static int getPlayerLifeShowner(Player p)
+    {
+        switch(p.life())
+        {
+            case 1:
+                return (p.isDragonProtected || p.isProtected) ? R.drawable.player_1_protected_life : R.drawable.player_1_life;
+            case 2:
+                return (p.isDragonProtected || p.isProtected) ? R.drawable.player_2_protected_life : R.drawable.player_2_life;
+            case 3:
+                return (p.isDragonProtected || p.isProtected) ? R.drawable.player_full_protected_life : R.drawable.player_full_life;
+        }
+        return R.drawable.unkown_e;
+    }
     public static String getCrypto(String s)
     {
         String[] sp = s.split("");
@@ -190,5 +208,4 @@ public class Util
         out.putParcelable("Target", player);
         return out;
     }
-
 }

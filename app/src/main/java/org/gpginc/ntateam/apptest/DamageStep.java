@@ -21,7 +21,7 @@ public class DamageStep extends RuntimeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_damage_step);
         setTitle(R.string.title_activity_damage_step);
-        if(Main.damageStep(this.ON_PLAYERS))
+        if(Main.damageStep(this))
         {
             findViewById(R.id.maybe_info).setVisibility(View.INVISIBLE);
             List<Player> deads = new ArrayList<>();

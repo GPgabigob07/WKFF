@@ -31,7 +31,9 @@ public class CurrentPlayer extends RuntimeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_player_neo);
-        setTitle(R.string.wkff_label);
+        Toolbar t = findViewById(R.id.toolbar);
+        setSupportActionBar(t);
+        setTitle(R.string.wkff_long);
         if(this.currentPlayer().attacked)this.currentPlayer().getClazz().runAttackTrigger(this);
 
         CurrentPlayerTabsAdapter adapterTab = new CurrentPlayerTabsAdapter(getSupportFragmentManager());

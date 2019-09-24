@@ -12,23 +12,22 @@ import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.CounterSkill;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MagicianCounter extends ClazzSkill
+public class MagicianCounter extends ClazzSkill implements CounterSkill<MagicianCounter>
 {
 
-    public MagicianCounter(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
-    }
-
-    public MagicianCounter(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public MagicianCounter() {
+        super("Magician Counter", ClazzSkill.Type.MAHOU, true);
+        this.isCounter = true;
     }
 
     public MagicianCounter(Parcel in) {
         super(in);
+        this.isCounter = true;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class MagicianCounter extends ClazzSkill
                 final List<Object> attackable = new ArrayList<>();
                 final SkillRun sk = this.current;
                 attackable.addAll(p.getAttackers());
-                final Player countered = p.getAttackers().get(0);
+                final Player countered = p.getAttackers().get(p.getAttackers().size() - 1);
                 Main.p("COUNTER TARGET: " +countered.getName());
 
                 final RuntimeActivity r = this.lastAct;
@@ -59,6 +58,9 @@ public class MagicianCounter extends ClazzSkill
                     public void onDismiss(DialogInterface dialog) {
                         countered.giveDamage(lastAct, 1, true);
                         p.increaseLifeIn(1);
+                        thisSkill.counteredTimes++;
+                        lastAct.changePlayer(p);
+                        lastAct.changePlayer(countered);
                         lastAct.goNext(counterDialog.findViewById(R.id.doalog_ok));
                     }
                 });
@@ -80,7 +82,7 @@ public class MagicianCounter extends ClazzSkill
                     }
                 });
 
-                if(p.getAttackers().size() >= 2)
+                if(p.getDamage() >= 2)
                 {
                     dzin.show();
                 } else if (countered.getClazz().equals(Clazzs.ARCHERY) || countered.getClazz().equals(Clazzs.SWORDMAN) || countered.getClazz().equals(Clazzs.LANCER))
@@ -112,4 +114,23 @@ public class MagicianCounter extends ClazzSkill
             return new MagicianCounter[size];
         }
     };
+
+    @Override
+    public MagicianCounter newInstance() {
+        Main.p("\n|**************************************************|\n|------ CREATED NEW INSTANCE FROM SKILL: MAGICIAN COUNTER ---------|\n|***************************************|\n");
+        return new MagicianCounter().setCounter(2);
+    }
+
+    @Override
+    public MagicianCounter base() {
+        Clazzs.SKILL_MAP.put(this.getName(), this);
+        return this;
+    }
+
+    @Override
+    public MagicianCounter setCounter(int maxCounterTimes) {
+        this.isCounter = true;
+        this.maxCounterTimes = maxCounterTimes;
+        return this;
+    }
 }

@@ -38,7 +38,7 @@
     <string name="countered"> attack countered!</string>
     <string name="magician_counter_info_attackers">You were attacked more than can counter\.\.\.</string>
     <string name="you_cant_counter">You weren\'t able to counter that Attack!</string>
-    <string name="title_activity_pre_player">Waiting Player</string>>
+    <string name="title_activity_pre_player">Waiting Player...</string>>
     <string name="show_player">Show</string>
     <string name="wkff_label">WKFF?</string>
     <string name="title_activity_damage_step">Damage Step</string>
@@ -166,12 +166,25 @@
     <string name="gamover">Game Over!</string>
     <string name="over_dead_player">Player that causes fall:</string>
     <string name="over_event_descr">Some Event Description</string>
-    <string name="evt_descr_eds">Basically, all the war now it\'s done!\n
-    Finally one kingdom had found glory on the war, and, of course,\n
-    the other one, had falls miserably, and will never rise back!</string>
+    <string name="evt_end_descr_eds">Basically, all the war now it\'s done!\nFinally one kingdom had found glory on the war, and, of course,\nthe other one, had falls miserably, and will never rise back!</string>
     <string name="event_killing_spree">Killing Spree</string>
-    <string name="evt_descr_ks">Player was ordened, by powererd forces, that he might kill an given target.</string>
+    <string name="evt_end_descr_ks">Player was ordened, by powererd forces, \nthat he might kill an given target,\n but failed.</string>
     <string name="battle_txt">Battle</string>
     <string name="objective_txt">Objectives</string>
+    <string name="target">Target:</string>
+    <string name="evt_descr_eds">You, magician, need to kill your most \npowerful enemy, the other\'s kingdom \nSupreme Magician!</string>
+    <string name="evt_descr_ks">You were ordened to kill this person, \n no matter who is, just KILL!</string>
+    <string name="evt_name_bg">Bodyguard</string>
+    <string name="evt_descr_bg">You migh convince your kindom that\nthis magician was a friend, or someone\nthat is as important as your life!\nHe(She) might don\'t die!</string>
+    <string name="evt_end_descr_bg">Magician had failed to protect\nhim friend...</string>
+    <string name="skill_godness">Godness Protection</string>
+    <string name="player_was_protected">player was sucessfully rotected for a turn!</string>
+    <string name="dragon_quasar_name">Quasar</string>
+    <string name="dragon_lancelot_name">Lancelot</string>
+    <string name="evt_name_db">Dragon Born</string>
+    <string name="evt_dscr_db">Your kingdom\'s dragon had awaken! You must be carefull, or you will be taken on crossed fire!</string>
+    <string name="evt_end_dscr_db">Dragons are super inteligent creatures, you humans, had got him to nervous, within this fury, he had obliterated both kingdoms!</string>
+    <string name="dragon_kingdom">Kingdom</string>
+    <string name="died_by_dragon">Has become dragon breakfast</string>
 
 </resources>

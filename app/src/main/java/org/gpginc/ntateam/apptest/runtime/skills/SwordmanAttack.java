@@ -25,12 +25,12 @@ import static org.gpginc.ntateam.apptest.runtime.Main.p;
 public class SwordmanAttack extends ClazzSkill
 {
 
-    public SwordmanAttack(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public SwordmanAttack(String name, Type type) {
+        super(name, type, false);
     }
 
-    public SwordmanAttack(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public SwordmanAttack(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public SwordmanAttack(Parcel in) {
@@ -92,9 +92,9 @@ public class SwordmanAttack extends ClazzSkill
                         @Override
                         public void onClick(View v) {
                             btn.setHint("twice");
-                            Snackbar.make(v, btn.getHint(), Snackbar.LENGTH_SHORT).show();
                             d.dismiss();
-
+                            lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 2, false);
+                            r.goNext(v);
                         }
                     };
 
@@ -104,19 +104,26 @@ public class SwordmanAttack extends ClazzSkill
                         d.findViewById(R.id.doalog_ok).setOnClickListener(this.secondListener);
                         if (adapter.getSelectedCount() < 2 && !btn.getHint().equals("twice")) {
                             d.show();
+
                         } else if (adapter.getSelectedCount() < 2) {
                             lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 2, false);
+                            r.changePlayer(lastAct.findByCode(adapter.getSelectedCodes()[0]));
                             r.goNext(v);
+                            current.finish();
                         } else {
                             lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1, false);
                             lastAct.getPlayers().get(adapter.getSelectedCodes()[1]).giveDamage(r, 1, false);
+                            r.changePlayer(lastAct.findByCode(adapter.getSelectedCodes()[0]));
+                            r.changePlayer(lastAct.findByCode(adapter.getSelectedCodes()[1]));
                             r.goNext(v);
+                            current.finish();
                         }
 
                     }
                 });
             }
         }
+
     }
 
     @Override

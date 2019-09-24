@@ -3,6 +3,7 @@ package org.gpginc.ntateam.apptest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,8 @@ public class PrePlayer extends RuntimeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_player);
         setTitle(R.string.title_activity_pre_player);
-        //setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+        Toolbar t = findViewById(R.id.toolbar);
+        setSupportActionBar(t);
         ((ImageView)findViewById(R.id.togglePlayer)).setImageResource(this.currentRes);
         findViewById(R.id.show_player).setVisibility(View.INVISIBLE);
         ((TextView)findViewById(R.id.current_player_name_view)).setText(currentPlayer().getName());

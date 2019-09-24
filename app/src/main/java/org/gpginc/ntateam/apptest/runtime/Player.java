@@ -4,11 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import org.gpginc.ntateam.apptest.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("UnusedReturnValue")
 public class Player implements Parcelable
@@ -18,7 +20,7 @@ public class Player implements Parcelable
 	private String kingdom;
 	private Clazz clazz;
 	private List<Player> attackers = new ArrayList<>();
-	private Player lastAttacker;
+	private Parcelable lastAttacker;
 	private final String name;
 	//private boolean[] bools = new boolean[]{this.isBlind, this.isProtected, this.isStunned, this.isDragonProtected};
 	
@@ -97,6 +99,11 @@ public class Player implements Parcelable
 		//this.clazz.setCurrentPlayer(this);
 		return this.clazz;
 	}
+
+	public int getDamage() {
+		return damageTaken;
+	}
+
 	public String getKingdom()
 	{
 		return this.kingdom;
@@ -126,6 +133,10 @@ public class Player implements Parcelable
 		return this;
 	}
 
+	public void setDragonProtected()
+	{
+		this.isDragonProtected = true;
+	}
 	public int getCod() {
 		return cod;
 	}
@@ -205,11 +216,9 @@ public class Player implements Parcelable
 	}
 	public void giveDamage(RuntimeActivity player, int i, boolean asCounter)
 	{
-		//TODO Fixing player Behaviour
 		if(!asCounter) {
 			this.attacked = true;
 			this.lastAttacker = player.currentPlayer();
-			this.damageTaken += i;
 			this.attackers.add(player.currentPlayer());
 
 			Main.p(this.getName() + " was attacked by " + player.currentPlayer().getName() + "\n life:" + this.lifePoints + "" +
@@ -217,11 +226,50 @@ public class Player implements Parcelable
 					"\n Attacked: " + this.attacked
 			);
 		}
+		this.damageTaken += i;
 	}
-	public Player damageStep()
+
+	public void giveDamage(Dragon d, int i)
 	{
-		this.lifePoints -= (!this.isProtected || !this.isDragonProtected) ? this.damageTaken : 0;
-		//this.isDead = (!this.isDragonProtected) && this.lifePoints <= 0;
+		this.attacked = true;
+		this.lastAttacker = d;
+		this.lifePoints-=i;
+
+		Main.p(this.getName() + " was attacked by " + d.getNameAsString() + "\n life:" + this.lifePoints + "" +
+				"\n Attacked: " + this.attacked
+		);
+
+	}
+
+	public boolean dragonAttack(Dragon d, boolean ignore)
+	{
+		if(!ignore && d.getKingdom() != this.kingdom) {
+			this.lifePoints = isDragonProtected ? life() : 0;
+			this.isDead = true;
+			return true;
+		} else {
+			this.lifePoints = isDragonProtected ? life() : 0;
+			this.isDead = true;
+			return true;
+		}
+	}
+
+	public Player damageStep(RuntimeActivity r)
+	{
+		if(this.isDragonProtected)
+		{
+			for(Dragon d : r.getDragons())
+			{
+				if(d.isProtecting && d.getProtectedOne().equals(this))
+				{
+					d.giveDamage(this.damageTaken);
+				}
+			}
+		}
+		else
+		{
+			this.lifePoints -= isProtected ? 0 : this.damageTaken;
+		}
 		return this;
 	}
 	public int life()
@@ -247,7 +295,7 @@ public class Player implements Parcelable
 		}
 		return players;
 	}
-	public Player getLastAttacker()
+	public Parcelable getLastAttacker()
 	{
 		return this.lastAttacker;
 	}
@@ -255,6 +303,19 @@ public class Player implements Parcelable
 	{
 		this.damageTaken -=i;
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Player player = (Player) o;
+		return name.equals(player.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 
 	public String toString()
@@ -269,4 +330,10 @@ public class Player implements Parcelable
     public void setAttachedToEvent() {
         this.attachedToEvent = true;
     }
+
+    public Player setProtected()
+	{
+		this.isProtected = true;
+		return this;
+	}
 }

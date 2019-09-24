@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Which Kingdom Falls First?</string>
+    <string name="Add">Adicionar</string>
+    <string name="action_settings">Configurar</string>
+    <string name="advice_no_players">Não há jogadores em seu campo, tente mudar-se para outro.</string>
+    <string name="attack_twice">Atacar duas vezes!</string>
+    <string name="battle_txt">Batalha</string>
+    <string name="bugstr">BUG</string>
+    <string name="cancel_reposition_dialog_btn">Cancelar</string>
+    <string name="clazz_adc">Mago de Suporte</string>
+    <string name="clazz_archery">Mago Arqueiro</string>
+    <string name="clazz_dh">Caçador de Dragões</string>
+    <string name="clazz_lancer">Mago Lanceiro</string>
+    <string name="clazz_spy">Espião</string>
+    <string name="clazz_supreme">Mago Supremo</string>
+    <string name="clazz_swordman">Mago Cavaleiro</string>
+    <string name="countered">Ataque devolvido!</string>
+    <string name="current_player_name">NomeDoJogador</string>
+    <string name="dead_info_1">Morreu neste turno.</string>
+    <string name="dead_info_2">Morreu, e completamente finalizador por:</string>
+    <string name="default_func_skill_btn">Selecionar</string>
+    <string name="del_player">Deletar</string>
+    <string name="dialog_text">Esse jogador já existe!</string>
+    <string name="dntw">Você não levará dano este turno.</string>
+    <string name="dtpywttd">Durante este turno você não levará dano.</string>
+    <string name="event_defeat_supreme">Assasinar o Mago Supremo</string>
+    <string name="event_killing_spree">Assassinato em Série</string>
+    <string name="evt_name_bg">Guarda-costas</string>
+    <string name="gamover">Fim de Jogo!</string>
+    <string name="go_btn_text">IR!</string>
+    <string name="intel_accept_btn">Aceitar Intel.</string>
+    <string name="large_text">esquece esse...</string>
+    <string name="menu_home">Principal</string>
+    <string name="next">Próximo!</string>
+    <string name="no_one_died">Ninguém morreu nesse turno.</string>
+    <string name="ps_intel">P.S. Mantenha-se em silêncio!</string>
+    <string name="title_section1">Ruinas</string>
+    <string name="title_section2">Floresta</string>
+    <string name="title_section3">Castelo</string>
+    <string name="title_section4">Deserto</string>
+</resources>

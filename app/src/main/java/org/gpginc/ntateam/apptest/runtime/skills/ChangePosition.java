@@ -20,12 +20,12 @@ import static org.gpginc.ntateam.apptest.runtime.Main.setUpFieldMemory;
 public class ChangePosition extends ClazzSkill
 {
 
-    public ChangePosition(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public ChangePosition(String name, Type type) {
+        super(name, type, false);
     }
 
-    public ChangePosition(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public ChangePosition(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public ChangePosition(Parcel in) {
@@ -37,6 +37,7 @@ public class ChangePosition extends ClazzSkill
     {
         if(o!=null)
         {
+            final Player p = (Player)o;
             final ViewPager pager = this.current.findViewById(R.id.pager);
             final ClazzSkill thisSkill = this;
             pager.setAdapter(new FieldSliderAdapter(this.current.getSupportFragmentManager(), this.current));
@@ -51,28 +52,33 @@ public class ChangePosition extends ClazzSkill
                         @Override
                         public void onClick(View v) {
                             d.dismiss();
+                            sk.finish();
                         }
                     });
-                    if(r.currentPlayer().getField() == pager.getCurrentItem()+1)
+                    if(p.getField() == pager.getCurrentItem()+1)
                     {
                         d.show();
                     } else
                     {
                         Main.p("Current:" + (pager.getCurrentItem()+1));
                         setDownFieldMemory(r.currentPlayer().getField());
-                        r.currentPlayer().setField(pager.getCurrentItem() + 1);
+                        p.setField(pager.getCurrentItem() + 1);
+                        r.changePlayer(p);
                         setUpFieldMemory(r.currentPlayer().getField());
                         if(thisSkill.isExternal())
                         {
                             sk.finish();
                             thisSkill.external = false;
                         }
-                        else r.goNext(v);
+                        else {
+                            r.goNext(v);
+                            current.finish();
+                        }
                     }
                 }
             });
-            Player p = (Player)o;
-            pager.setCurrentItem(p.getField()-1);
+
+          pager.setCurrentItem(p.getField()-1);
         }
     }
 

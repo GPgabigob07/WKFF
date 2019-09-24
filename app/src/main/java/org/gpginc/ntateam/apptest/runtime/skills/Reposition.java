@@ -24,12 +24,12 @@ import static org.gpginc.ntateam.apptest.runtime.Main.p;
 public class Reposition extends ClazzSkill
 {
 
-    public Reposition(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public Reposition(String name, Type type) {
+        super(name, type, false);
     }
 
-    public Reposition(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public Reposition(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public Reposition(Parcel in) {
@@ -43,7 +43,7 @@ public class Reposition extends ClazzSkill
         {
             //Variable initialization
             final Player p = (Player) o;
-            p.getClazz().setCurrentPlayer(null);
+            //p.getClazz().setCurrentPlayer(null);
             final String cK = p.getKingdom();
             final SkillRun sk = this.current;
             final Dialog d = this.lastAct.getDialog(this.current,R.string.reposition_message);
@@ -60,7 +60,7 @@ public class Reposition extends ClazzSkill
                     //Get all players that apply to the condition
                     for(Player k : lastAct.getPlayers())
                     {
-                        if(k.getKingdom().equals(cK) && !k.getName().equals(p.getName()))
+                        if(k.getKingdom().equals(cK) && !k.equals(p))
                         {
                             p("["+k.getCod()+"] " + k.getName());
                             gone.add(k);
@@ -100,7 +100,7 @@ public class Reposition extends ClazzSkill
                                 c.setLastAct(rt);
                                 Intent skill = new Intent(sk, SkillRun.class);
                                 skill.putExtra("cskill", c.getName());
-                                skill.putExtra("PLAYER_EXECUTE", rt.currentPlayer());
+                                skill.putExtra("PLAYER_EXECUTE", lastAct.findByCode(adapter.getSelectedCodes()[0]));
                                 sk.startActivity(skill);
                                 sk.finish();
                             }
@@ -117,12 +117,11 @@ public class Reposition extends ClazzSkill
                     sk.finish();
                 }
             });
-
-
             //----------------------DIALOG SETUP----------------------//
             d.show(); //Shows the dialog
 
         }
+
     }
 
     @Override

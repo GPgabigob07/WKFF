@@ -6,10 +6,14 @@ import org.gpginc.ntateam.apptest.runtime.Player;
 public interface TargetEvent<T extends Event>
 {
     public Player getTarget();
-    public  T setTarget(Player p);
+
+    public T setTarget(Player p);
+
     public Player getOwner();
+
     public T setOwner(Player p);
-    public T newInstance(Player target, Player owner);
-    public T base();
+
+    T newInstance(Player owner, Player Target);
+    T base();
 }
 

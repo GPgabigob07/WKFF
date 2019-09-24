@@ -17,7 +17,7 @@ public class KillingSpree extends Event implements TargetEvent<KillingSpree> {
     private Player killer, target;
 
     public KillingSpree() {
-        super(R.string.event_killing_spree, R.string.evt_descr_ks, Rarity.RARE, 2, EventHandler.ON_DEATH, true);
+        super(R.string.event_killing_spree,R.string.evt_descr_ks, R.string.evt_end_descr_ks, Rarity.RARE, 2, EventHandler.ON_DEATH, true);
         super.setNeedPlayers();
     }
     @Override
@@ -33,8 +33,10 @@ public class KillingSpree extends Event implements TargetEvent<KillingSpree> {
     }
 
     @Override
-    public boolean check(Player p) {
-        return target.isDead && target.getLastAttacker().getCod() == killer.getCod();
+    public boolean check(Player p)
+    {
+        if(target.getLastAttacker() instanceof Player)return target.isDead && ((Player)target.getLastAttacker()).getCod() == killer.getCod();
+        else return false;
     }
 
     @Override
@@ -88,7 +90,7 @@ public class KillingSpree extends Event implements TargetEvent<KillingSpree> {
     }
 
     @Override
-    public KillingSpree newInstance(Player target, Player owner) {
+    public KillingSpree newInstance(Player owner, Player target) {
         return new KillingSpree().setOwner(owner).setTarget(target);
     }
 

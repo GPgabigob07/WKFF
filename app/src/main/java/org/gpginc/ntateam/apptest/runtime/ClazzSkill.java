@@ -18,7 +18,8 @@ import java.io.Serializable;
 public abstract class ClazzSkill implements Skill {
 	private final String name;
 	private boolean passiveRun;
-	protected boolean isCounter = false;
+	public boolean isCounter = false;
+	public int maxCounterTimes = 0, counteredTimes = 0;
 	public boolean external = false;
 	public boolean isLoaded = false;
 
@@ -35,23 +36,31 @@ public abstract class ClazzSkill implements Skill {
 	@NonNull
 	protected int layout = -1;
 
-	public ClazzSkill(String name, Type type, boolean isCounter)
+	public ClazzSkill(String name, Type type, boolean needBase)
 	{
+		//TODO need to change name from string to StringRes (int)
 		this.name = name;
 		this.type = type;
-		this.isCounter =isCounter;
-		Clazzs.SKILL_MAP.put(this.name, this);
+		if(!needBase)
+		{
+			Clazzs.SKILL_MAP.put(this.name, this);
+		}
 	}
-	public ClazzSkill(String name, Type type, boolean isCounter, int layout)
+	public ClazzSkill(String name, Type type, int layout, boolean needBase)
 	{
-		this(name, type, isCounter);
+		this(name, type, needBase);
 		this.layout = layout;
 	}
 
 	public ClazzSkill(Parcel in)
 	{
-		this(in.readString(), (Type) in.readSerializable(), in.readByte() != 0, in.readInt());
+		this.name = in.readString();
+		this.type = (Type) in.readSerializable();
+		this.layout = in.readInt();
 		this.external = in.readByte() == 1;
+		this.maxCounterTimes = in.readInt();
+		this.counteredTimes = in.readInt();
+		this.isCounter = in.readByte() ==1;
 		this.setLastAct((RuntimeActivity) in.readParcelable(RuntimeActivity.class.getClassLoader()));
 	}
 	@Override
@@ -59,9 +68,11 @@ public abstract class ClazzSkill implements Skill {
 	{
 		dest.writeString(this.name);
 		dest.writeSerializable(this.type);
-		dest.writeByte((byte) (this.isCounter ? 1 : 0));
 		dest.writeInt(this.layout);
 		dest.writeByte((byte) (this.external ? 1 : 0));
+		dest.writeInt(this.maxCounterTimes);
+		dest.writeInt(this.counteredTimes);
+		dest.writeByte((byte) (this.isCounter ? 1 : 0));
 		dest.writeParcelable(this.lastAct, flags);
 	}
 	public void setCurrent(SkillRun current)
@@ -93,7 +104,7 @@ public abstract class ClazzSkill implements Skill {
 	{
 		return this.type;
 	}
-	public boolean isCounter() {return this.isCounter;}
+	public boolean stillCounter() {return this.isCounter && counteredTimes < maxCounterTimes;}
 
 	public String toString()
 	{
@@ -139,6 +150,7 @@ public abstract class ClazzSkill implements Skill {
 		this.getLastAct().goNext(v);
 		if(this.current!=null)this.current.finish();
 	}
+
 	public enum Type implements Serializable
 	{
 		MAHOU,

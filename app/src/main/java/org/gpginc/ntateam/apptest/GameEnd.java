@@ -17,6 +17,7 @@ import org.gpginc.ntateam.apptest.runtime.Main;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.util.Util;
+import org.gpginc.ntateam.apptest.runtime.util.enums.EventHandler;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class GameEnd extends RuntimeActivity {
 
         /*load info from Extras*/
         Bundle b = this.getIntent().getExtras();
+        checkEvents(EventHandler.ON_GAME_END);
         this.endEvt = Events.byName(b.getInt("EVT"));
         this.endPlayer = b.getParcelable("Target");
         if(this.endEvt != null) {
@@ -47,11 +49,14 @@ public class GameEnd extends RuntimeActivity {
                 ((TextView)findViewById(R.id.current_player_clazz)).setText(this.endPlayer.getClazz().getName());
                 if(this.endPlayer.isDead) {
                     ((TextView) findViewById(R.id.dmg_info)).setText(Util.getDeadInfoFor(this.endPlayer) != -1 ? Util.getDeadInfoFor(this.endPlayer) : R.string.bugstr);
-                    if (this.endPlayer.life() < 0) ((TextView) findViewById(R.id.dmg_info)).setText(((TextView) findViewById(R.id.dmg_info)).getText() + " " + this.endPlayer.getLastAttacker().getName());
+                    if (this.endPlayer.life() < 0) ((TextView) findViewById(R.id.dmg_info)).setText(((TextView) findViewById(R.id.dmg_info)).getText() + " " +
+                            (((this.endPlayer.getLastAttacker() instanceof Dragon) ?
+                            ((Dragon)this.endPlayer.getLastAttacker()).getNameAsString() :
+                            ((Player)this.endPlayer.getLastAttacker()).getName())));
                 } findViewById(R.id.dmg_info).setVisibility(View.INVISIBLE);
                 ((ImageView)findViewById(R.id.dmg_kingdom)).setImageResource(Util.getKindomFor(this.endPlayer));
 
-                ((TextView)findViewById(R.id.over_event_descr)).setText(this.endEvt.getDescription());
+                ((TextView)findViewById(R.id.over_event_descr)).setText(this.endEvt.getEndDescription());
                 /*--------------*/
 
                 /*----Setup Winner's list-----*/

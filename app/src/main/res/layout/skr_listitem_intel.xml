@@ -4,11 +4,11 @@
     android:id="@+id/rl_intel_"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@android:color/darker_gray">
+    android:background="#FF000000">
 
   <TextView
       android:id="@+id/intel_player_name"
-      android:layout_width="105dp"
+      android:layout_width="wrap_content"
       android:layout_height="25dp"
       android:layout_alignParentTop="true"
       android:layout_marginStart="90dp"
@@ -20,7 +20,7 @@
 
   <TextView
       android:id="@+id/intel_player_clazz"
-      android:layout_width="105dp"
+      android:layout_width="wrap_content"
       android:layout_height="25dp"
       android:layout_alignParentTop="true"
       android:layout_marginStart="89dp"
@@ -38,9 +38,13 @@
 
   <ImageView
       android:id="@+id/kingdom_emblem_intel"
-      android:layout_width="72dp"
+      android:layout_width="100dp"
       android:layout_height="72dp"
-      android:layout_marginStart="93dp"
-      android:layout_toEndOf="@+id/intel_player_name"
+      android:layout_alignStart="@+id/field_showner_intel"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="293dp"
+      android:layout_marginTop="0dp"
+      android:layout_marginEnd="0dp"
       app:srcCompat="@drawable/camelot_emblem" />
 </RelativeLayout>

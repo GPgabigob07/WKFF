@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="false"
+    android:background="@drawable/backgorund_shape"
+    android:backgroundTintMode="src_over"
+    android:fadingEdge="horizontal|vertical">
 
     <TextView
         android:id="@+id/dialog_info"
@@ -11,7 +14,7 @@
         android:padding="10dp"
         android:text="@string/dialog_text"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,14 +27,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
-            android:text="Cancel" />
+            android:text="Cancel"
+            android:textColor="#FFFFFFFF"
+            android:textSize="18sp" />
+
         <Button
 
             android:id="@+id/doalog_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
-            android:text="Ok!" />
+            android:text="Ok!"
+            android:textColor="#FFFFFFFF"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </RelativeLayout>

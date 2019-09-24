@@ -27,7 +27,13 @@
             android:text="ClazzName"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
+
     </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

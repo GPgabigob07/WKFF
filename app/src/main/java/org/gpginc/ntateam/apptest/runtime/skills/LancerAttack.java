@@ -21,12 +21,12 @@ import java.util.List;
 public class LancerAttack extends ClazzSkill
 {
 
-    public LancerAttack(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public LancerAttack(String name, Type type) {
+        super(name, type, false);
     }
 
-    public LancerAttack(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public LancerAttack(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public LancerAttack(Parcel in) {
@@ -62,7 +62,7 @@ public class LancerAttack extends ClazzSkill
             int asd = 1;
             for(int i = 0; i< lastAct.getPlayers().size(); ++i)
             {
-                if(!lastAct.getPlayers().get(i).getName().equals(p.getName()) && (lastAct.getPlayers().get(i).getField() == attackingField || lastAct.getPlayers().get(i).getField() == pField))
+                if(!lastAct.getPlayers().get(i).equals(p) && (lastAct.getPlayers().get(i).getField() == attackingField || lastAct.getPlayers().get(i).getField() == pField))
                 {
                     attackable.add(lastAct.getPlayers().get(i));
                     Main.p(lastAct.getPlayers().get(i).getName());
@@ -104,10 +104,11 @@ public class LancerAttack extends ClazzSkill
                     {
                         lastAct.findByCode(adapter.getSelectedCodes()[0]).giveDamage(r, 1, false);
                         r.goNext(v);
+                        current.finish();
                     }
                 }
             });
-
+            lastAct.changePlayer(p);
         }
     }
 

@@ -85,18 +85,6 @@ public class PlayerListAdapter<T> extends BaseExpandableListAdapter
 
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        /*ImageButton delete = new ImageButton(this.context);
-        final PlayerListAdapter a = this;
-        delete.setImageResource(android.R.drawable.ic_menu_delete);
-        delete.setPadding(10, 5, 30 ,5);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Clicked lol", Toast.LENGTH_SHORT).show();
-                a.owners.remove(groupPosition);
-                ((ExpandableListView)a.activity.findViewById(R.id.player_list)).setAdapter(a);
-            }
-        });*/
         View viewRow = convertView;
         if(viewRow == null)
         {

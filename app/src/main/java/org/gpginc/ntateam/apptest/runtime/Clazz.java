@@ -3,7 +3,6 @@ package org.gpginc.ntateam.apptest.runtime;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +12,16 @@ import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
+import org.gpginc.ntateam.apptest.runtime.util.CounterSkill;
+import org.gpginc.ntateam.apptest.runtime.util.GameClazz;
+import org.gpginc.ntateam.apptest.runtime.util.IntanciableSkill;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class Clazz implements Parcelable
+public class Clazz implements GameClazz<Clazz>
 {
 	@StringRes
 	private final int name;
@@ -26,6 +29,7 @@ public class Clazz implements Parcelable
 	private Player cPlayer;
 	@DrawableRes
 	private final int icon;
+	public final boolean needInstance;
 	private final ArrayList<ClazzSkill> SKILLS = new ArrayList<>();
 
 	private Resources resources;
@@ -43,24 +47,33 @@ public class Clazz implements Parcelable
 		return icon;
 	}
 
-	public Clazz(@StringRes int name, Rarity r, @DrawableRes int icon){
+	public Clazz(@StringRes int name, Rarity r, @DrawableRes int icon, boolean needBase){
 		this.name = name;
 		this.RARITY = r;
-		Clazzs.CLAZZS.add(this);
-		Clazzs.CLAZZ_MAP.put(this.name, this);
 		this.icon = icon;
 		Main.p(this.getName());
-/*		if(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class) == null)
+		if(!needBase)
 		{
-			throw new AnnotationTypeMismatchException(this.getClass().getMethod("Clazz", String.class), "Clazz declaration error, no rarity handler attached!" +
-					"\n at " + this.getClass().getDeclaringClass());
-		} else Main.p("Clazz was created perfectly!\n");*/
+			Clazzs.CLAZZS.add(this);
+			Clazzs.CLAZZ_MAP.put(this.name, this);
+		}
+		this.needInstance = needBase;
 	}
+
+	protected Clazz setAllSkills(List<ClazzSkill> skills)
+	{
+		for (ClazzSkill sk : skills)
+		{
+			this.bindSkill(sk, 0);
+		}
+		return this;}
+
 	/**
-	 * Use this constructor for SPY based classes
+	 * Use this constructor for SPY based clazzs
 	 */
 	public Clazz()
 	{
+		this.needInstance = false;
 		this.name = R.string.clazz_spy;
 		this.icon= R.drawable.botao_adicionar;
 		this.RARITY = Rarity.MASTERRARE;
@@ -89,6 +102,7 @@ for(String name :  names)
 	protected Clazz(Parcel in) {
 		name = in.readInt();
 		cPlayer = in.readParcelable(Player.class.getClassLoader());
+		this.needInstance = in.readByte() ==1;
 		ArrayList<String> names =  new ArrayList<>();
 		in.readStringList(names);
 		for(String name :  names)
@@ -104,6 +118,7 @@ for(String name :  names)
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(name);
 		dest.writeParcelable(cPlayer, flags);
+		dest.writeByte((byte) (this.needInstance ? 1 : 0));
 		ArrayList<String> names =  new ArrayList<>();
 		for(ClazzSkill c : this.SKILLS)
 		{
@@ -136,6 +151,21 @@ for(String name :  names)
 	{
 		this.SKILLS.add(skill);
 		Main.p("Skill: " + skill.getName() + " added to " + this.getName());
+		return this;
+	}
+	public Clazz bindSkill(ClazzSkill skill, int flag)
+	{
+		if(flag == 0)
+		{
+			if(skill instanceof IntanciableSkill)
+			{
+				this.SKILLS.add(((IntanciableSkill) skill).newInstance());
+			}
+			else
+			{
+				this.SKILLS.add(skill);
+			}
+		} else this.SKILLS.add(skill);
 		return this;
 	}
 	public ArrayList<ClazzSkill> getSkills() {
@@ -219,6 +249,19 @@ for(String name :  names)
 	public boolean equals(Clazz clazz)
 	{
 		return clazz.getName() == this.getName();
+	}
+
+	@Override
+	public Clazz newInstance()
+	{
+		return new Clazz(this.getName(), this.RARITY, this.icon, this.needInstance).setAllSkills(this.SKILLS);
+	}
+
+	@Override
+	public Clazz base() {
+		Clazzs.CLAZZS.add(this);
+		Clazzs.CLAZZ_MAP.put(this.name, this);
+		return this;
 	}
 }
 

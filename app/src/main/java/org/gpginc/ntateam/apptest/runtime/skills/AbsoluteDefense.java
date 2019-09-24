@@ -12,13 +12,12 @@ import org.gpginc.ntateam.apptest.runtime.Player;
 
 public class AbsoluteDefense extends ClazzSkill
 {
-
-    public AbsoluteDefense(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public AbsoluteDefense(String name, Type type) {
+        super(name, type, false);
     }
 
-    public AbsoluteDefense(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public AbsoluteDefense(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     private AbsoluteDefense(Parcel in) {

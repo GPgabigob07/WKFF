@@ -15,12 +15,12 @@ import static org.gpginc.ntateam.apptest.runtime.Main.p;
 public class NullingAttack extends ClazzSkill
 {
 
-    public NullingAttack(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public NullingAttack(String name, Type type) {
+        super(name, type, false);
     }
 
-    public NullingAttack(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public NullingAttack(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public NullingAttack(Parcel in) {

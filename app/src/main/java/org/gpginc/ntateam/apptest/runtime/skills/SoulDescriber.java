@@ -25,12 +25,12 @@ import java.util.List;
 public class SoulDescriber extends ClazzSkill
 {
 
-    public SoulDescriber(String name, Type type, boolean isCounter) {
-        super(name, type, isCounter);
+    public SoulDescriber(String name, Type type) {
+        super(name, type, false);
     }
 
-    public SoulDescriber(String name, Type type, boolean isCounter, int layout) {
-        super(name, type, isCounter, layout);
+    public SoulDescriber(String name, Type type, int layout) {
+        super(name, type, layout, false);
     }
 
     public SoulDescriber(Parcel in) {
@@ -78,29 +78,29 @@ public class SoulDescriber extends ClazzSkill
                 if (adapter.getSelectedCount() < 1) {
                     d.show();
                 } else if (adapter.getSelectedCount() == 1) {
-                   final Dialog d3 = r.getDialog(sk, R.string.lancer_atk_info);
-                   d3.setContentView(R.layout.skr_soul_inspect);
-                   TextView playerName, playerClazz;
-                   RelativeLayout kingdom;
-                   playerClazz = d3.findViewById(R.id.player_clazz);
-                   playerName = d3.findViewById(R.id.player_name);
-                   kingdom =  d3.findViewById(R.id.kingdom_inspect);
-                   playerClazz.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getClazz().getName()));
-                   playerName.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getName()));
-                   kingdom.setBackgroundResource(Util.getKindomFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
-                   kingdom.setOnClickListener(lastAct.dialogDismiss(d3, false));
-                   d3.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                       @Override
-                       public void onDismiss(DialogInterface dialog) {
-                           lastAct.findViewById(R.id.next_player_bt).performClick();
-                       }
-                   });
-                   d3.show();
+                    final Dialog d3 = r.getDialog(sk, R.string.lancer_atk_info);
+                    d3.setContentView(R.layout.skr_soul_inspect);
+                    TextView playerName, playerClazz;
+                    RelativeLayout kingdom;
+                    playerClazz = d3.findViewById(R.id.player_clazz);
+                    playerName = d3.findViewById(R.id.player_name);
+                    kingdom = d3.findViewById(R.id.kingdom_inspect);
+                    playerClazz.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getClazz().getName()));
+                    playerName.setText((lastAct.findByCode(adapter.getSelectedCodes()[0]).getName()));
+                    kingdom.setBackgroundResource(Util.getKindomFor(lastAct.findByCode(adapter.getSelectedCodes()[0])));
+                    kingdom.setOnClickListener(lastAct.dialogDismiss(d3, false));
+                    d3.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            lastAct.findViewById(R.id.next_player_bt).performClick();
+                            current.finish();
+                        }
+                    });
+                    d3.show();
                 }
             }
         });
     }
-
     public static final Creator<SoulDescriber> CREATOR = new Creator<SoulDescriber>()
     {
         @Override

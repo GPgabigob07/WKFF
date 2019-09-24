@@ -19,7 +19,7 @@ import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 public class DefeatSupreme extends Event
 {
     public DefeatSupreme() {
-        super(R.string.event_defeat_supreme, R.string.evt_descr_eds, Rarity.ALWAYS, 1, EventHandler.ALWAYS, false);
+        super(R.string.event_defeat_supreme,R.string.evt_descr_eds ,R.string.evt_end_descr_eds, Rarity.ALWAYS, 1, EventHandler.ALWAYS, true);
     }
 
     public DefeatSupreme(Parcel in) {

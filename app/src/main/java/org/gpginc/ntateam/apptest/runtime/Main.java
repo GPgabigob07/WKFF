@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 import java.util.ArrayList;
@@ -241,7 +242,7 @@ public class Main
 	 */
 	private static void setupPlayer(Player p, Clazz clazz, String kingdom, int field)
 	{
-		p.setClazz(clazz).setKingdom(kingdom).setField(field);
+		p.setClazz((clazz.needInstance ? clazz.newInstance() : clazz)).setKingdom(kingdom).setField(field);
 		/*OUT_CLAZZS.add(clazz.getNameLikeStr());
 		OUT_KINGDOMS.add(kingdom);
 		OUT_FIELDS.add(field);*/
@@ -332,13 +333,13 @@ public class Main
 			}
 		}
 	}*/
-	public static boolean damageStep(@org.jetbrains.annotations.NotNull final List<Player> players)
+	public static boolean damageStep(@org.jetbrains.annotations.NotNull RuntimeActivity r)
 	{
 		List<Player> playersKilled = new ArrayList<>();
 		boolean flag = false;
-		for(Player p : players)
+		for(Player p : r.getPlayers())
 		{
-			p.damageStep();
+			p.damageStep(r);
 			p("-------------------------------------------");
 			p(p.getName() + " status: ");
 			p("Current Life:"+p.life());
@@ -359,12 +360,12 @@ public class Main
 			}
 			if(!p.isDead) {
                 if (p.life() == 0) {
-                    p("Has died this turn");
+                   // p("Has died this turn");
                     playersKilled.add(p);
 					flag = true;
                     p.kill();
                 } else if (p.life() < 0) {
-                    p("Has died, and " + p.getAttackers().get(p.getAttackers().size() - 1).getName() + " had guaranteed that wont come back to this world");
+                    //p("Has died, and " + p.getAttackers().get(p.getAttackers().size() - 1).getName() + " had guaranteed that wont come back to this world");
                     playersKilled.add(p);
 					flag = true;
                     p.kill();
@@ -429,9 +430,9 @@ public class Main
 			{
 				if(p.attacked)
 				{
-					p("["+i+"] " + c.getSkillAt(i).getName() + (c.getSkillAt(i).isCounter() ? " *COUNTER!*" : ""));
+					p("["+i+"] " + c.getSkillAt(i).getName() + (c.getSkillAt(i).stillCounter() ? " *COUNTER!*" : ""));
 					++asd;
-				}else if(!p.attacked && !c.getSkillAt(i).isCounter())
+				}else if(!p.attacked && !c.getSkillAt(i).stillCounter())
 				{
 					p("["+i+"] " + c.getSkillAt(i).getName());
 					++asd;
