@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 public abstract class ClazzSkill implements Skill {
 	private final String name;
-	private boolean passiveRun;
+	private boolean passiveRun = false;
 	public boolean isCounter = false;
 	public int maxCounterTimes = 0, counteredTimes = 0;
 	public boolean external = false;
@@ -96,8 +96,9 @@ public abstract class ClazzSkill implements Skill {
 		return passiveRun;
 	}
 	public boolean isAttack(){return this.type.equals(Type.ATTACK);}
-	public void setPassiveRun(boolean passiveRun) {
+	public ClazzSkill setPassiveRun(boolean passiveRun) {
 		this.passiveRun = passiveRun;
+		return this;
 	}
 	
 	public Type getType()

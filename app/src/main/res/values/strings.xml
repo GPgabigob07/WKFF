@@ -186,5 +186,11 @@
     <string name="evt_end_dscr_db">Dragons are super inteligent creatures, you humans, had got him to nervous, within this fury, he had obliterated both kingdoms!</string>
     <string name="dragon_kingdom">Kingdom</string>
     <string name="died_by_dragon">Has become dragon breakfast</string>
+    <string name="tpywtdis">This phase you\'ll take damage...</string>
+    <string name="efx_poison_name">Poison</string>
+    <string name="efx_poison_description">Poisoned players must recieve 1 of damage for 2 turns</string>
+    <string name="evt_name_dw">Dark Witch</string>
+    <string name="evt_descr_dw">The Dark Witch has rised into this battle!\\nShe will try to kill everyone! Beware!</string>
+    <string name="evt_end_descr_dw">The Witch has finally found glory!</string>
 
 </resources>

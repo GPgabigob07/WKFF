@@ -1,5 +1,9 @@
 package org.gpginc.ntateam.apptest.runtime.util;
 
+
+/**
+ * Uses to implements skills that have a limited usages, and also, can be recover;
+ */
 public interface TurnSkill
 {
 

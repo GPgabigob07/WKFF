@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import org.gpginc.ntateam.apptest.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
 
@@ -20,8 +19,12 @@ public class Player implements Parcelable
 	private String kingdom;
 	private Clazz clazz;
 	private List<Player> attackers = new ArrayList<>();
+	private List<Effect> efx = new ArrayList<>();
 	private Parcelable lastAttacker;
 	private final String name;
+
+	public int[] ATTACKS_RECIEVED;
+
 	//private boolean[] bools = new boolean[]{this.isBlind, this.isProtected, this.isStunned, this.isDragonProtected};
 	
 	public Player(String name, Clazz clazz, String kingdom) 
@@ -36,65 +39,94 @@ public class Player implements Parcelable
 		this.name = name;
 	}
 
-    protected Player(Parcel in) {
-        lifePoints = in.readInt();
-        damageTaken = in.readInt();
-        currentField = in.readInt();
-        cod = in.readInt();
-        isStunned = in.readByte() != 0;
-        attacked = in.readByte() != 0;
-        isBlind = in.readByte() != 0;
-        isProtected = in.readByte() != 0;
-        isDragonProtected = in.readByte() != 0;
-        isDead = in.readByte() != 0;
-        isWinner = in.readByte() != 0;
-        attachedToEvent = in.readByte() != 0;
-        kingdom = in.readString();
-        clazz = in.readParcelable(Clazz.class.getClassLoader());
-        attackers = in.createTypedArrayList(Player.CREATOR);
-        lastAttacker = in.readParcelable(Player.class.getClassLoader());
-        name = in.readString();
-    }
+	protected Player(Parcel in) {
+		lifePoints = in.readInt();
+		damageTaken = in.readInt();
+		currentField = in.readInt();
+		cod = in.readInt();
+		isStunned = in.readByte() != 0;
+		attacked = in.readByte() != 0;
+		isBlind = in.readByte() != 0;
+		isProtected = in.readByte() != 0;
+		isDragonProtected = in.readByte() != 0;
+		isDead = in.readByte() != 0;
+		isWinner = in.readByte() != 0;
+		attachedToEvent = in.readByte() != 0;
+		kingdom = in.readString();
+		clazz = in.readParcelable(Clazz.class.getClassLoader());
+		attackers = in.createTypedArrayList(Player.CREATOR);
+		for(int i = 0; i < in.readInt(); ++i)
+		{
+			this.efx.add((Effect) in.readParcelable(Effect.class.getClassLoader()));
+		}
+		name = in.readString();
+		ATTACKS_RECIEVED = in.createIntArray();
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(lifePoints);
-        dest.writeInt(damageTaken);
-        dest.writeInt(currentField);
-        dest.writeInt(cod);
-        dest.writeByte((byte) (isStunned ? 1 : 0));
-        dest.writeByte((byte) (attacked ? 1 : 0));
-        dest.writeByte((byte) (isBlind ? 1 : 0));
-        dest.writeByte((byte) (isProtected ? 1 : 0));
-        dest.writeByte((byte) (isDragonProtected ? 1 : 0));
-        dest.writeByte((byte) (isDead ? 1 : 0));
-        dest.writeByte((byte) (isWinner ? 1 : 0));
-        dest.writeByte((byte) (attachedToEvent ? 1 : 0));
-        dest.writeString(kingdom);
-        dest.writeParcelable(clazz, flags);
-        dest.writeTypedList(attackers);
-        dest.writeParcelable(lastAttacker, flags);
-        dest.writeString(name);
-    }
+	public boolean isAffectedBy(Effect e)
+	{
+		Main.p(e + " EFFECT!");
+		return this.efx.contains(e);
+	}
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(lifePoints);
+		dest.writeInt(damageTaken);
+		dest.writeInt(currentField);
+		dest.writeInt(cod);
+		dest.writeByte((byte) (isStunned ? 1 : 0));
+		dest.writeByte((byte) (attacked ? 1 : 0));
+		dest.writeByte((byte) (isBlind ? 1 : 0));
+		dest.writeByte((byte) (isProtected ? 1 : 0));
+		dest.writeByte((byte) (isDragonProtected ? 1 : 0));
+		dest.writeByte((byte) (isDead ? 1 : 0));
+		dest.writeByte((byte) (isWinner ? 1 : 0));
+		dest.writeByte((byte) (attachedToEvent ? 1 : 0));
+		dest.writeString(kingdom);
+		dest.writeParcelable(clazz, flags);
+		dest.writeTypedList(attackers);
+		dest.writeInt(efx.size());
+		for(int i = 0; i < efx.size(); ++i)
+		{
+			dest.writeParcelable(efx.get(i), flags);
+		}
+		dest.writeString(name);
+		dest.writeIntArray(ATTACKS_RECIEVED);
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Creator<Player> CREATOR = new Creator<Player>() {
-        @Override
-        public Player createFromParcel(Parcel in) {
-            return new Player(in);
-        }
+	public static final Creator<Player> CREATOR = new Creator<Player>() {
+		@Override
+		public Player createFromParcel(Parcel in) {
+			return new Player(in);
+		}
 
-        @Override
-        public Player[] newArray(int size) {
-            return new Player[size];
-        }
-    };
+		@Override
+		public Player[] newArray(int size) {
+			return new Player[size];
+		}
+	};
 
-    public Clazz getClazz()
+	public void antidote(Effect e)
+	{
+		if(this.efx.contains(e))this.efx.remove(e);
+	}
+	public void effectDamage(int i)
+	{
+		this.damageTaken -=i;
+		this.inspect();
+	}
+
+	public boolean isAffected()
+	{
+		return !this.efx.isEmpty();
+	}
+
+	public Clazz getClazz()
 	{
 		//this.clazz.setCurrentPlayer(this);
 		return this.clazz;
@@ -139,65 +171,6 @@ public class Player implements Parcelable
 	}
 	public int getCod() {
 		return cod;
-	}
-
-	public static String withName(Player p)
-	{
-		return p.getName();
-	}
-	public boolean hasKingdom()
-	{
-		return this.kingdom != null;
-	}
-	public boolean hasClazz()
-	{
-		return this.clazz != null;
-	}
-	
-	public void showField()
-	{
-		switch(this.currentField)
-		{
-		case 1:
-			Main.p("    *    ");
-			Main.p(" X  *    ");
-			Main.p("    *    ");
-			Main.p("*********");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			break;
-		case 2:
-			Main.p("    *    ");
-			Main.p("    *  X ");
-			Main.p("    *    ");
-			Main.p("*********");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			break;
-		case 3:
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("*********");
-			Main.p("    *    ");
-			Main.p("    *  X ");
-			Main.p("    *    ");
-			break;
-		case 4:
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("    *    ");
-			Main.p("*********");
-			Main.p("    *    ");
-			Main.p(" X  *    ");
-			Main.p("    *    ");
-			break;
-		case 5:
-			break;
-		}
-		
 	}
 
 	public boolean isEnemyFrom(Player p)
@@ -253,9 +226,14 @@ public class Player implements Parcelable
 			return true;
 		}
 	}
+	public void affect(Effect e)
+	{
+		this.efx.add(e);
+	}
 
 	public Player damageStep(RuntimeActivity r)
 	{
+		for(Effect e : this.efx)e.apply(this);
 		if(this.isDragonProtected)
 		{
 			for(Dragon d : r.getDragons())
@@ -269,9 +247,15 @@ public class Player implements Parcelable
 		else
 		{
 			this.lifePoints -= isProtected ? 0 : this.damageTaken;
+			this.inspect();
 		}
 		return this;
 	}
+
+	public void inspect()
+    {
+        this.isDead = isDragonProtected ? false : this.lifePoints <=0;
+    }
 	public int life()
 	{
 		return this.lifePoints;
@@ -283,6 +267,7 @@ public class Player implements Parcelable
 		this.damageTaken = 0;
 		this.isProtected = false;
 		this.clazz.renew();
+		for(int i= 0; i < ATTACKS_RECIEVED.length; ++i)ATTACKS_RECIEVED[i] = 0;
 		return this;
 	}
 	@Nullable

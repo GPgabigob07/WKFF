@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.v4.app.INotificationSideChannel;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,13 +13,13 @@ import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
 import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.activity.wdiget_util.PlayerSelectAdapter;
-import org.gpginc.ntateam.apptest.runtime.util.IntanciableSkill;
+import org.gpginc.ntateam.apptest.runtime.util.InstanciableSkill;
 import org.gpginc.ntateam.apptest.runtime.util.TurnSkill;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GodnessProtection extends ClazzSkill implements IntanciableSkill<GodnessProtection>, TurnSkill {
+public class GodnessProtection extends ClazzSkill implements InstanciableSkill<GodnessProtection>, TurnSkill {
 
     private final int MAX_USAGES = 2;
     private int USAGES = 0;

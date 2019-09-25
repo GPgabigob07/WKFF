@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import org.gpginc.ntateam.apptest.Dragon;
+import org.gpginc.ntateam.apptest.runtime.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Player;
 import org.gpginc.ntateam.apptest.runtime.util.Util;

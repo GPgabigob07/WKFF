@@ -6,13 +6,11 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 
-import org.gpginc.ntateam.apptest.Dragon;
+import org.gpginc.ntateam.apptest.runtime.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Player;
-import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

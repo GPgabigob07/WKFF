@@ -3,7 +3,7 @@ package org.gpginc.ntateam.apptest.runtime.events;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import org.gpginc.ntateam.apptest.Dragon;
+import org.gpginc.ntateam.apptest.runtime.Dragon;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Event;
 import org.gpginc.ntateam.apptest.runtime.Events;
@@ -21,7 +21,7 @@ public class Dragonborn extends Event implements DragonEvent<Dragonborn>
     private int agressivity;
     private Dragon dragon;
     public Dragonborn() {
-        super(R.string.evt_name_db, R.string.evt_dscr_db, R.string.evt_end_dscr_db, Rarity.RARE, 2, EventHandler.ALWAYS, true);
+        super(R.string.evt_name_db, R.string.evt_dscr_db, R.string.evt_end_dscr_db, Rarity.ULTRARARE, 2, EventHandler.ALWAYS, true);
     }
 
     protected Dragonborn(Parcel in) {

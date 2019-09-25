@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.gpginc.ntateam.apptest.DamageStep;
-import org.gpginc.ntateam.apptest.Dragon;
+import org.gpginc.ntateam.apptest.runtime.Dragon;
 import org.gpginc.ntateam.apptest.PrePlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.Clazz;

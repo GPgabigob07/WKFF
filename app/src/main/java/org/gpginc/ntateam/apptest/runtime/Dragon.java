@@ -1,16 +1,11 @@
-package org.gpginc.ntateam.apptest;
+package org.gpginc.ntateam.apptest.runtime;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
-import android.support.design.shape.ShapePath;
 
-import org.gpginc.ntateam.apptest.runtime.Main;
-import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Dragon implements Parcelable
 {
@@ -98,7 +93,11 @@ public class Dragon implements Parcelable
     {
         if(canLightAttack) {
             for (Player p : r.getPlayers()) {
-                if (p.getField() == field && !p.getKingdom().equals(this.kingdom)) p.giveDamage(this, 1);
+                if (p.getField() == field && !p.getKingdom().equals(this.kingdom))
+                {
+                    p.giveDamage(this, 1);
+                    p.damageStep(r);
+                }
             }
         }
     }
@@ -107,12 +106,19 @@ public class Dragon implements Parcelable
         if(canHeavyAttack)
         {
             for(Player p : r.getPlayers()){
-                if(ignore)p.giveDamage(this,1);
-                else if(!p.getKingdom().equals(this.getKingdom()))p.giveDamage(this, 1);
+                if(ignore)
+                {
+                    p.giveDamage(this,1);
+                    p.damageStep(r);
+                }
+                else if(!p.getKingdom().equals(this.getKingdom()))
+                {
+                    p.giveDamage(this, 1);
+                    p.damageStep(r);
+                }
 
             }
         }
-        Main.damageStep(r);
     }
 
     public void giveDamage(int dmg)

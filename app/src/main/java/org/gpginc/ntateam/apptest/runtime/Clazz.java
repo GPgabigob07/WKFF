@@ -2,7 +2,9 @@ package org.gpginc.ntateam.apptest.runtime;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +14,9 @@ import org.gpginc.ntateam.apptest.CurrentPlayer;
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.SkillRun;
 import org.gpginc.ntateam.apptest.runtime.activity.RuntimeActivity;
-import org.gpginc.ntateam.apptest.runtime.util.CounterSkill;
 import org.gpginc.ntateam.apptest.runtime.util.GameClazz;
-import org.gpginc.ntateam.apptest.runtime.util.IntanciableSkill;
+import org.gpginc.ntateam.apptest.runtime.util.InstanciableSkill;
+import org.gpginc.ntateam.apptest.runtime.util.Skill;
 import org.gpginc.ntateam.apptest.runtime.util.enums.Rarity;
 
 import java.util.ArrayList;
@@ -77,23 +79,8 @@ public class Clazz implements GameClazz<Clazz>
 		this.name = R.string.clazz_spy;
 		this.icon= R.drawable.botao_adicionar;
 		this.RARITY = Rarity.MASTERRARE;
-//		Main.p(this.getClass().getDeclaringClass().getAnnotation(RarityHandler.class).rarity());
 	}
 
-/*
-ArrayList<String> names =  new ArrayList();
-		in.readStringList(names);
-for(String name :  names)
-		{
-			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
-		}
-
-		for(ClazzSkill c : this.SKILLS)
-		{
-			names.add(c.getName());
-		}
-		dest.writeStringList(names);
- */
 
 	public Rarity getRARITY() {
 		return RARITY;
@@ -103,31 +90,34 @@ for(String name :  names)
 		name = in.readInt();
 		cPlayer = in.readParcelable(Player.class.getClassLoader());
 		this.needInstance = in.readByte() ==1;
-		ArrayList<String> names =  new ArrayList<>();
-		in.readStringList(names);
-		for(String name :  names)
-		{
-			this.SKILLS.add(Clazzs.SKILL_MAP.get(name));
-		}
 		enabled = in.readByte() != 0;
 		RARITY = Rarity.withName(in.readString());
 		icon = in.readInt();
+		Bundle b = in.readBundle();
+		for(String s : b.getStringArrayList("NAMES"))
+		{
+			this.SKILLS.add((ClazzSkill)b.getParcelable(s));
+		}
 	}
+
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(name);
 		dest.writeParcelable(cPlayer, flags);
 		dest.writeByte((byte) (this.needInstance ? 1 : 0));
-		ArrayList<String> names =  new ArrayList<>();
-		for(ClazzSkill c : this.SKILLS)
-		{
-			names.add(c.getName());
-		}
-		dest.writeStringList(names);
 		dest.writeByte((byte) (enabled ? 1 : 0));
 		dest.writeString(this.RARITY.R());
 		dest.writeInt(this.icon);
+		Bundle b = new Bundle();
+		ArrayList<String> names = new ArrayList<>();
+		for(ClazzSkill sk : this.SKILLS)
+		{
+			names.add(sk.getName());
+			b.putParcelable(sk.getName(), sk);
+		}
+		b.putStringArrayList("NAMES", names);
+		dest.writeBundle(b);
 	}
 
 	@Override
@@ -157,9 +147,9 @@ for(String name :  names)
 	{
 		if(flag == 0)
 		{
-			if(skill instanceof IntanciableSkill)
+			if(skill instanceof InstanciableSkill)
 			{
-				this.SKILLS.add(((IntanciableSkill) skill).newInstance());
+				this.SKILLS.add(((InstanciableSkill) skill).newInstance());
 			}
 			else
 			{

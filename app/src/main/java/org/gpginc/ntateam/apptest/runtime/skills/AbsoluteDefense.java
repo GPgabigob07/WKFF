@@ -4,20 +4,24 @@ import android.app.Dialog;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import org.gpginc.ntateam.apptest.R;
 import org.gpginc.ntateam.apptest.runtime.ClazzSkill;
+import org.gpginc.ntateam.apptest.runtime.Clazzs;
 import org.gpginc.ntateam.apptest.runtime.Player;
+import org.gpginc.ntateam.apptest.runtime.util.InstanciableSkill;
+import org.gpginc.ntateam.apptest.runtime.util.Util;
 
 public class AbsoluteDefense extends ClazzSkill
 {
     public AbsoluteDefense(String name, Type type) {
-        super(name, type, false);
+        super(name, type, true);
     }
 
     public AbsoluteDefense(String name, Type type, int layout) {
-        super(name, type, layout, false);
+        super(name, type, layout, true);
     }
 
     private AbsoluteDefense(Parcel in) {
@@ -44,7 +48,7 @@ public class AbsoluteDefense extends ClazzSkill
                 popupWindow.showAsDropDown(this.lastAct.findViewById(R.id.content_cp_layout));
                 if(p.attacked)d.show();
                 p.isProtected = true;
-                this.setPassiveRun(true);
+                ((ImageView)this.lastAct.findViewById(R.id.current_player_life)).setBackgroundResource(Util.getPlayerLifeShowner(p));
             }
         }
     }
